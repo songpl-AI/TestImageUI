@@ -177,6 +177,8 @@ python3 -m src.main \
 - `layout_ir.json`
 - `report.md`
 
+`rebuild` 会严格校验所需 PNG：缺失、无法读取或尺寸不匹配都会返回失败，并打印具体 layer。
+
 注意：同一个 output 目录不要并发执行 `prepare-regenerate` 和 `rebuild`，避免读到未写完的 PNG。
 
 ## Codex Sprite Skill
@@ -302,6 +304,7 @@ examples/output/mermaid_pass_single_sprites/
 - 必须先出 Sprite Plan
 - raw 图和标准化图不要混用
 - 动态文字不要生成 PNG
+- 重建前素材必须齐全且尺寸匹配
 - prepare/rebuild 不要并发写同一目录
 - chroma-key 颜色冲突风险
 

@@ -51,6 +51,8 @@ python3 -m src.main \
   --mode rebuild
 ```
 
+Rebuild validates every required PNG before rendering. Missing, unreadable, or incorrectly sized assets make the command exit with a non-zero status and list the affected layer ids.
+
 This writes:
 
 - `reconstruction_direct.png`
