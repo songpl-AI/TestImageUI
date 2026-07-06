@@ -148,7 +148,7 @@ python3 -m src.main \
 - `assets_regenerated/`：无需生图的透传资产。
 - `regen_tasks/`：每个待生成 sprite 的任务目录。
 - `regen_tasks_manifest.md`：任务清单。
-- `layout_ir.json`
+- `layout_ir.pending.json`：引用待生成资产的预览 Layout IR。
 - `report.md`
 
 每个 `regen_tasks/<id>/` 包含：

@@ -18,7 +18,7 @@ This writes:
 - `assets_regenerated/`: passthrough assets that do not need Codex generation.
 - `regen_tasks/`: one folder per Codex image task.
 - `regen_tasks_manifest.md`: task index for Codex or a human operator.
-- `layout_ir.json`
+- `layout_ir.pending.json`: preview Layout IR with pending generated assets.
 - `report.md`
 
 Each task folder contains:

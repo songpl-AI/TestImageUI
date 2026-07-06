@@ -49,13 +49,19 @@ def main() -> int:
 
     if args.mode in {"direct", "prepare-regenerate", "full"}:
         direct_assets = generate_direct_assets(source_image, layer_ir, direct_dir)
-        direct_rebuild = reconstruct(layer_ir, direct_dir, output_dir / "reconstruction_direct.png", draw_text=False)
+        direct_rebuild = reconstruct(
+            layer_ir,
+            direct_dir,
+            output_dir / "reconstruction_direct.png",
+            draw_text=False,
+            strict_assets=True,
+        )
         print(f"Generated direct assets: {len(direct_assets)}")
         print(f"Wrote {direct_rebuild}")
 
     if args.mode == "prepare-regenerate":
         tasks, passthrough_assets = export_regenerate_tasks(source_image, layer_ir, output_dir, source_image_path=args.input)
-        layout_path = save_layout_ir(build_layout_ir(layer_ir), output_dir / "layout_ir.json")
+        layout_path = save_layout_ir(build_layout_ir(layer_ir), output_dir / "layout_ir.pending.json")
         report_path = build_report(layer_ir, output_dir / "report.md")
         print(f"Exported Codex regenerate tasks: {len(tasks)}")
         print(f"Prepared passthrough assets: {len(passthrough_assets)}")
@@ -71,18 +77,30 @@ def main() -> int:
             regenerated_dir,
             output_dir / "reconstruction_regenerated.png",
             draw_text=True,
+            strict_assets=True,
         )
         print(f"Generated regenerated assets: {len(regenerated_assets)}")
         print(f"Wrote {regenerated_rebuild}")
 
     if args.mode == "rebuild":
-        direct_rebuild = reconstruct(layer_ir, direct_dir, output_dir / "reconstruction_direct.png", draw_text=False)
-        regenerated_rebuild = reconstruct(
-            layer_ir,
-            regenerated_dir,
-            output_dir / "reconstruction_regenerated.png",
-            draw_text=True,
-        )
+        try:
+            direct_rebuild = reconstruct(
+                layer_ir,
+                direct_dir,
+                output_dir / "reconstruction_direct.png",
+                draw_text=False,
+                strict_assets=True,
+            )
+            regenerated_rebuild = reconstruct(
+                layer_ir,
+                regenerated_dir,
+                output_dir / "reconstruction_regenerated.png",
+                draw_text=True,
+                strict_assets=True,
+            )
+        except ValueError as exc:
+            print(str(exc))
+            return 1
         print(f"Wrote {direct_rebuild}")
         print(f"Wrote {regenerated_rebuild}")
 

@@ -33,8 +33,11 @@ def validate_layer_ir(layer_ir: LayerIR, image_size: tuple[int, int]) -> list[st
             f"image={image_width}x{image_height}"
         )
 
+    all_layer_ids = {layer.id for layer in layer_ir.layers}
     seen_ids: set[str] = set()
     for layer in layer_ir.layers:
+        role = layer.role.lower()
+
         if not layer.id:
             errors.append("layer id cannot be empty")
         if layer.id in seen_ids:
@@ -49,6 +52,17 @@ def validate_layer_ir(layer_ir: LayerIR, image_size: tuple[int, int]) -> list[st
             errors.append(f"{layer.id}: bbox exceeds source image bounds")
         if layer.asset_strategy == "text_node" and not layer.text:
             errors.append(f"{layer.id}: text_node requires text")
+        if "dynamic_text" in role and layer.asset_strategy != "text_node":
+            errors.append(f"{layer.id}: dynamic_text role must use text_node")
+        if "art_text" in role and layer.asset_strategy != "text_node" and not layer.text:
+            errors.append(f"{layer.id}: art text image asset requires text")
+        if layer.remove_text and layer.asset_strategy == "direct_crop":
+            errors.append(f"{layer.id}: remove_text cannot use direct_crop")
+        if layer.remove_occluding_children and layer.asset_strategy == "direct_crop":
+            errors.append(f"{layer.id}: remove_occluding_children cannot use direct_crop")
+        for child_id in layer.children_hint:
+            if child_id not in all_layer_ids:
+                errors.append(f"{layer.id}: children_hint references unknown layer {child_id}")
 
     if not layer_ir.layers:
         errors.append("Layer IR must contain at least one layer")

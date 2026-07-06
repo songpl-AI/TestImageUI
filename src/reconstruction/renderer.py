@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, UnidentifiedImageError
 
 from src.core.types import LayerIR, LayerItem
 
@@ -13,7 +13,13 @@ def reconstruct(
     output_path: Path,
     *,
     draw_text: bool,
+    strict_assets: bool = False,
 ) -> Path:
+    if strict_assets:
+        errors = validate_required_assets(layer_ir, assets_dir, draw_text=draw_text)
+        if errors:
+            raise ValueError("asset validation failed:\n" + "\n".join(f"- {error}" for error in errors))
+
     canvas = Image.new("RGBA", (layer_ir.canvas_width, layer_ir.canvas_height), (0, 0, 0, 0))
     draw = ImageDraw.Draw(canvas)
 
@@ -21,16 +27,52 @@ def reconstruct(
         if layer.asset_strategy == "ignore":
             continue
 
+        if draw_text and layer.asset_strategy == "text_node":
+            _draw_text_node(draw, layer)
+            continue
+
         asset_path = assets_dir / f"{layer.id}.png"
         if asset_path.exists():
-            asset = Image.open(asset_path).convert("RGBA")
+            with Image.open(asset_path) as asset_image:
+                asset = asset_image.convert("RGBA")
             canvas.alpha_composite(asset, (layer.bbox.x, layer.bbox.y))
-        elif draw_text and layer.asset_strategy == "text_node":
-            _draw_text_node(draw, layer)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     canvas.convert("RGB").save(output_path)
     return output_path
+
+
+def validate_required_assets(layer_ir: LayerIR, assets_dir: Path, *, draw_text: bool) -> list[str]:
+    errors: list[str] = []
+
+    for layer in layer_ir.layers:
+        if not _requires_asset(layer, draw_text=draw_text):
+            continue
+
+        asset_path = assets_dir / f"{layer.id}.png"
+        if not asset_path.exists():
+            errors.append(f"{layer.id}: missing asset {asset_path}")
+            continue
+
+        try:
+            with Image.open(asset_path) as asset:
+                if asset.size != (layer.bbox.width, layer.bbox.height):
+                    errors.append(
+                        f"{layer.id}: asset size {asset.size[0]}x{asset.size[1]} "
+                        f"does not match bbox {layer.bbox.width}x{layer.bbox.height}"
+                    )
+        except (OSError, UnidentifiedImageError) as exc:
+            errors.append(f"{layer.id}: cannot read asset {asset_path}: {exc}")
+
+    return errors
+
+
+def _requires_asset(layer: LayerItem, *, draw_text: bool) -> bool:
+    if layer.asset_strategy == "ignore":
+        return False
+    if draw_text and layer.asset_strategy == "text_node":
+        return False
+    return True
 
 
 def build_comparison(original_path: Path, direct_path: Path, regenerated_path: Path, output_path: Path) -> Path:
