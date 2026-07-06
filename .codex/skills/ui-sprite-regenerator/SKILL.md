@@ -73,6 +73,7 @@ Sprite Plan 必须分成两类：
 
 ## 工作流
 
+0. 先阅读 `references/known_issues.md`，把里面的防错规则纳入本次执行。
 1. 查看源 UI 图片。
 2. 识别语义元素，而不是只画裁切框：
    - 背景
@@ -96,6 +97,7 @@ Sprite Plan 必须分成两类：
 7. 分开保存生成源图和最终透明 PNG。
 8. 生成棋盘格总览图，方便人工确认这些是真正单图。
 9. 如果已有 Layout IR / Layer IR，再生成按目标 rect 装进透明画布的 fitted 版本，用于回贴验证。
+10. 如果本次运行中发现新问题、返工原因或用户纠正，按 `references/known_issues.md` 的模板追加记录。
 
 ## 推荐输出素材
 
@@ -182,6 +184,7 @@ output/<screen>_single_sprites/
 
 汇报完成前必须确认：
 
+- 已阅读并遵守 `references/known_issues.md`。
 - 已先输出 Sprite Plan，并处理人工确认项。
 - 最终资产是生成/重生成的独立 sprite，不是原图矩形 crop。
 - 背景、按钮、卡片、徽章类素材不包含动态文字。
@@ -189,9 +192,20 @@ output/<screen>_single_sprites/
 - 需要透明的最终资产是 PNG 且带 alpha。
 - 已提供棋盘格总览图。
 - 明确说明仍然 crop-based 或需要再次生成的资产。
+- 如果出现新坑，已写入 Known Issues，或说明为什么暂不记录。
 
 ## 失败判定
 
 如果结果是一块原图矩形，里面带有邻近像素、文字、遮挡、背景或其它 UI 元素，只能称为 reference crop，不能称为 sprite。
 
 用户说“每一张单图”“sprite 贴图”“工程切图”“可复用素材”时，默认走独立重生成流程，并先出 Sprite Plan。不要停在 bbox crop 提取。
+
+## Known Issues 机制
+
+运行中遇到问题时，不要只在对话里道歉；要把可复用教训沉淀到 `references/known_issues.md`。
+
+记录标准：
+
+- 会导致用户返工、误解或结果不可用的问题，必须记录。
+- 只是一次性拼写、小口误、不影响后续流程的问题，可以不记录。
+- 记录要写“如何预防”，不要只写“发生了什么”。
