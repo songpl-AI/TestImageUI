@@ -1,0 +1,8 @@
+- Create a clean game UI asset for role `currency_icon`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 70x70 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Generate or extract only the standalone icon object.
+- Remove the surrounding UI background.
+- Keep clean transparent edges and any natural object shadow.

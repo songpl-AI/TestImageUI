@@ -1,0 +1,286 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 941,
+    "height": 1672
+  },
+  "source_image": "mermaid_pass_raw.png",
+  "layers": [
+    {
+      "id": "screen_background",
+      "role": "screen_background",
+      "bbox": [
+        0,
+        0,
+        941,
+        1672
+      ],
+      "asset_strategy": "direct_crop",
+      "transparent": false
+    },
+    {
+      "id": "currency_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [
+        24,
+        65,
+        268,
+        76
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "currency_pearl_icon",
+      "role": "currency_icon",
+      "bbox": [
+        39,
+        76,
+        73,
+        59
+      ],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "currency_amount_text",
+      "role": "dynamic_text",
+      "bbox": [
+        107,
+        77,
+        120,
+        50
+      ],
+      "asset_strategy": "text_node",
+      "text": "3200"
+    },
+    {
+      "id": "currency_plus_button",
+      "role": "small_button",
+      "bbox": [
+        217,
+        68,
+        71,
+        71
+      ],
+      "asset_strategy": "direct_crop",
+      "transparent": true
+    },
+    {
+      "id": "close_button",
+      "role": "close_button",
+      "bbox": [
+        792,
+        146,
+        107,
+        107
+      ],
+      "asset_strategy": "direct_crop",
+      "transparent": true
+    },
+    {
+      "id": "main_shell_panel",
+      "role": "panel_background",
+      "bbox": [
+        37,
+        372,
+        868,
+        1091
+      ],
+      "asset_strategy": "regenerate_or_inpaint",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "title_board",
+        "subtitle_ribbon",
+        "reward_card_bg",
+        "level_badge_bg",
+        "progress_bar_bg",
+        "claim_button_bg"
+      ]
+    },
+    {
+      "id": "title_board",
+      "role": "title_board",
+      "bbox": [
+        154,
+        131,
+        635,
+        385
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true
+    },
+    {
+      "id": "title_logo",
+      "role": "title_art_text",
+      "bbox": [
+        209,
+        235,
+        523,
+        209
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "text": "MERMAID PASS"
+    },
+    {
+      "id": "subtitle_ribbon",
+      "role": "ribbon_background",
+      "bbox": [
+        235,
+        546,
+        470,
+        107
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "subtitle_text",
+      "role": "label_text",
+      "bbox": [
+        322,
+        575,
+        301,
+        55
+      ],
+      "asset_strategy": "text_node",
+      "text": "Pearl Bonus"
+    },
+    {
+      "id": "reward_card_bg",
+      "role": "reward_card_background",
+      "bbox": [
+        190,
+        651,
+        562,
+        451
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "reward_pearl_icon",
+      "role": "reward_icon",
+      "bbox": [
+        314,
+        686,
+        314,
+        327
+      ],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "level_badge_bg",
+      "role": "label_badge_background",
+      "bbox": [
+        298,
+        1053,
+        346,
+        73
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "level_text",
+      "role": "dynamic_text",
+      "bbox": [
+        386,
+        1065,
+        170,
+        47
+      ],
+      "asset_strategy": "text_node",
+      "text": "Level 12"
+    },
+    {
+      "id": "progress_bar_bg",
+      "role": "progress_bar_background",
+      "bbox": [
+        200,
+        1130,
+        542,
+        78
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "progress_value_text",
+      "role": "dynamic_text",
+      "bbox": [
+        372,
+        1142,
+        196,
+        46
+      ],
+      "asset_strategy": "text_node",
+      "text": "720 / 1000"
+    },
+    {
+      "id": "progress_shell_icon",
+      "role": "progress_icon",
+      "bbox": [
+        669,
+        1110,
+        97,
+        97
+      ],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "claim_button_bg",
+      "role": "button_background",
+      "bbox": [
+        201,
+        1225,
+        542,
+        170
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "claim_button_label",
+      "role": "button_label",
+      "bbox": [
+        340,
+        1275,
+        261,
+        76
+      ],
+      "asset_strategy": "text_node",
+      "text": "CLAIM"
+    },
+    {
+      "id": "bottom_shell_decoration",
+      "role": "decoration_shell",
+      "bbox": [
+        350,
+        1403,
+        242,
+        104
+      ],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    }
+  ]
+}

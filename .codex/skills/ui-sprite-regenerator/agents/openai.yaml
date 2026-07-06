@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Sprite Regenerator"
+  short_description: "Generate clean standalone UI sprites from AI UI mockups."
+  default_prompt: "Turn this AI-generated UI mockup into clean standalone transparent sprite assets, not rectangular crops."

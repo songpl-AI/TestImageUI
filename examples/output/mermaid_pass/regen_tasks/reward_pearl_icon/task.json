@@ -1,0 +1,22 @@
+{
+  "id": "reward_pearl_icon",
+  "role": "reward_icon",
+  "asset_strategy": "segmentation_extract",
+  "bbox": [
+    240,
+    525,
+    240,
+    250
+  ],
+  "target_size": {
+    "width": 240,
+    "height": 250
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/mermaid_pass.png",
+  "reference_crop": "examples/output/mermaid_pass/regen_tasks/reward_pearl_icon/reference_crop.png",
+  "prompt": "examples/output/mermaid_pass/regen_tasks/reward_pearl_icon/prompt.txt",
+  "target_asset": "examples/output/mermaid_pass/assets_regenerated/reward_pearl_icon.png"
+}

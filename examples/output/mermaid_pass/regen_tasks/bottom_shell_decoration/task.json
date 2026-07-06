@@ -1,0 +1,22 @@
+{
+  "id": "bottom_shell_decoration",
+  "role": "decoration_shell",
+  "asset_strategy": "segmentation_extract",
+  "bbox": [
+    268,
+    1074,
+    185,
+    80
+  ],
+  "target_size": {
+    "width": 185,
+    "height": 80
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/mermaid_pass.png",
+  "reference_crop": "examples/output/mermaid_pass/regen_tasks/bottom_shell_decoration/reference_crop.png",
+  "prompt": "examples/output/mermaid_pass/regen_tasks/bottom_shell_decoration/prompt.txt",
+  "target_asset": "examples/output/mermaid_pass/assets_regenerated/bottom_shell_decoration.png"
+}

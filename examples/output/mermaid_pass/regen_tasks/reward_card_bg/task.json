@@ -1,0 +1,22 @@
+{
+  "id": "reward_card_bg",
+  "role": "reward_card_background",
+  "asset_strategy": "regenerate",
+  "bbox": [
+    145,
+    498,
+    430,
+    345
+  ],
+  "target_size": {
+    "width": 430,
+    "height": 345
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": true,
+  "source_image": "examples/input/mermaid_pass.png",
+  "reference_crop": "examples/output/mermaid_pass/regen_tasks/reward_card_bg/reference_crop.png",
+  "prompt": "examples/output/mermaid_pass/regen_tasks/reward_card_bg/prompt.txt",
+  "target_asset": "examples/output/mermaid_pass/assets_regenerated/reward_card_bg.png"
+}

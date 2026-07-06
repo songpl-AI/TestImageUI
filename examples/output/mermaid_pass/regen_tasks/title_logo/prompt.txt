@@ -1,0 +1,8 @@
+- Create a clean game UI asset for role `title_art_text`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 400x160 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Generate the fixed art title text `MERMAID PASS` as a transparent PNG.
+- Preserve the reference style, fill color, outline, and game UI feel.
+- This is fixed title art, not editable engine text.

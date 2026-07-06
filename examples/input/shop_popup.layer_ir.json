@@ -1,0 +1,129 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "source_image": "shop_popup.png",
+  "layers": [
+    {
+      "id": "screen_background",
+      "role": "screen_background",
+      "bbox": [0, 0, 720, 1280],
+      "asset_strategy": "direct_crop",
+      "transparent": false
+    },
+    {
+      "id": "panel_main_bg",
+      "role": "panel_background",
+      "bbox": [70, 210, 580, 875],
+      "asset_strategy": "regenerate_or_inpaint",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "title_board",
+        "reward_card_bg",
+        "buy_button_bg",
+        "coin_bar_bg"
+      ]
+    },
+    {
+      "id": "title_board",
+      "role": "title_board",
+      "bbox": [150, 150, 420, 135],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true
+    },
+    {
+      "id": "title_logo",
+      "role": "title_art_text",
+      "bbox": [150, 172, 420, 90],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "text": "LIMITED GIFT"
+    },
+    {
+      "id": "close_button",
+      "role": "close_button",
+      "bbox": [590, 170, 80, 80],
+      "asset_strategy": "direct_crop",
+      "transparent": true
+    },
+    {
+      "id": "reward_card_bg",
+      "role": "reward_card_background",
+      "bbox": [160, 390, 400, 345],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_occluding_children": true
+    },
+    {
+      "id": "reward_glow",
+      "role": "decoration_glow",
+      "bbox": [200, 405, 320, 320],
+      "asset_strategy": "regenerate",
+      "transparent": true
+    },
+    {
+      "id": "reward_chest_icon",
+      "role": "reward_icon",
+      "bbox": [230, 480, 260, 230],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "reward_count_text",
+      "role": "dynamic_text",
+      "bbox": [250, 680, 220, 55],
+      "asset_strategy": "text_node",
+      "text": "x100"
+    },
+    {
+      "id": "price_text",
+      "role": "dynamic_text",
+      "bbox": [185, 770, 350, 65],
+      "asset_strategy": "text_node",
+      "text": "Special Price: $6"
+    },
+    {
+      "id": "buy_button_bg",
+      "role": "button_background",
+      "bbox": [190, 890, 340, 125],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "buy_button_label",
+      "role": "button_label",
+      "bbox": [245, 922, 230, 60],
+      "asset_strategy": "text_node",
+      "text": "BUY NOW"
+    },
+    {
+      "id": "coin_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [205, 1040, 310, 85],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true
+    },
+    {
+      "id": "coin_icon",
+      "role": "currency_icon",
+      "bbox": [225, 1048, 70, 70],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "coin_amount_text",
+      "role": "dynamic_text",
+      "bbox": [315, 1055, 140, 55],
+      "asset_strategy": "text_node",
+      "text": "1888"
+    }
+  ]
+}

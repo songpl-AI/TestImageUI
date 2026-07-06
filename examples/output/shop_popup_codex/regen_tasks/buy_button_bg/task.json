@@ -1,0 +1,22 @@
+{
+  "id": "buy_button_bg",
+  "role": "button_background",
+  "asset_strategy": "regenerate",
+  "bbox": [
+    190,
+    890,
+    340,
+    125
+  ],
+  "target_size": {
+    "width": 340,
+    "height": 125
+  },
+  "transparent": true,
+  "remove_text": true,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/buy_button_bg/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/buy_button_bg/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/buy_button_bg.png"
+}

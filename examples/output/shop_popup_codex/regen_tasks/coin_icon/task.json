@@ -1,0 +1,22 @@
+{
+  "id": "coin_icon",
+  "role": "currency_icon",
+  "asset_strategy": "segmentation_extract",
+  "bbox": [
+    225,
+    1048,
+    70,
+    70
+  ],
+  "target_size": {
+    "width": 70,
+    "height": 70
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/coin_icon/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/coin_icon/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/coin_icon.png"
+}

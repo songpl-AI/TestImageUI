@@ -1,0 +1,22 @@
+{
+  "id": "reward_chest_icon",
+  "role": "reward_icon",
+  "asset_strategy": "segmentation_extract",
+  "bbox": [
+    230,
+    480,
+    260,
+    230
+  ],
+  "target_size": {
+    "width": 260,
+    "height": 230
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/reward_chest_icon/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/reward_chest_icon/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/reward_chest_icon.png"
+}

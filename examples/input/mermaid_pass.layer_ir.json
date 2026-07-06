@@ -1,0 +1,181 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "source_image": "mermaid_pass.png",
+  "layers": [
+    {
+      "id": "screen_background",
+      "role": "screen_background",
+      "bbox": [0, 0, 720, 1280],
+      "asset_strategy": "direct_crop",
+      "transparent": false
+    },
+    {
+      "id": "currency_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [18, 50, 205, 58],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "currency_pearl_icon",
+      "role": "currency_icon",
+      "bbox": [30, 58, 56, 45],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "currency_amount_text",
+      "role": "dynamic_text",
+      "bbox": [82, 59, 92, 38],
+      "asset_strategy": "text_node",
+      "text": "3200"
+    },
+    {
+      "id": "currency_plus_button",
+      "role": "small_button",
+      "bbox": [166, 52, 54, 54],
+      "asset_strategy": "direct_crop",
+      "transparent": true
+    },
+    {
+      "id": "close_button",
+      "role": "close_button",
+      "bbox": [606, 112, 82, 82],
+      "asset_strategy": "direct_crop",
+      "transparent": true
+    },
+    {
+      "id": "main_shell_panel",
+      "role": "panel_background",
+      "bbox": [28, 285, 664, 835],
+      "asset_strategy": "regenerate_or_inpaint",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "title_board",
+        "subtitle_ribbon",
+        "reward_card_bg",
+        "level_badge_bg",
+        "progress_bar_bg",
+        "claim_button_bg"
+      ]
+    },
+    {
+      "id": "title_board",
+      "role": "title_board",
+      "bbox": [118, 100, 486, 295],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true
+    },
+    {
+      "id": "title_logo",
+      "role": "title_art_text",
+      "bbox": [160, 180, 400, 160],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "text": "MERMAID PASS"
+    },
+    {
+      "id": "subtitle_ribbon",
+      "role": "ribbon_background",
+      "bbox": [180, 418, 360, 82],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "subtitle_text",
+      "role": "label_text",
+      "bbox": [246, 440, 230, 42],
+      "asset_strategy": "text_node",
+      "text": "Pearl Bonus"
+    },
+    {
+      "id": "reward_card_bg",
+      "role": "reward_card_background",
+      "bbox": [145, 498, 430, 345],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "reward_pearl_icon",
+      "role": "reward_icon",
+      "bbox": [240, 525, 240, 250],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "level_badge_bg",
+      "role": "label_badge_background",
+      "bbox": [228, 806, 265, 56],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "level_text",
+      "role": "dynamic_text",
+      "bbox": [295, 815, 130, 36],
+      "asset_strategy": "text_node",
+      "text": "Level 12"
+    },
+    {
+      "id": "progress_bar_bg",
+      "role": "progress_bar_background",
+      "bbox": [153, 865, 415, 60],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "progress_value_text",
+      "role": "dynamic_text",
+      "bbox": [285, 874, 150, 35],
+      "asset_strategy": "text_node",
+      "text": "720 / 1000"
+    },
+    {
+      "id": "progress_shell_icon",
+      "role": "progress_icon",
+      "bbox": [512, 850, 74, 74],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    },
+    {
+      "id": "claim_button_bg",
+      "role": "button_background",
+      "bbox": [154, 938, 415, 130],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "claim_button_label",
+      "role": "button_label",
+      "bbox": [260, 976, 200, 58],
+      "asset_strategy": "text_node",
+      "text": "CLAIM"
+    },
+    {
+      "id": "bottom_shell_decoration",
+      "role": "decoration_shell",
+      "bbox": [268, 1074, 185, 80],
+      "asset_strategy": "segmentation_extract",
+      "transparent": true
+    }
+  ]
+}

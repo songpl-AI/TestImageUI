@@ -1,0 +1,215 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "shop_popup",
+    "canvas": {
+      "width": 720,
+      "height": 1280
+    },
+    "nodes": [
+      {
+        "id": "screen_background",
+        "type": "Image",
+        "role": "screen_background",
+        "rect": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/screen_background.png"
+      },
+      {
+        "id": "panel_main_bg",
+        "type": "Panel",
+        "role": "panel_background",
+        "rect": [
+          70,
+          210,
+          580,
+          875
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/panel_main_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "title_board",
+          "reward_card_bg",
+          "buy_button_bg",
+          "coin_bar_bg"
+        ]
+      },
+      {
+        "id": "title_board",
+        "type": "Image",
+        "role": "title_board",
+        "rect": [
+          150,
+          150,
+          420,
+          135
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/title_board.png"
+      },
+      {
+        "id": "title_logo",
+        "type": "Image",
+        "role": "title_art_text",
+        "rect": [
+          150,
+          172,
+          420,
+          90
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/title_logo.png"
+      },
+      {
+        "id": "close_button",
+        "type": "Button",
+        "role": "close_button",
+        "rect": [
+          590,
+          170,
+          80,
+          80
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/close_button.png"
+      },
+      {
+        "id": "reward_card_bg",
+        "type": "Image",
+        "role": "reward_card_background",
+        "rect": [
+          160,
+          390,
+          400,
+          345
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/reward_card_bg.png"
+      },
+      {
+        "id": "reward_glow",
+        "type": "Decoration",
+        "role": "decoration_glow",
+        "rect": [
+          200,
+          405,
+          320,
+          320
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/reward_glow.png"
+      },
+      {
+        "id": "reward_chest_icon",
+        "type": "Image",
+        "role": "reward_icon",
+        "rect": [
+          230,
+          480,
+          260,
+          230
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/reward_chest_icon.png"
+      },
+      {
+        "id": "reward_count_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          250,
+          680,
+          220,
+          55
+        ],
+        "anchor": "top_left",
+        "text": "x100"
+      },
+      {
+        "id": "price_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          185,
+          770,
+          350,
+          65
+        ],
+        "anchor": "top_left",
+        "text": "Special Price: $6"
+      },
+      {
+        "id": "buy_button_bg",
+        "type": "Button",
+        "role": "button_background",
+        "rect": [
+          190,
+          890,
+          340,
+          125
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/buy_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "buy_button_label",
+        "type": "Text",
+        "role": "button_label",
+        "rect": [
+          245,
+          922,
+          230,
+          60
+        ],
+        "anchor": "top_left",
+        "text": "BUY NOW"
+      },
+      {
+        "id": "coin_bar_bg",
+        "type": "Image",
+        "role": "currency_bar_background",
+        "rect": [
+          205,
+          1040,
+          310,
+          85
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/coin_bar_bg.png"
+      },
+      {
+        "id": "coin_icon",
+        "type": "Image",
+        "role": "currency_icon",
+        "rect": [
+          225,
+          1048,
+          70,
+          70
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/coin_icon.png"
+      },
+      {
+        "id": "coin_amount_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          315,
+          1055,
+          140,
+          55
+        ],
+        "anchor": "top_left",
+        "text": "1888"
+      }
+    ]
+  }
+}

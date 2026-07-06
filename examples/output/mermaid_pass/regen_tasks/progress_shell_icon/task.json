@@ -1,0 +1,22 @@
+{
+  "id": "progress_shell_icon",
+  "role": "progress_icon",
+  "asset_strategy": "segmentation_extract",
+  "bbox": [
+    512,
+    850,
+    74,
+    74
+  ],
+  "target_size": {
+    "width": 74,
+    "height": 74
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/mermaid_pass.png",
+  "reference_crop": "examples/output/mermaid_pass/regen_tasks/progress_shell_icon/reference_crop.png",
+  "prompt": "examples/output/mermaid_pass/regen_tasks/progress_shell_icon/prompt.txt",
+  "target_asset": "examples/output/mermaid_pass/assets_regenerated/progress_shell_icon.png"
+}

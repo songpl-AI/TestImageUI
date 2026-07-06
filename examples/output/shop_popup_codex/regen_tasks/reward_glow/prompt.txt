@@ -1,0 +1,8 @@
+- Create a clean game UI asset for role `decoration_glow`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 320x320 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Generate only the glow or light effect.
+- Use soft alpha edges and no solid background.
+- Do not include icons, text, or panels.

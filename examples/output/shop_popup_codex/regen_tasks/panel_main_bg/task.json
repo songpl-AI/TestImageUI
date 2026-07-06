@@ -1,0 +1,22 @@
+{
+  "id": "panel_main_bg",
+  "role": "panel_background",
+  "asset_strategy": "regenerate_or_inpaint",
+  "bbox": [
+    70,
+    210,
+    580,
+    875
+  ],
+  "target_size": {
+    "width": 580,
+    "height": 875
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": true,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/panel_main_bg/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/panel_main_bg/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/panel_main_bg.png"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "reward_glow",
+  "role": "decoration_glow",
+  "asset_strategy": "regenerate",
+  "bbox": [
+    200,
+    405,
+    320,
+    320
+  ],
+  "target_size": {
+    "width": 320,
+    "height": 320
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": false,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/reward_glow/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/reward_glow/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/reward_glow.png"
+}

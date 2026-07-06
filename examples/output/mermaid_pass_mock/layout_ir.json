@@ -1,0 +1,300 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "mermaid_pass",
+    "canvas": {
+      "width": 720,
+      "height": 1280
+    },
+    "nodes": [
+      {
+        "id": "screen_background",
+        "type": "Image",
+        "role": "screen_background",
+        "rect": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/screen_background.png"
+      },
+      {
+        "id": "currency_bar_bg",
+        "type": "Image",
+        "role": "currency_bar_background",
+        "rect": [
+          18,
+          50,
+          205,
+          58
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/currency_bar_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "currency_pearl_icon",
+        "type": "Image",
+        "role": "currency_icon",
+        "rect": [
+          30,
+          58,
+          56,
+          45
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/currency_pearl_icon.png"
+      },
+      {
+        "id": "currency_amount_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          82,
+          59,
+          92,
+          38
+        ],
+        "anchor": "top_left",
+        "text": "3200"
+      },
+      {
+        "id": "currency_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          166,
+          52,
+          54,
+          54
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/currency_plus_button.png"
+      },
+      {
+        "id": "close_button",
+        "type": "Button",
+        "role": "close_button",
+        "rect": [
+          606,
+          112,
+          82,
+          82
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/close_button.png"
+      },
+      {
+        "id": "main_shell_panel",
+        "type": "Panel",
+        "role": "panel_background",
+        "rect": [
+          28,
+          285,
+          664,
+          835
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/main_shell_panel.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "title_board",
+          "subtitle_ribbon",
+          "reward_card_bg",
+          "level_badge_bg",
+          "progress_bar_bg",
+          "claim_button_bg"
+        ]
+      },
+      {
+        "id": "title_board",
+        "type": "Image",
+        "role": "title_board",
+        "rect": [
+          118,
+          100,
+          486,
+          295
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/title_board.png"
+      },
+      {
+        "id": "title_logo",
+        "type": "Image",
+        "role": "title_art_text",
+        "rect": [
+          160,
+          180,
+          400,
+          160
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/title_logo.png"
+      },
+      {
+        "id": "subtitle_ribbon",
+        "type": "Image",
+        "role": "ribbon_background",
+        "rect": [
+          180,
+          418,
+          360,
+          82
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/subtitle_ribbon.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "subtitle_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          246,
+          440,
+          230,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "Pearl Bonus"
+      },
+      {
+        "id": "reward_card_bg",
+        "type": "Image",
+        "role": "reward_card_background",
+        "rect": [
+          145,
+          498,
+          430,
+          345
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/reward_card_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "reward_pearl_icon",
+        "type": "Image",
+        "role": "reward_icon",
+        "rect": [
+          240,
+          525,
+          240,
+          250
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/reward_pearl_icon.png"
+      },
+      {
+        "id": "level_badge_bg",
+        "type": "Text",
+        "role": "label_badge_background",
+        "rect": [
+          228,
+          806,
+          265,
+          56
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/level_badge_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "level_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          295,
+          815,
+          130,
+          36
+        ],
+        "anchor": "top_left",
+        "text": "Level 12"
+      },
+      {
+        "id": "progress_bar_bg",
+        "type": "Image",
+        "role": "progress_bar_background",
+        "rect": [
+          153,
+          865,
+          415,
+          60
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/progress_bar_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "progress_value_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          285,
+          874,
+          150,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "720 / 1000"
+      },
+      {
+        "id": "progress_shell_icon",
+        "type": "Image",
+        "role": "progress_icon",
+        "rect": [
+          512,
+          850,
+          74,
+          74
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/progress_shell_icon.png"
+      },
+      {
+        "id": "claim_button_bg",
+        "type": "Button",
+        "role": "button_background",
+        "rect": [
+          154,
+          938,
+          415,
+          130
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/claim_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "claim_button_label",
+        "type": "Text",
+        "role": "button_label",
+        "rect": [
+          260,
+          976,
+          200,
+          58
+        ],
+        "anchor": "top_left",
+        "text": "CLAIM"
+      },
+      {
+        "id": "bottom_shell_decoration",
+        "type": "Decoration",
+        "role": "decoration_shell",
+        "rect": [
+          268,
+          1074,
+          185,
+          80
+        ],
+        "anchor": "top_left",
+        "asset": "assets_regenerated/bottom_shell_decoration.png"
+      }
+    ]
+  }
+}

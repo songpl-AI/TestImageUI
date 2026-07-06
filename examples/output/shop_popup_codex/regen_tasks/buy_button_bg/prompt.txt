@@ -1,0 +1,9 @@
+- Create a clean game UI asset for role `button_background`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 340x125 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Do not include any text, letters, numbers, or labels.
+- Generate only the button background.
+- Preserve the reference color, rounded shape, outline, highlight, and shadow style.
+- Do not add icons or decorative elements.

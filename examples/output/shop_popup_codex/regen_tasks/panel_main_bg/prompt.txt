@@ -1,0 +1,9 @@
+- Create a clean game UI asset for role `panel_background`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 580x875 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Remove all child UI elements, icons, labels, buttons, and occluding objects.
+- Generate only the clean panel background and border.
+- Remove all internal content while preserving the frame style.
+- Keep it usable as a nine-slice candidate.

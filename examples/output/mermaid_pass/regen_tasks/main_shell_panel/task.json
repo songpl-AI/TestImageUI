@@ -1,0 +1,22 @@
+{
+  "id": "main_shell_panel",
+  "role": "panel_background",
+  "asset_strategy": "regenerate_or_inpaint",
+  "bbox": [
+    28,
+    285,
+    664,
+    835
+  ],
+  "target_size": {
+    "width": 664,
+    "height": 835
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": true,
+  "source_image": "examples/input/mermaid_pass.png",
+  "reference_crop": "examples/output/mermaid_pass/regen_tasks/main_shell_panel/reference_crop.png",
+  "prompt": "examples/output/mermaid_pass/regen_tasks/main_shell_panel/prompt.txt",
+  "target_asset": "examples/output/mermaid_pass/assets_regenerated/main_shell_panel.png"
+}

@@ -1,0 +1,7 @@
+- Create a clean game UI asset for role `currency_bar_background`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 310x85 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Do not include any text, letters, numbers, or labels.
+- Preserve the reference visual style while removing unrelated surrounding content.

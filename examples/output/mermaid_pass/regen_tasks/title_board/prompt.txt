@@ -1,0 +1,8 @@
+- Create a clean game UI asset for role `title_board`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 486x295 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Do not include any text, letters, numbers, or labels.
+- Generate only the clean title board or title plate.
+- Do not include title text unless the role explicitly asks for art text.

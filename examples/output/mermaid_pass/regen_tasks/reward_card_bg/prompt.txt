@@ -1,0 +1,8 @@
+- Create a clean game UI asset for role `reward_card_background`.
+- Use the provided reference crop as the visual reference.
+- Output size must be exactly 430x345 pixels.
+- Output should be a PNG asset suitable for a game engine.
+- Use a transparent background.
+- Remove all child UI elements, icons, labels, buttons, and occluding objects.
+- Generate only the clean card background.
+- Remove item icons, text, glow, and other foreground content.

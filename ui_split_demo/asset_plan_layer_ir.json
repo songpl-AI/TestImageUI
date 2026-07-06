@@ -1,0 +1,81 @@
+{
+  "canvas": [
+    720,
+    1280
+  ],
+  "note": "Controlled demo: direct crops preserve pixels but include occlusions/text/background; regenerated assets are cleaner and more engine-ready.",
+  "elements": [
+    {
+      "id": "panel_main_bg",
+      "bbox": [
+        70,
+        210,
+        650,
+        1085
+      ],
+      "direct": "direct_panel_with_occlusions.png",
+      "regenerated": "regen_panel_bg_clean_no_children.png",
+      "strategy": "regenerate/inpaint preferred because panel is occluded by children"
+    },
+    {
+      "id": "title_board",
+      "bbox": [
+        150,
+        150,
+        570,
+        285
+      ],
+      "direct": "direct_title_board_plus_text.png",
+      "regenerated": "regen_title_board_clean_no_text.png + regen_title_logo_art_text.png",
+      "strategy": "split title board and art text"
+    },
+    {
+      "id": "close_button",
+      "bbox": [
+        590,
+        170,
+        670,
+        250
+      ],
+      "direct": "direct_close_button.png",
+      "regenerated": "regen_close_button_clean.png",
+      "strategy": "direct is acceptable when isolated"
+    },
+    {
+      "id": "reward_card",
+      "bbox": [
+        160,
+        390,
+        560,
+        735
+      ],
+      "direct": "direct_reward_card_with_icon_text.png",
+      "regenerated": "regen_reward_card_bg_clean_no_icon_text.png + icon + glow + text",
+      "strategy": "semantic split required"
+    },
+    {
+      "id": "buy_button",
+      "bbox": [
+        190,
+        890,
+        530,
+        1015
+      ],
+      "direct": "direct_buy_button_with_text.png",
+      "regenerated": "regen_buy_button_bg_clean_no_text.png + Text(BUY NOW)",
+      "strategy": "button bg should be separated from dynamic text"
+    },
+    {
+      "id": "coin_bar",
+      "bbox": [
+        205,
+        1040,
+        515,
+        1125
+      ],
+      "direct": "direct_coin_bar_with_number.png",
+      "regenerated": "regen_coin_bar_bg_clean_no_number.png + coin_icon + Text(1888)",
+      "strategy": "number should remain Text"
+    }
+  ]
+}

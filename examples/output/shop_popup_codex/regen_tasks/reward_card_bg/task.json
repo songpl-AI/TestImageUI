@@ -1,0 +1,22 @@
+{
+  "id": "reward_card_bg",
+  "role": "reward_card_background",
+  "asset_strategy": "regenerate",
+  "bbox": [
+    160,
+    390,
+    400,
+    345
+  ],
+  "target_size": {
+    "width": 400,
+    "height": 345
+  },
+  "transparent": true,
+  "remove_text": false,
+  "remove_occluding_children": true,
+  "source_image": "examples/input/shop_popup.png",
+  "reference_crop": "examples/output/shop_popup_codex/regen_tasks/reward_card_bg/reference_crop.png",
+  "prompt": "examples/output/shop_popup_codex/regen_tasks/reward_card_bg/prompt.txt",
+  "target_asset": "examples/output/shop_popup_codex/assets_regenerated/reward_card_bg.png"
+}
