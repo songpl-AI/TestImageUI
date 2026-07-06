@@ -1,4 +1,4 @@
 interface:
-  display_name: "UI Sprite Regenerator"
-  short_description: "Generate clean standalone UI sprites from AI UI mockups."
-  default_prompt: "Turn this AI-generated UI mockup into clean standalone transparent sprite assets, not rectangular crops."
+  display_name: "UI Sprite 单图生成"
+  short_description: "从 AI UI 效果图规划并生成干净独立的 sprite 单图。"
+  default_prompt: "先分析这张 AI UI 效果图，输出需要生成的 sprite_plan.md 供人工确认；确认后再生成独立透明 PNG，不要把矩形裁图当成 sprite。"
