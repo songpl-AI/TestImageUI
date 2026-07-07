@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "canvas": {
+    "width": 1280,
+    "height": 720
+  },
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "layers": [
+    {
+      "id": "build_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        329,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/build_button_bg.png",
+      "metadata": {
+        "asset_id": "build_button_bg",
+        "source_asset_png": "assets_png/build_button_bg.png",
+        "fit_mode": "stretch_exact"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "build_hammer_icon",
+      "role": "nav_icon",
+      "bbox": [
+        356,
+        586,
+        58,
+        52
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/build_hammer_icon.png",
+      "metadata": {
+        "asset_id": "build_hammer_icon",
+        "source_asset_png": "assets_png/build_hammer_icon.png",
+        "fit_mode": "contain"
+      }
+    },
+    {
+      "id": "build_badge_dot",
+      "role": "notification_badge_dot",
+      "bbox": [
+        414,
+        580,
+        29,
+        31
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/build_badge_dot.png",
+      "metadata": {
+        "asset_id": "build_badge_dot",
+        "source_asset_png": "assets_png/build_badge_dot.png",
+        "fit_mode": "contain",
+        "bbox_source": "red-pixel source crop estimate with rim padding"
+      }
+    },
+    {
+      "id": "build_label",
+      "role": "button_label",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "BUILD",
+      "metadata": {
+        "font_hint": "bold white bottom nav label, dark outline",
+        "fit_mode": "text_node"
+      }
+    }
+  ]
+}

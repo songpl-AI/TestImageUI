@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "screen": {
+    "width": 1280,
+    "height": 720,
+    "nodes": [
+      {
+        "id": "top_resource_strip_frame",
+        "role": "top_resource_strip_composite_frame",
+        "bbox": [338, 0, 914, 72],
+        "asset_strategy": "reference_guided_realgen",
+        "transparent": true,
+        "output": "assets_fit_raw/top_resource_strip_frame.png",
+        "metadata": {
+          "asset_id": "top_resource_strip_frame",
+          "source_asset_png": "assets_png/top_resource_strip_frame.png",
+          "fit_mode": "stretch_exact"
+        }
+      },
+      {"id": "wood_label", "role": "label_text", "bbox": [445, 17, 70, 18], "asset_strategy": "text_node", "text": "WOOD"},
+      {"id": "wood_value", "role": "dynamic_text", "bbox": [445, 37, 75, 22], "asset_strategy": "text_node", "text": "2.5M"},
+      {"id": "food_label", "role": "label_text", "bbox": [665, 17, 70, 18], "asset_strategy": "text_node", "text": "FOOD"},
+      {"id": "food_value", "role": "dynamic_text", "bbox": [665, 37, 75, 22], "asset_strategy": "text_node", "text": "3.2M"},
+      {"id": "gold_label", "role": "label_text", "bbox": [890, 17, 70, 18], "asset_strategy": "text_node", "text": "GOLD"},
+      {"id": "gold_value", "role": "dynamic_text", "bbox": [890, 37, 75, 22], "asset_strategy": "text_node", "text": "4.7M"},
+      {"id": "gems_label", "role": "label_text", "bbox": [1115, 17, 70, 18], "asset_strategy": "text_node", "text": "GEMS"},
+      {"id": "gems_value", "role": "dynamic_text", "bbox": [1114, 37, 78, 22], "asset_strategy": "text_node", "text": "1,250"}
+    ]
+  }
+}

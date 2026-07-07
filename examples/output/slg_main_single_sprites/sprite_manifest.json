@@ -1,0 +1,1084 @@
+{
+  "source_image": "examples/input/slg_main.png",
+  "raw_reference_image": "examples/input/slg_main_raw.png",
+  "output_dir": "examples/output/slg_main_single_sprites",
+  "layer_ir": "examples/output/slg_main_single_sprites/layer_ir.json",
+  "layout_ir": "examples/output/slg_main_single_sprites/layout_ir.json",
+  "bbox_overlay": "examples/output/slg_main_single_sprites/bbox_overlay.png",
+  "status": "real_assets_generated",
+  "confirmed_at": "2026-07-07",
+  "rules": {
+    "do_not_use_rect_crop_as_sprite": true,
+    "dynamic_text_as_text_node": true,
+    "transparent_assets_use_chroma_key_then_alpha": true,
+    "default_chroma_key": "#00ff00",
+    "recommended_plan_confirmed": true,
+    "keep_city_buildings_as_background_hotspots": true
+  },
+  "sprites": [
+    {
+      "id": "bg_kingdom_city",
+      "output": "assets_png/bg_kingdom_city.png",
+      "type": "background",
+      "transparent": false,
+      "strategy": "background_sprite",
+      "prompt_subject": "clean full kingdom city background without UI overlays, no HUD, no text, no buttons, preserve fantasy SLG city composition and warm sunrise lighting",
+      "natural_size": [
+        1280,
+        720
+      ],
+      "mode": "RGB"
+    },
+    {
+      "id": "player_avatar_frame",
+      "output": "assets_png/player_avatar_frame.png",
+      "type": "profile_frame",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "clean circular player avatar frame with gold trim and blue enamel rim, no avatar, no level number",
+      "natural_size": [
+        272,
+        274
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "player_avatar_icon",
+      "output": "assets_png/player_avatar_icon.png",
+      "type": "avatar_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone medieval knight helmet avatar icon, no frame or badge",
+      "natural_size": [
+        261,
+        263
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "player_power_panel_bg",
+      "output": "assets_png/player_power_panel_bg.png",
+      "type": "info_panel_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "dark blue and gold player power info panel background, no POWER text, no number",
+      "natural_size": [
+        321,
+        147
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "player_level_badge_bg",
+      "output": "assets_png/player_level_badge_bg.png",
+      "type": "badge_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small shield shaped level badge background, no number",
+      "natural_size": [
+        160,
+        186
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "vip_badge_bg",
+      "output": "assets_png/vip_badge_bg.png",
+      "type": "badge_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "red and gold VIP badge background with crown motif, no VIP text or number",
+      "natural_size": [
+        286,
+        129
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "title_plate_bg",
+      "output": "assets_png/title_plate_bg.png",
+      "type": "title_plate",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "center top red enamel kingdom title plate, gold bevel trim, no text",
+      "natural_size": [
+        347,
+        105
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "top_banner_decoration",
+      "output": "assets_png/top_banner_decoration.png",
+      "type": "decoration",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "gold wings, side ornaments and hanging red banner decoration for title plate, no text",
+      "natural_size": [
+        243,
+        198
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "resource_bar_bg",
+      "output": "assets_png/resource_bar_bg.png",
+      "type": "resource_bar_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "reusable dark blue enamel resource bar background with gold trim, no icon, no text, no plus button",
+      "natural_size": [
+        308,
+        93
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "resource_plus_button",
+      "output": "assets_png/resource_plus_button.png",
+      "type": "small_button",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small green circular plus button with gold trim",
+      "natural_size": [
+        177,
+        179
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "wood_icon",
+      "output": "assets_png/wood_icon.png",
+      "type": "resource_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone wood logs resource icon, fantasy SLG style",
+      "natural_size": [
+        221,
+        208
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "food_icon",
+      "output": "assets_png/food_icon.png",
+      "type": "resource_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone wheat food resource icon, fantasy SLG style",
+      "natural_size": [
+        190,
+        219
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "gold_icon",
+      "output": "assets_png/gold_icon.png",
+      "type": "resource_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone gold coin resource icon, fantasy SLG style",
+      "natural_size": [
+        195,
+        202
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "gems_icon",
+      "output": "assets_png/gems_icon.png",
+      "type": "resource_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone purple gem resource icon, fantasy SLG style",
+      "natural_size": [
+        206,
+        201
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_panel_bg",
+      "output": "assets_png/quest_panel_bg.png",
+      "type": "quest_panel_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "clean parchment quest panel background with gold trim, no text, no row icons",
+      "natural_size": [
+        262,
+        317
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_header_bg",
+      "output": "assets_png/quest_header_bg.png",
+      "type": "header_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "red quest header tab background with gold trim, no text",
+      "natural_size": [
+        309,
+        137
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_collapse_button",
+      "output": "assets_png/quest_collapse_button.png",
+      "type": "small_button",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small parchment collapse button with up arrow symbol, standalone",
+      "natural_size": [
+        183,
+        169
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_row_icon_bg",
+      "output": "assets_png/quest_row_icon_bg.png",
+      "type": "small_icon_badge",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small circular quest row icon badge background, gold and parchment, reusable",
+      "natural_size": [
+        195,
+        196
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_icon_upgrade",
+      "output": "assets_png/quest_icon_upgrade.png",
+      "type": "quest_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small castle upgrade quest icon, no badge background",
+      "natural_size": [
+        235,
+        249
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_icon_train",
+      "output": "assets_png/quest_icon_train.png",
+      "type": "quest_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small soldier training quest icon, no badge background",
+      "natural_size": [
+        208,
+        242
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_icon_gather",
+      "output": "assets_png/quest_icon_gather.png",
+      "type": "quest_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small wood gathering quest icon, no badge background",
+      "natural_size": [
+        233,
+        203
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_icon_defeat",
+      "output": "assets_png/quest_icon_defeat.png",
+      "type": "quest_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small crossed swords bandit defeat quest icon, no badge background",
+      "natural_size": [
+        205,
+        211
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "side_event_button_bg",
+      "output": "assets_png/side_event_button_bg.png",
+      "type": "side_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "vertical right-side event button frame background with blue label plate and gold trim, no icon, no text, no badge",
+      "natural_size": [
+        214,
+        297
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "side_notification_badge_bg",
+      "output": "assets_png/side_notification_badge_bg.png",
+      "type": "notification_badge_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small red circular notification badge background with white trim, no number",
+      "natural_size": [
+        177,
+        176
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "event_chest_icon",
+      "output": "assets_png/event_chest_icon.png",
+      "type": "event_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone treasure chest event icon, fantasy SLG polished style",
+      "natural_size": [
+        237,
+        229
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "bonus_gift_icon",
+      "output": "assets_png/bonus_gift_icon.png",
+      "type": "event_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone wrapped gift bonus icon, fantasy SLG polished style",
+      "natural_size": [
+        214,
+        228
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "alliance_shield_icon",
+      "output": "assets_png/alliance_shield_icon.png",
+      "type": "event_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone red alliance shield icon with gold trim",
+      "natural_size": [
+        201,
+        243
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "arena_swords_icon",
+      "output": "assets_png/arena_swords_icon.png",
+      "type": "event_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone crossed swords arena icon",
+      "natural_size": [
+        203,
+        207
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "bottom_nav_button_bg",
+      "output": "assets_png/bottom_nav_button_bg.png",
+      "type": "nav_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "reusable bottom navigation button background, dark blue enamel with gold bevel trim, no icon, no text",
+      "natural_size": [
+        259,
+        283
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "build_icon",
+      "output": "assets_png/build_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone hammer build icon, no button background",
+      "natural_size": [
+        231,
+        240
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "army_icon",
+      "output": "assets_png/army_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone helmet army icon, no button background",
+      "natural_size": [
+        208,
+        281
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "hero_icon",
+      "output": "assets_png/hero_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone crown hero icon, no button background",
+      "natural_size": [
+        288,
+        244
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "quest_nav_icon",
+      "output": "assets_png/quest_nav_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone scroll quest icon, no button background",
+      "natural_size": [
+        236,
+        233
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "map_icon",
+      "output": "assets_png/map_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone map pin map icon, no button background",
+      "natural_size": [
+        268,
+        233
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "chat_button_bg",
+      "output": "assets_png/chat_button_bg.png",
+      "type": "small_nav_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small square chat button background, dark blue and gold, no icon, no text, no badge",
+      "natural_size": [
+        203,
+        219
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "mail_button_bg",
+      "output": "assets_png/mail_button_bg.png",
+      "type": "small_nav_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "small square mail button background, dark blue and gold, no icon, no text, no badge",
+      "natural_size": [
+        202,
+        219
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "chat_icon",
+      "output": "assets_png/chat_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone chat bubble icon, no button background",
+      "natural_size": [
+        200,
+        193
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "mail_icon",
+      "output": "assets_png/mail_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone envelope mail icon, no button background",
+      "natural_size": [
+        214,
+        168
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "go_button_bg",
+      "output": "assets_png/go_button_bg.png",
+      "type": "primary_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "large round primary GO button background with gold trim and red side banners, no castle icon, no text",
+      "natural_size": [
+        350,
+        300
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": "go_button_castle_icon",
+      "output": "assets_png/go_button_castle_icon.png",
+      "type": "button_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone white castle icon for GO button, no button background",
+      "natural_size": [
+        252,
+        246
+      ],
+      "mode": "RGBA",
+      "alpha_validation": {
+        "has_alpha": true,
+        "corners_alpha": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "player_level_text",
+      "text": "35"
+    },
+    {
+      "id": "vip_text",
+      "text": "VIP 8"
+    },
+    {
+      "id": "player_power_label",
+      "text": "POWER"
+    },
+    {
+      "id": "player_power_value",
+      "text": "1,250,000"
+    },
+    {
+      "id": "title_text",
+      "text": "KINGDOM"
+    },
+    {
+      "id": "wood_label",
+      "text": "WOOD"
+    },
+    {
+      "id": "wood_value",
+      "text": "2.5M"
+    },
+    {
+      "id": "food_label",
+      "text": "FOOD"
+    },
+    {
+      "id": "food_value",
+      "text": "3.2M"
+    },
+    {
+      "id": "gold_label",
+      "text": "GOLD"
+    },
+    {
+      "id": "gold_value",
+      "text": "4.7M"
+    },
+    {
+      "id": "gems_label",
+      "text": "GEMS"
+    },
+    {
+      "id": "gems_value",
+      "text": "1,250"
+    },
+    {
+      "id": "quest_header_text",
+      "text": "QUEST"
+    },
+    {
+      "id": "quest_1_title",
+      "text": "Upgrade Castle"
+    },
+    {
+      "id": "quest_1_progress",
+      "text": "(24/25)"
+    },
+    {
+      "id": "quest_2_title",
+      "text": "Train 1,000 Soldiers"
+    },
+    {
+      "id": "quest_2_progress",
+      "text": "(680/1000)"
+    },
+    {
+      "id": "quest_3_title",
+      "text": "Gather 500K Wood"
+    },
+    {
+      "id": "quest_3_progress",
+      "text": "(320K/500K)"
+    },
+    {
+      "id": "quest_4_title",
+      "text": "Defeat 10 Bandits"
+    },
+    {
+      "id": "quest_4_progress",
+      "text": "(6/10)"
+    },
+    {
+      "id": "side_event_label",
+      "text": "EVENT"
+    },
+    {
+      "id": "side_event_badge_text",
+      "text": "3"
+    },
+    {
+      "id": "side_bonus_label",
+      "text": "BONUS"
+    },
+    {
+      "id": "side_bonus_badge_text",
+      "text": "5"
+    },
+    {
+      "id": "side_alliance_label",
+      "text": "ALLIANCE"
+    },
+    {
+      "id": "side_alliance_badge_text",
+      "text": "7"
+    },
+    {
+      "id": "side_arena_label",
+      "text": "ARENA"
+    },
+    {
+      "id": "side_arena_badge_text",
+      "text": "1"
+    },
+    {
+      "id": "chat_label",
+      "text": "CHAT"
+    },
+    {
+      "id": "chat_badge_text",
+      "text": "2"
+    },
+    {
+      "id": "mail_label",
+      "text": "MAIL"
+    },
+    {
+      "id": "mail_badge_text",
+      "text": "1"
+    },
+    {
+      "id": "build_label",
+      "text": "BUILD"
+    },
+    {
+      "id": "army_label",
+      "text": "ARMY"
+    },
+    {
+      "id": "hero_label",
+      "text": "HERO"
+    },
+    {
+      "id": "quest_nav_label",
+      "text": "QUEST"
+    },
+    {
+      "id": "map_label",
+      "text": "MAP"
+    },
+    {
+      "id": "go_button_text",
+      "text": "GO"
+    }
+  ],
+  "generated_at": "2026-07-07T03:24:00.047892+00:00",
+  "generation_notes": [
+    "assets_png were generated from shared asset family sheets, not rectangular crops from the source UI",
+    "transparent sprites use border-connected #ff00ff chroma-key removal to preserve purple gem details",
+    "dynamic labels and numbers remain text_node layers and are not baked into sprite PNGs",
+    "assets_fit_raw are per-layer fitted instances with canvas sizes locked to layer_ir bbox values",
+    "sheet cells were expanded and filtered by primary connected component to remove neighboring-cell fragments",
+    "transparent sprites use border-connected #ff00ff chroma-key removal; internal key holes are removed except the purple gems icon",
+    "sheet cells were expanded and filtered to the primary connected component to remove neighboring-cell fragments"
+  ],
+  "generated_outputs": {
+    "asset_sheets": [
+      "generated_src/asset_sheets/bg_kingdom_city_source.png",
+      "generated_src/asset_sheets/bottom_sheet.png",
+      "generated_src/asset_sheets/hud_sheet.png",
+      "generated_src/asset_sheets/quest_side_sheet.png"
+    ],
+    "cell_sources": "generated_src/cells",
+    "assets_png": "assets_png",
+    "assets_fit_raw": "assets_fit_raw",
+    "sprite_overview": "sprite_overview.png",
+    "reconstruction": "reconstruction.png",
+    "comparison": "comparison.png"
+  },
+  "generation_counts": {
+    "manifest_sprites": 40,
+    "assets_png_created": 40,
+    "image_layers_fit_raw_created": 61,
+    "text_nodes": 40,
+    "ignored_layers": 4
+  }
+}

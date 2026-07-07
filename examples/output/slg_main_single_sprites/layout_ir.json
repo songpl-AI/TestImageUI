@@ -1,0 +1,1546 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "slg_main",
+    "canvas": {
+      "width": 1280,
+      "height": 720
+    },
+    "nodes": [
+      {
+        "id": "bg_kingdom_city",
+        "type": "Image",
+        "role": "screen_background",
+        "rect": [
+          0,
+          0,
+          1280,
+          720
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bg_kingdom_city.png",
+        "source_asset_png": "assets_png/bg_kingdom_city.png"
+      },
+      {
+        "id": "castle_keep_hotspot",
+        "type": "HitArea",
+        "role": "city_building_hotspot",
+        "rect": [
+          520,
+          130,
+          290,
+          225
+        ],
+        "anchor": "top_left",
+        "hit_area": true,
+        "notes": "invisible hit area for central castle keep; not a sprite in first pass"
+      },
+      {
+        "id": "barracks_hotspot",
+        "type": "HitArea",
+        "role": "city_building_hotspot",
+        "rect": [
+          862,
+          320,
+          160,
+          125
+        ],
+        "anchor": "top_left",
+        "hit_area": true,
+        "notes": "invisible hit area for round barracks/arena building"
+      },
+      {
+        "id": "workshop_hotspot",
+        "type": "HitArea",
+        "role": "city_building_hotspot",
+        "rect": [
+          365,
+          385,
+          170,
+          100
+        ],
+        "anchor": "top_left",
+        "hit_area": true,
+        "notes": "invisible hit area for forge/workshop building"
+      },
+      {
+        "id": "training_ground_hotspot",
+        "type": "HitArea",
+        "role": "city_building_hotspot",
+        "rect": [
+          575,
+          468,
+          190,
+          80
+        ],
+        "anchor": "top_left",
+        "hit_area": true,
+        "notes": "invisible hit area for troops/training area"
+      },
+      {
+        "id": "player_avatar_frame",
+        "type": "Image",
+        "role": "profile_frame",
+        "rect": [
+          6,
+          4,
+          154,
+          135
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_avatar_frame.png",
+        "source_asset_png": "assets_png/player_avatar_frame.png",
+        "children_hint": [
+          "player_avatar_icon",
+          "player_level_badge_bg",
+          "player_level_text"
+        ]
+      },
+      {
+        "id": "player_avatar_icon",
+        "type": "Image",
+        "role": "avatar_icon",
+        "rect": [
+          28,
+          14,
+          98,
+          92
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_avatar_icon.png",
+        "source_asset_png": "assets_png/player_avatar_icon.png"
+      },
+      {
+        "id": "player_level_badge_bg",
+        "type": "Panel",
+        "role": "badge_background",
+        "rect": [
+          19,
+          103,
+          48,
+          48
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_level_badge_bg.png",
+        "source_asset_png": "assets_png/player_level_badge_bg.png"
+      },
+      {
+        "id": "player_level_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          23,
+          111,
+          40,
+          32
+        ],
+        "anchor": "top_left",
+        "text": "35",
+        "style_hint": "bold white level number with dark outline"
+      },
+      {
+        "id": "vip_badge_bg",
+        "type": "Panel",
+        "role": "vip_badge_background",
+        "rect": [
+          140,
+          9,
+          166,
+          47
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/vip_badge_bg.png",
+        "source_asset_png": "assets_png/vip_badge_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "vip_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          190,
+          18,
+          78,
+          25
+        ],
+        "anchor": "top_left",
+        "text": "VIP 8",
+        "style_hint": "bold gold VIP text"
+      },
+      {
+        "id": "player_power_panel_bg",
+        "type": "Panel",
+        "role": "info_panel_background",
+        "rect": [
+          146,
+          58,
+          154,
+          84
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_power_panel_bg.png",
+        "source_asset_png": "assets_png/player_power_panel_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "player_power_label",
+          "player_power_value"
+        ]
+      },
+      {
+        "id": "player_power_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          158,
+          72,
+          80,
+          23
+        ],
+        "anchor": "top_left",
+        "text": "POWER",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "player_power_value",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          158,
+          102,
+          126,
+          29
+        ],
+        "anchor": "top_left",
+        "text": "1,250,000",
+        "style_hint": "bold gold resource number"
+      },
+      {
+        "id": "top_banner_decoration",
+        "type": "Decoration",
+        "role": "title_decoration",
+        "rect": [
+          455,
+          75,
+          380,
+          98
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/top_banner_decoration.png",
+        "source_asset_png": "assets_png/top_banner_decoration.png",
+        "children_hint": [
+          "title_plate_bg",
+          "title_text"
+        ]
+      },
+      {
+        "id": "title_plate_bg",
+        "type": "Panel",
+        "role": "title_plate_background",
+        "rect": [
+          476,
+          80,
+          326,
+          58
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/title_plate_bg.png",
+        "source_asset_png": "assets_png/title_plate_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "title_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          553,
+          92,
+          175,
+          38
+        ],
+        "anchor": "top_left",
+        "text": "KINGDOM",
+        "style_hint": "large bold white title text with dark red shadow"
+      },
+      {
+        "id": "wood_bar_bg",
+        "type": "Panel",
+        "role": "resource_bar_background",
+        "rect": [
+          392,
+          8,
+          160,
+          46
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/wood_bar_bg.png",
+        "source_asset_png": "assets_png/resource_bar_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "wood_label",
+          "wood_value",
+          "wood_plus_button",
+          "wood_icon"
+        ]
+      },
+      {
+        "id": "wood_icon",
+        "type": "Image",
+        "role": "resource_icon",
+        "rect": [
+          348,
+          12,
+          54,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/wood_icon.png",
+        "source_asset_png": "assets_png/wood_icon.png"
+      },
+      {
+        "id": "wood_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          445,
+          17,
+          70,
+          18
+        ],
+        "anchor": "top_left",
+        "text": "WOOD",
+        "style_hint": "small bold white resource label"
+      },
+      {
+        "id": "wood_value",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          445,
+          37,
+          75,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "2.5M",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "wood_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          517,
+          14,
+          38,
+          38
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/wood_plus_button.png",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      },
+      {
+        "id": "food_bar_bg",
+        "type": "Panel",
+        "role": "resource_bar_background",
+        "rect": [
+          612,
+          8,
+          170,
+          46
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/food_bar_bg.png",
+        "source_asset_png": "assets_png/resource_bar_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "food_label",
+          "food_value",
+          "food_plus_button",
+          "food_icon"
+        ]
+      },
+      {
+        "id": "food_icon",
+        "type": "Image",
+        "role": "resource_icon",
+        "rect": [
+          570,
+          12,
+          54,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/food_icon.png",
+        "source_asset_png": "assets_png/food_icon.png"
+      },
+      {
+        "id": "food_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          665,
+          17,
+          70,
+          18
+        ],
+        "anchor": "top_left",
+        "text": "FOOD",
+        "style_hint": "small bold white resource label"
+      },
+      {
+        "id": "food_value",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          665,
+          37,
+          75,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "3.2M",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "food_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          750,
+          14,
+          38,
+          38
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/food_plus_button.png",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      },
+      {
+        "id": "gold_bar_bg",
+        "type": "Panel",
+        "role": "resource_bar_background",
+        "rect": [
+          834,
+          8,
+          170,
+          46
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gold_bar_bg.png",
+        "source_asset_png": "assets_png/resource_bar_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "gold_label",
+          "gold_value",
+          "gold_plus_button",
+          "gold_icon"
+        ]
+      },
+      {
+        "id": "gold_icon",
+        "type": "Image",
+        "role": "resource_icon",
+        "rect": [
+          792,
+          12,
+          54,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gold_icon.png",
+        "source_asset_png": "assets_png/gold_icon.png"
+      },
+      {
+        "id": "gold_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          890,
+          17,
+          70,
+          18
+        ],
+        "anchor": "top_left",
+        "text": "GOLD",
+        "style_hint": "small bold white resource label"
+      },
+      {
+        "id": "gold_value",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          890,
+          37,
+          75,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "4.7M",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "gold_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          972,
+          14,
+          38,
+          38
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gold_plus_button.png",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      },
+      {
+        "id": "gems_bar_bg",
+        "type": "Panel",
+        "role": "resource_bar_background",
+        "rect": [
+          1060,
+          8,
+          176,
+          46
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gems_bar_bg.png",
+        "source_asset_png": "assets_png/resource_bar_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "gems_label",
+          "gems_value",
+          "gems_plus_button",
+          "gems_icon"
+        ]
+      },
+      {
+        "id": "gems_icon",
+        "type": "Image",
+        "role": "resource_icon",
+        "rect": [
+          1018,
+          12,
+          54,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gems_icon.png",
+        "source_asset_png": "assets_png/gems_icon.png"
+      },
+      {
+        "id": "gems_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          1115,
+          17,
+          70,
+          18
+        ],
+        "anchor": "top_left",
+        "text": "GEMS",
+        "style_hint": "small bold white resource label"
+      },
+      {
+        "id": "gems_value",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          1114,
+          37,
+          78,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "1,250",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "gems_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          1204,
+          14,
+          38,
+          38
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gems_plus_button.png",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      },
+      {
+        "id": "quest_panel_bg",
+        "type": "Panel",
+        "role": "quest_panel_background",
+        "rect": [
+          8,
+          181,
+          209,
+          280
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_panel_bg.png",
+        "source_asset_png": "assets_png/quest_panel_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "quest_header_bg",
+        "type": "Panel",
+        "role": "header_background",
+        "rect": [
+          18,
+          184,
+          164,
+          55
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_header_bg.png",
+        "source_asset_png": "assets_png/quest_header_bg.png",
+        "nine_slice_candidate": true,
+        "children_hint": [
+          "quest_header_text"
+        ]
+      },
+      {
+        "id": "quest_header_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          62,
+          197,
+          82,
+          30
+        ],
+        "anchor": "top_left",
+        "text": "QUEST",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "quest_collapse_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          183,
+          187,
+          34,
+          38
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_collapse_button.png",
+        "source_asset_png": "assets_png/quest_collapse_button.png"
+      },
+      {
+        "id": "quest_1_icon_bg",
+        "type": "Panel",
+        "role": "quest_row_icon_background",
+        "rect": [
+          30,
+          239,
+          44,
+          44
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_1_icon_bg.png",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      },
+      {
+        "id": "quest_1_icon",
+        "type": "Image",
+        "role": "quest_icon",
+        "rect": [
+          38,
+          247,
+          28,
+          28
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_1_icon.png",
+        "source_asset_png": "assets_png/quest_icon_upgrade.png"
+      },
+      {
+        "id": "quest_1_title",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          78,
+          240,
+          120,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "Upgrade Castle",
+        "style_hint": "small dark quest title text"
+      },
+      {
+        "id": "quest_1_progress",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          78,
+          264,
+          75,
+          19
+        ],
+        "anchor": "top_left",
+        "text": "(24/25)",
+        "style_hint": "small green progress text"
+      },
+      {
+        "id": "quest_2_icon_bg",
+        "type": "Panel",
+        "role": "quest_row_icon_background",
+        "rect": [
+          30,
+          293,
+          44,
+          44
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_2_icon_bg.png",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      },
+      {
+        "id": "quest_2_icon",
+        "type": "Image",
+        "role": "quest_icon",
+        "rect": [
+          38,
+          301,
+          28,
+          28
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_2_icon.png",
+        "source_asset_png": "assets_png/quest_icon_train.png"
+      },
+      {
+        "id": "quest_2_title",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          78,
+          294,
+          130,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "Train 1,000 Soldiers",
+        "style_hint": "small dark quest title text"
+      },
+      {
+        "id": "quest_2_progress",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          78,
+          318,
+          84,
+          19
+        ],
+        "anchor": "top_left",
+        "text": "(680/1000)",
+        "style_hint": "small green progress text"
+      },
+      {
+        "id": "quest_3_icon_bg",
+        "type": "Panel",
+        "role": "quest_row_icon_background",
+        "rect": [
+          30,
+          346,
+          44,
+          44
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_3_icon_bg.png",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      },
+      {
+        "id": "quest_3_icon",
+        "type": "Image",
+        "role": "quest_icon",
+        "rect": [
+          38,
+          354,
+          28,
+          28
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_3_icon.png",
+        "source_asset_png": "assets_png/quest_icon_gather.png"
+      },
+      {
+        "id": "quest_3_title",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          78,
+          347,
+          130,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "Gather 500K Wood",
+        "style_hint": "small dark quest title text"
+      },
+      {
+        "id": "quest_3_progress",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          78,
+          371,
+          96,
+          19
+        ],
+        "anchor": "top_left",
+        "text": "(320K/500K)",
+        "style_hint": "small green progress text"
+      },
+      {
+        "id": "quest_4_icon_bg",
+        "type": "Panel",
+        "role": "quest_row_icon_background",
+        "rect": [
+          30,
+          399,
+          44,
+          44
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_4_icon_bg.png",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      },
+      {
+        "id": "quest_4_icon",
+        "type": "Image",
+        "role": "quest_icon",
+        "rect": [
+          38,
+          407,
+          28,
+          28
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_4_icon.png",
+        "source_asset_png": "assets_png/quest_icon_defeat.png"
+      },
+      {
+        "id": "quest_4_title",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          78,
+          400,
+          124,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "Defeat 10 Bandits",
+        "style_hint": "small dark quest title text"
+      },
+      {
+        "id": "quest_4_progress",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          78,
+          424,
+          58,
+          19
+        ],
+        "anchor": "top_left",
+        "text": "(6/10)",
+        "style_hint": "small green progress text"
+      },
+      {
+        "id": "side_event_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          1166,
+          111,
+          102,
+          104
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_event_button_bg.png",
+        "source_asset_png": "assets_png/side_event_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "event_chest_icon",
+        "type": "Image",
+        "role": "event_icon",
+        "rect": [
+          1179,
+          116,
+          62,
+          48
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/event_chest_icon.png",
+        "source_asset_png": "assets_png/event_chest_icon.png"
+      },
+      {
+        "id": "side_event_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          1173,
+          176,
+          88,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "EVENT",
+        "style_hint": "bold white side button label"
+      },
+      {
+        "id": "side_event_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          1241,
+          110,
+          30,
+          30
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_event_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "side_event_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          1248,
+          114,
+          16,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "3",
+        "style_hint": "bold white notification number"
+      },
+      {
+        "id": "side_bonus_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          1166,
+          246,
+          102,
+          104
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_bonus_button_bg.png",
+        "source_asset_png": "assets_png/side_event_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "bonus_gift_icon",
+        "type": "Image",
+        "role": "event_icon",
+        "rect": [
+          1180,
+          251,
+          62,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bonus_gift_icon.png",
+        "source_asset_png": "assets_png/bonus_gift_icon.png"
+      },
+      {
+        "id": "side_bonus_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          1173,
+          311,
+          88,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "BONUS",
+        "style_hint": "bold white side button label"
+      },
+      {
+        "id": "side_bonus_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          1241,
+          245,
+          30,
+          30
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_bonus_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "side_bonus_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          1248,
+          249,
+          16,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "5",
+        "style_hint": "bold white notification number"
+      },
+      {
+        "id": "side_alliance_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          1164,
+          360,
+          104,
+          104
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_alliance_button_bg.png",
+        "source_asset_png": "assets_png/side_event_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "alliance_shield_icon",
+        "type": "Image",
+        "role": "event_icon",
+        "rect": [
+          1179,
+          364,
+          65,
+          52
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/alliance_shield_icon.png",
+        "source_asset_png": "assets_png/alliance_shield_icon.png"
+      },
+      {
+        "id": "side_alliance_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          1162,
+          426,
+          104,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "ALLIANCE",
+        "style_hint": "bold white side button label"
+      },
+      {
+        "id": "side_alliance_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          1241,
+          357,
+          30,
+          30
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_alliance_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "side_alliance_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          1248,
+          361,
+          16,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "7",
+        "style_hint": "bold white notification number"
+      },
+      {
+        "id": "side_arena_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          1164,
+          474,
+          104,
+          104
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_arena_button_bg.png",
+        "source_asset_png": "assets_png/side_event_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "arena_swords_icon",
+        "type": "Image",
+        "role": "event_icon",
+        "rect": [
+          1179,
+          478,
+          65,
+          50
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/arena_swords_icon.png",
+        "source_asset_png": "assets_png/arena_swords_icon.png"
+      },
+      {
+        "id": "side_arena_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          1174,
+          539,
+          84,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "ARENA",
+        "style_hint": "bold white side button label"
+      },
+      {
+        "id": "side_arena_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          1238,
+          471,
+          30,
+          30
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/side_arena_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "side_arena_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          1245,
+          475,
+          16,
+          22
+        ],
+        "anchor": "top_left",
+        "text": "1",
+        "style_hint": "bold white notification number"
+      },
+      {
+        "id": "chat_button_bg",
+        "type": "Button",
+        "role": "small_nav_button_background",
+        "rect": [
+          34,
+          592,
+          84,
+          98
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/chat_button_bg.png",
+        "source_asset_png": "assets_png/chat_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "chat_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          50,
+          612,
+          52,
+          44
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/chat_icon.png",
+        "source_asset_png": "assets_png/chat_icon.png"
+      },
+      {
+        "id": "chat_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          47,
+          664,
+          58,
+          26
+        ],
+        "anchor": "top_left",
+        "text": "CHAT",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "chat_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          91,
+          581,
+          31,
+          31
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/chat_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "chat_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          99,
+          585,
+          15,
+          20
+        ],
+        "anchor": "top_left",
+        "text": "2",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "mail_button_bg",
+        "type": "Button",
+        "role": "small_nav_button_background",
+        "rect": [
+          126,
+          592,
+          84,
+          98
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/mail_button_bg.png",
+        "source_asset_png": "assets_png/mail_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "mail_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          142,
+          617,
+          54,
+          42
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/mail_icon.png",
+        "source_asset_png": "assets_png/mail_icon.png"
+      },
+      {
+        "id": "mail_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          140,
+          664,
+          58,
+          26
+        ],
+        "anchor": "top_left",
+        "text": "MAIL",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "mail_badge_bg",
+        "type": "Panel",
+        "role": "notification_badge_background",
+        "rect": [
+          198,
+          581,
+          31,
+          31
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/mail_badge_bg.png",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      {
+        "id": "mail_badge_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          206,
+          585,
+          15,
+          20
+        ],
+        "anchor": "top_left",
+        "text": "1",
+        "style_hint": "bold white game UI text"
+      },
+      {
+        "id": "build_button_bg",
+        "type": "Button",
+        "role": "nav_button_background",
+        "rect": [
+          329,
+          570,
+          112,
+          120
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/build_button_bg.png",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "build_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          356,
+          586,
+          58,
+          52
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/build_icon.png",
+        "source_asset_png": "assets_png/build_icon.png"
+      },
+      {
+        "id": "build_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          350,
+          664,
+          70,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "BUILD",
+        "style_hint": "bold white bottom nav label"
+      },
+      {
+        "id": "army_button_bg",
+        "type": "Button",
+        "role": "nav_button_background",
+        "rect": [
+          462,
+          570,
+          112,
+          120
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/army_button_bg.png",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "army_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          490,
+          584,
+          58,
+          54
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/army_icon.png",
+        "source_asset_png": "assets_png/army_icon.png"
+      },
+      {
+        "id": "army_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          486,
+          664,
+          68,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "ARMY",
+        "style_hint": "bold white bottom nav label"
+      },
+      {
+        "id": "hero_button_bg",
+        "type": "Button",
+        "role": "nav_button_background",
+        "rect": [
+          595,
+          570,
+          112,
+          120
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/hero_button_bg.png",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "hero_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          620,
+          582,
+          62,
+          56
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/hero_icon.png",
+        "source_asset_png": "assets_png/hero_icon.png"
+      },
+      {
+        "id": "hero_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          620,
+          664,
+          66,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "HERO",
+        "style_hint": "bold white bottom nav label"
+      },
+      {
+        "id": "quest_nav_button_bg",
+        "type": "Button",
+        "role": "nav_button_background",
+        "rect": [
+          728,
+          570,
+          112,
+          120
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_nav_button_bg.png",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "quest_nav_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          756,
+          585,
+          58,
+          52
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_nav_icon.png",
+        "source_asset_png": "assets_png/quest_nav_icon.png"
+      },
+      {
+        "id": "quest_nav_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          748,
+          664,
+          80,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "QUEST",
+        "style_hint": "bold white bottom nav label"
+      },
+      {
+        "id": "map_button_bg",
+        "type": "Button",
+        "role": "nav_button_background",
+        "rect": [
+          861,
+          570,
+          112,
+          120
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/map_button_bg.png",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "map_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          886,
+          585,
+          62,
+          52
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/map_icon.png",
+        "source_asset_png": "assets_png/map_icon.png"
+      },
+      {
+        "id": "map_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          898,
+          664,
+          58,
+          27
+        ],
+        "anchor": "top_left",
+        "text": "MAP",
+        "style_hint": "bold white bottom nav label"
+      },
+      {
+        "id": "go_button_bg",
+        "type": "Button",
+        "role": "primary_button_background",
+        "rect": [
+          1040,
+          545,
+          194,
+          166
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/go_button_bg.png",
+        "source_asset_png": "assets_png/go_button_bg.png",
+        "children_hint": [
+          "go_button_castle_icon",
+          "go_button_text"
+        ]
+      },
+      {
+        "id": "go_button_castle_icon",
+        "type": "Button",
+        "role": "button_icon",
+        "rect": [
+          1100,
+          565,
+          82,
+          60
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/go_button_castle_icon.png",
+        "source_asset_png": "assets_png/go_button_castle_icon.png"
+      },
+      {
+        "id": "go_button_text",
+        "type": "Text",
+        "role": "button_label",
+        "rect": [
+          1114,
+          646,
+          72,
+          36
+        ],
+        "anchor": "top_left",
+        "text": "GO",
+        "style_hint": "large bold white primary action label"
+      }
+    ]
+  }
+}

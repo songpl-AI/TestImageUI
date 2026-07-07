@@ -1,0 +1,52 @@
+{
+  "status": "proxy_experiment_complete",
+  "goal": "Minimal upper-bound test for replacing drift-prone fine-grained reconstruction with component-level composite candidates.",
+  "important_constraint": "Proxy crops are not final sprites and must not be shipped as reusable assets. They only measure whether component-level fidelity would matter.",
+  "inputs": {
+    "source": "examples/input/slg_main.png",
+    "current_reconstruction": "examples/output/slg_main_single_sprites/reconstruction.png"
+  },
+  "components": [
+    {
+      "id": "top_resource_strip",
+      "bbox": [
+        338,
+        0,
+        914,
+        72
+      ],
+      "purpose": "covers the four resource slots as one visual composite candidate",
+      "final_sprite_status": "not_final_crop_proxy",
+      "source_reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/top_resource_strip_source_reference_crop.png",
+      "current_reconstruction_crop": "examples/output/slg_main_fidelity_experiment/current_crops/top_resource_strip_current_reconstruction_crop.png",
+      "crop_proxy_not_final_sprite": "examples/output/slg_main_fidelity_experiment/proxy_crops_not_final_sprites/top_resource_strip_crop_proxy_not_final_sprite.png",
+      "mean_abs_rgb_delta_current_vs_source": 57.61
+    },
+    {
+      "id": "build_nav_button",
+      "bbox": [
+        320,
+        560,
+        130,
+        152
+      ],
+      "purpose": "covers one bottom nav button as a compact composite candidate",
+      "final_sprite_status": "not_final_crop_proxy",
+      "source_reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+      "current_reconstruction_crop": "examples/output/slg_main_fidelity_experiment/current_crops/build_nav_button_current_reconstruction_crop.png",
+      "crop_proxy_not_final_sprite": "examples/output/slg_main_fidelity_experiment/proxy_crops_not_final_sprites/build_nav_button_crop_proxy_not_final_sprite.png",
+      "mean_abs_rgb_delta_current_vs_source": 45.2
+    }
+  ],
+  "outputs": {
+    "focused_component_comparison": "examples/output/slg_main_fidelity_experiment/focused_component_comparison.png",
+    "full_hybrid_proxy_comparison": "examples/output/slg_main_fidelity_experiment/full_hybrid_proxy_comparison.png",
+    "hybrid_proxy_reconstruction": "examples/output/slg_main_fidelity_experiment/hybrid_proxy_reconstruction.png",
+    "hybrid_proxy_reconstruction_marked": "examples/output/slg_main_fidelity_experiment/hybrid_proxy_reconstruction_marked.png"
+  },
+  "decision_read": [
+    "If proxy regions visibly close the gap, a component-level sprite pass is worth testing with real regenerated assets.",
+    "If proxy regions do not close the gap, the main issue is likely background/global style or text rendering rather than component granularity.",
+    "This experiment intentionally avoids adding new IR abstractions beyond recording component bboxes."
+  ]
+}

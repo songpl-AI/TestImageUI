@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "screen": {
+    "width": 1280,
+    "height": 720,
+    "nodes": [
+      {
+        "id": "build_button_bg_cleanup",
+        "role": "nav_button_background",
+        "bbox": [329, 570, 112, 120],
+        "asset_strategy": "edit_cleanup_inpaint",
+        "transparent": true,
+        "output": "assets_fit_raw/build_button_bg_cleanup.png",
+        "metadata": {
+          "asset_id": "build_button_bg_cleanup",
+          "source_asset_png": "assets_png/build_button_bg_cleanup.png",
+          "fit_mode": "stretch_exact"
+        }
+      },
+      {
+        "id": "build_hammer_icon",
+        "role": "nav_icon",
+        "bbox": [356, 586, 58, 52],
+        "asset_strategy": "reuse_existing_realgen_sprite",
+        "transparent": true,
+        "output": "assets_fit_raw/build_hammer_icon.png"
+      },
+      {
+        "id": "build_badge_dot",
+        "role": "notification_badge_dot",
+        "bbox": [414, 580, 29, 31],
+        "asset_strategy": "reuse_existing_realgen_sprite",
+        "transparent": true,
+        "output": "assets_fit_raw/build_badge_dot.png"
+      },
+      {
+        "id": "build_label",
+        "role": "button_label",
+        "bbox": [350, 664, 70, 27],
+        "asset_strategy": "text_node",
+        "transparent": true,
+        "text": "BUILD",
+        "metadata": {
+          "font_hint": "bold white bottom nav label, dark outline"
+        }
+      }
+    ]
+  }
+}

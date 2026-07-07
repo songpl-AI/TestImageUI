@@ -1,0 +1,93 @@
+{
+  "status": "cleanup_bg_realgen_experiment_complete",
+  "generated_at": "2026-07-07T04:56:39.223230+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "sprites": [
+    {
+      "id": "build_button_bg_cleanup",
+      "output": "assets_png/build_button_bg_cleanup.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "edit_cleanup_inpaint_to_standalone_sprite",
+      "prompt_subject": "BUILD bottom nav button background only; source crop used as edit target/reference; no icon, no red dot, no text"
+    },
+    {
+      "id": "build_hammer_icon",
+      "output": "assets_png/build_hammer_icon.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "reuse_existing_realgen_sprite"
+    },
+    {
+      "id": "build_badge_dot",
+      "output": "assets_png/build_badge_dot.png",
+      "type": "notification_badge",
+      "transparent": true,
+      "strategy": "reuse_existing_realgen_sprite"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "build_label",
+      "text": "BUILD",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ]
+    }
+  ],
+  "outputs": {
+    "generated_chroma": "generated_src/build_button_bg_cleanup_chroma.png",
+    "transparent_untrimmed": "assets_png/build_button_bg_cleanup_untrimmed.png",
+    "transparent_sprite": "assets_png/build_button_bg_cleanup.png",
+    "fit_raw": "assets_fit_raw/build_button_bg_cleanup.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "sprite_overview": "sprite_overview.png",
+    "focused_cleanup_comparison": "focused_cleanup_comparison.png",
+    "full_cleanup_comparison": "full_cleanup_comparison.png",
+    "reconstruction_with_cleanup": "reconstruction_with_cleanup_bg_build_nav_button.png"
+  },
+  "validation": {
+    "alpha_corner_values": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "fit_alpha_corner_values": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "trimmed_sprite_size": [
+      970,
+      1124
+    ],
+    "fit_size": [
+      112,
+      120
+    ],
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "whole_realgen_vs_source_mean_abs_rgb_delta": 53.61,
+      "decomposed_vs_source_mean_abs_rgb_delta": 45.64,
+      "cleanup_bg_vs_source_mean_abs_rgb_delta": 47.56
+    },
+    "read": [
+      "The source crop was used only as an edit/reference input, not as a final sprite.",
+      "The generated cleanup background is a true transparent standalone sprite after chroma-key removal.",
+      "The generated shape is cleaner and more canonical than the source crop, so visual drift remains visible."
+    ]
+  }
+}

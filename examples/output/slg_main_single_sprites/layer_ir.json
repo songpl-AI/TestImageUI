@@ -1,0 +1,1970 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 1280,
+    "height": 720
+  },
+  "source_image": "examples/input/slg_main.png",
+  "raw_reference_image": "examples/input/slg_main_raw.png",
+  "layers": [
+    {
+      "id": "bg_kingdom_city",
+      "role": "screen_background",
+      "bbox": [
+        0,
+        0,
+        1280,
+        720
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": false,
+      "output": "assets_fit_raw/bg_kingdom_city.png",
+      "metadata": {
+        "asset_id": "bg_kingdom_city",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/bg_kingdom_city.png",
+        "notes": "clean background should remove all UI overlays; raw image remains the high-quality style reference"
+      },
+      "remove_occluding_children": true
+    },
+    {
+      "id": "castle_keep_hotspot",
+      "role": "city_building_hotspot",
+      "bbox": [
+        520,
+        130,
+        290,
+        225
+      ],
+      "asset_strategy": "ignore",
+      "transparent": true,
+      "metadata": {
+        "hit_area": true,
+        "confidence": "medium",
+        "notes": "invisible hit area for central castle keep; not a sprite in first pass"
+      }
+    },
+    {
+      "id": "barracks_hotspot",
+      "role": "city_building_hotspot",
+      "bbox": [
+        862,
+        320,
+        160,
+        125
+      ],
+      "asset_strategy": "ignore",
+      "transparent": true,
+      "metadata": {
+        "hit_area": true,
+        "confidence": "medium",
+        "notes": "invisible hit area for round barracks/arena building"
+      }
+    },
+    {
+      "id": "workshop_hotspot",
+      "role": "city_building_hotspot",
+      "bbox": [
+        365,
+        385,
+        170,
+        100
+      ],
+      "asset_strategy": "ignore",
+      "transparent": true,
+      "metadata": {
+        "hit_area": true,
+        "confidence": "medium",
+        "notes": "invisible hit area for forge/workshop building"
+      }
+    },
+    {
+      "id": "training_ground_hotspot",
+      "role": "city_building_hotspot",
+      "bbox": [
+        575,
+        468,
+        190,
+        80
+      ],
+      "asset_strategy": "ignore",
+      "transparent": true,
+      "metadata": {
+        "hit_area": true,
+        "confidence": "medium",
+        "notes": "invisible hit area for troops/training area"
+      }
+    },
+    {
+      "id": "player_avatar_frame",
+      "role": "profile_frame",
+      "bbox": [
+        6,
+        4,
+        154,
+        135
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/player_avatar_frame.png",
+      "metadata": {
+        "asset_id": "player_avatar_frame",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/player_avatar_frame.png"
+      },
+      "remove_occluding_children": true,
+      "children_hint": [
+        "player_avatar_icon",
+        "player_level_badge_bg",
+        "player_level_text"
+      ]
+    },
+    {
+      "id": "player_avatar_icon",
+      "role": "avatar_icon",
+      "bbox": [
+        28,
+        14,
+        98,
+        92
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/player_avatar_icon.png",
+      "metadata": {
+        "asset_id": "player_avatar_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/player_avatar_icon.png"
+      }
+    },
+    {
+      "id": "player_level_badge_bg",
+      "role": "badge_background",
+      "bbox": [
+        19,
+        103,
+        48,
+        48
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/player_level_badge_bg.png",
+      "metadata": {
+        "asset_id": "player_level_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/player_level_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "player_level_text",
+      "role": "dynamic_text",
+      "bbox": [
+        23,
+        111,
+        40,
+        32
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "35",
+      "metadata": {
+        "font_hint": "bold white level number with dark outline",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "vip_badge_bg",
+      "role": "vip_badge_background",
+      "bbox": [
+        140,
+        9,
+        166,
+        47
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/vip_badge_bg.png",
+      "metadata": {
+        "asset_id": "vip_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/vip_badge_bg.png"
+      },
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "vip_text",
+      "role": "dynamic_text",
+      "bbox": [
+        190,
+        18,
+        78,
+        25
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "VIP 8",
+      "metadata": {
+        "font_hint": "bold gold VIP text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "player_power_panel_bg",
+      "role": "info_panel_background",
+      "bbox": [
+        146,
+        58,
+        154,
+        84
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/player_power_panel_bg.png",
+      "metadata": {
+        "asset_id": "player_power_panel_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/player_power_panel_bg.png"
+      },
+      "remove_text": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "player_power_label",
+        "player_power_value"
+      ]
+    },
+    {
+      "id": "player_power_label",
+      "role": "label_text",
+      "bbox": [
+        158,
+        72,
+        80,
+        23
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "POWER",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "player_power_value",
+      "role": "dynamic_text",
+      "bbox": [
+        158,
+        102,
+        126,
+        29
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "1,250,000",
+      "metadata": {
+        "font_hint": "bold gold resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "top_banner_decoration",
+      "role": "title_decoration",
+      "bbox": [
+        455,
+        75,
+        380,
+        98
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/top_banner_decoration.png",
+      "metadata": {
+        "asset_id": "top_banner_decoration",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/top_banner_decoration.png"
+      },
+      "remove_occluding_children": true,
+      "children_hint": [
+        "title_plate_bg",
+        "title_text"
+      ]
+    },
+    {
+      "id": "title_plate_bg",
+      "role": "title_plate_background",
+      "bbox": [
+        476,
+        80,
+        326,
+        58
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/title_plate_bg.png",
+      "metadata": {
+        "asset_id": "title_plate_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/title_plate_bg.png"
+      },
+      "remove_text": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "title_text",
+      "role": "label_text",
+      "bbox": [
+        553,
+        92,
+        175,
+        38
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "KINGDOM",
+      "metadata": {
+        "font_hint": "large bold white title text with dark red shadow",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "wood_bar_bg",
+      "role": "resource_bar_background",
+      "bbox": [
+        392,
+        8,
+        160,
+        46
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/wood_bar_bg.png",
+      "metadata": {
+        "asset_id": "resource_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_bar_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "wood_label",
+        "wood_value",
+        "wood_plus_button",
+        "wood_icon"
+      ]
+    },
+    {
+      "id": "wood_icon",
+      "role": "resource_icon",
+      "bbox": [
+        348,
+        12,
+        54,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/wood_icon.png",
+      "metadata": {
+        "asset_id": "wood_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/wood_icon.png"
+      }
+    },
+    {
+      "id": "wood_label",
+      "role": "label_text",
+      "bbox": [
+        445,
+        17,
+        70,
+        18
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "WOOD",
+      "metadata": {
+        "font_hint": "small bold white resource label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "wood_value",
+      "role": "dynamic_text",
+      "bbox": [
+        445,
+        37,
+        75,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "2.5M",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "wood_plus_button",
+      "role": "small_button",
+      "bbox": [
+        517,
+        14,
+        38,
+        38
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/wood_plus_button.png",
+      "metadata": {
+        "asset_id": "resource_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      }
+    },
+    {
+      "id": "food_bar_bg",
+      "role": "resource_bar_background",
+      "bbox": [
+        612,
+        8,
+        170,
+        46
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/food_bar_bg.png",
+      "metadata": {
+        "asset_id": "resource_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_bar_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "food_label",
+        "food_value",
+        "food_plus_button",
+        "food_icon"
+      ]
+    },
+    {
+      "id": "food_icon",
+      "role": "resource_icon",
+      "bbox": [
+        570,
+        12,
+        54,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/food_icon.png",
+      "metadata": {
+        "asset_id": "food_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/food_icon.png"
+      }
+    },
+    {
+      "id": "food_label",
+      "role": "label_text",
+      "bbox": [
+        665,
+        17,
+        70,
+        18
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "FOOD",
+      "metadata": {
+        "font_hint": "small bold white resource label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "food_value",
+      "role": "dynamic_text",
+      "bbox": [
+        665,
+        37,
+        75,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "3.2M",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "food_plus_button",
+      "role": "small_button",
+      "bbox": [
+        750,
+        14,
+        38,
+        38
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/food_plus_button.png",
+      "metadata": {
+        "asset_id": "resource_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      }
+    },
+    {
+      "id": "gold_bar_bg",
+      "role": "resource_bar_background",
+      "bbox": [
+        834,
+        8,
+        170,
+        46
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gold_bar_bg.png",
+      "metadata": {
+        "asset_id": "resource_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_bar_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "gold_label",
+        "gold_value",
+        "gold_plus_button",
+        "gold_icon"
+      ]
+    },
+    {
+      "id": "gold_icon",
+      "role": "resource_icon",
+      "bbox": [
+        792,
+        12,
+        54,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gold_icon.png",
+      "metadata": {
+        "asset_id": "gold_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/gold_icon.png"
+      }
+    },
+    {
+      "id": "gold_label",
+      "role": "label_text",
+      "bbox": [
+        890,
+        17,
+        70,
+        18
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "GOLD",
+      "metadata": {
+        "font_hint": "small bold white resource label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gold_value",
+      "role": "dynamic_text",
+      "bbox": [
+        890,
+        37,
+        75,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "4.7M",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gold_plus_button",
+      "role": "small_button",
+      "bbox": [
+        972,
+        14,
+        38,
+        38
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gold_plus_button.png",
+      "metadata": {
+        "asset_id": "resource_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      }
+    },
+    {
+      "id": "gems_bar_bg",
+      "role": "resource_bar_background",
+      "bbox": [
+        1060,
+        8,
+        176,
+        46
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gems_bar_bg.png",
+      "metadata": {
+        "asset_id": "resource_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_bar_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "gems_label",
+        "gems_value",
+        "gems_plus_button",
+        "gems_icon"
+      ]
+    },
+    {
+      "id": "gems_icon",
+      "role": "resource_icon",
+      "bbox": [
+        1018,
+        12,
+        54,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gems_icon.png",
+      "metadata": {
+        "asset_id": "gems_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/gems_icon.png"
+      }
+    },
+    {
+      "id": "gems_label",
+      "role": "label_text",
+      "bbox": [
+        1115,
+        17,
+        70,
+        18
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "GEMS",
+      "metadata": {
+        "font_hint": "small bold white resource label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gems_value",
+      "role": "dynamic_text",
+      "bbox": [
+        1114,
+        37,
+        78,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "1,250",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gems_plus_button",
+      "role": "small_button",
+      "bbox": [
+        1204,
+        14,
+        38,
+        38
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gems_plus_button.png",
+      "metadata": {
+        "asset_id": "resource_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/resource_plus_button.png"
+      }
+    },
+    {
+      "id": "quest_panel_bg",
+      "role": "quest_panel_background",
+      "bbox": [
+        8,
+        181,
+        209,
+        280
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_panel_bg.png",
+      "metadata": {
+        "asset_id": "quest_panel_bg",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/quest_panel_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "quest_header_bg",
+      "role": "header_background",
+      "bbox": [
+        18,
+        184,
+        164,
+        55
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_header_bg.png",
+      "metadata": {
+        "asset_id": "quest_header_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_header_bg.png"
+      },
+      "remove_text": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "quest_header_text"
+      ]
+    },
+    {
+      "id": "quest_header_text",
+      "role": "label_text",
+      "bbox": [
+        62,
+        197,
+        82,
+        30
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "QUEST",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "quest_collapse_button",
+      "role": "small_button",
+      "bbox": [
+        183,
+        187,
+        34,
+        38
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_collapse_button.png",
+      "metadata": {
+        "asset_id": "quest_collapse_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_collapse_button.png"
+      }
+    },
+    {
+      "id": "quest_1_icon_bg",
+      "role": "quest_row_icon_background",
+      "bbox": [
+        30,
+        239,
+        44,
+        44
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_1_icon_bg.png",
+      "metadata": {
+        "asset_id": "quest_row_icon_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      }
+    },
+    {
+      "id": "quest_1_icon",
+      "role": "quest_icon",
+      "bbox": [
+        38,
+        247,
+        28,
+        28
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_1_icon.png",
+      "metadata": {
+        "asset_id": "quest_icon_upgrade",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_icon_upgrade.png"
+      }
+    },
+    {
+      "id": "quest_1_title",
+      "role": "label_text",
+      "bbox": [
+        78,
+        240,
+        120,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "Upgrade Castle",
+      "metadata": {
+        "font_hint": "small dark quest title text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_1_progress",
+      "role": "dynamic_text",
+      "bbox": [
+        78,
+        264,
+        75,
+        19
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "(24/25)",
+      "metadata": {
+        "font_hint": "small green progress text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_2_icon_bg",
+      "role": "quest_row_icon_background",
+      "bbox": [
+        30,
+        293,
+        44,
+        44
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_2_icon_bg.png",
+      "metadata": {
+        "asset_id": "quest_row_icon_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      }
+    },
+    {
+      "id": "quest_2_icon",
+      "role": "quest_icon",
+      "bbox": [
+        38,
+        301,
+        28,
+        28
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_2_icon.png",
+      "metadata": {
+        "asset_id": "quest_icon_train",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_icon_train.png"
+      }
+    },
+    {
+      "id": "quest_2_title",
+      "role": "label_text",
+      "bbox": [
+        78,
+        294,
+        130,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "Train 1,000 Soldiers",
+      "metadata": {
+        "font_hint": "small dark quest title text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_2_progress",
+      "role": "dynamic_text",
+      "bbox": [
+        78,
+        318,
+        84,
+        19
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "(680/1000)",
+      "metadata": {
+        "font_hint": "small green progress text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_3_icon_bg",
+      "role": "quest_row_icon_background",
+      "bbox": [
+        30,
+        346,
+        44,
+        44
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_3_icon_bg.png",
+      "metadata": {
+        "asset_id": "quest_row_icon_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      }
+    },
+    {
+      "id": "quest_3_icon",
+      "role": "quest_icon",
+      "bbox": [
+        38,
+        354,
+        28,
+        28
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_3_icon.png",
+      "metadata": {
+        "asset_id": "quest_icon_gather",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_icon_gather.png"
+      }
+    },
+    {
+      "id": "quest_3_title",
+      "role": "label_text",
+      "bbox": [
+        78,
+        347,
+        130,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "Gather 500K Wood",
+      "metadata": {
+        "font_hint": "small dark quest title text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_3_progress",
+      "role": "dynamic_text",
+      "bbox": [
+        78,
+        371,
+        96,
+        19
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "(320K/500K)",
+      "metadata": {
+        "font_hint": "small green progress text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_4_icon_bg",
+      "role": "quest_row_icon_background",
+      "bbox": [
+        30,
+        399,
+        44,
+        44
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_4_icon_bg.png",
+      "metadata": {
+        "asset_id": "quest_row_icon_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_row_icon_bg.png"
+      }
+    },
+    {
+      "id": "quest_4_icon",
+      "role": "quest_icon",
+      "bbox": [
+        38,
+        407,
+        28,
+        28
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_4_icon.png",
+      "metadata": {
+        "asset_id": "quest_icon_defeat",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_icon_defeat.png"
+      }
+    },
+    {
+      "id": "quest_4_title",
+      "role": "label_text",
+      "bbox": [
+        78,
+        400,
+        124,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "Defeat 10 Bandits",
+      "metadata": {
+        "font_hint": "small dark quest title text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "quest_4_progress",
+      "role": "dynamic_text",
+      "bbox": [
+        78,
+        424,
+        58,
+        19
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "(6/10)",
+      "metadata": {
+        "font_hint": "small green progress text",
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "side_event_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        1166,
+        111,
+        102,
+        104
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_event_button_bg.png",
+      "metadata": {
+        "asset_id": "side_event_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_event_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "event_chest_icon",
+      "role": "event_icon",
+      "bbox": [
+        1179,
+        116,
+        62,
+        48
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/event_chest_icon.png",
+      "metadata": {
+        "asset_id": "event_chest_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/event_chest_icon.png"
+      }
+    },
+    {
+      "id": "side_event_label",
+      "role": "label_text",
+      "bbox": [
+        1173,
+        176,
+        88,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "EVENT",
+      "metadata": {
+        "font_hint": "bold white side button label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_event_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        1241,
+        110,
+        30,
+        30
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_event_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "side_event_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        1248,
+        114,
+        16,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "3",
+      "metadata": {
+        "font_hint": "bold white notification number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_bonus_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        1166,
+        246,
+        102,
+        104
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_bonus_button_bg.png",
+      "metadata": {
+        "asset_id": "side_event_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_event_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "bonus_gift_icon",
+      "role": "event_icon",
+      "bbox": [
+        1180,
+        251,
+        62,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/bonus_gift_icon.png",
+      "metadata": {
+        "asset_id": "bonus_gift_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bonus_gift_icon.png"
+      }
+    },
+    {
+      "id": "side_bonus_label",
+      "role": "label_text",
+      "bbox": [
+        1173,
+        311,
+        88,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "BONUS",
+      "metadata": {
+        "font_hint": "bold white side button label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_bonus_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        1241,
+        245,
+        30,
+        30
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_bonus_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "side_bonus_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        1248,
+        249,
+        16,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "5",
+      "metadata": {
+        "font_hint": "bold white notification number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_alliance_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        1164,
+        360,
+        104,
+        104
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_alliance_button_bg.png",
+      "metadata": {
+        "asset_id": "side_event_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_event_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "alliance_shield_icon",
+      "role": "event_icon",
+      "bbox": [
+        1179,
+        364,
+        65,
+        52
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/alliance_shield_icon.png",
+      "metadata": {
+        "asset_id": "alliance_shield_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/alliance_shield_icon.png"
+      }
+    },
+    {
+      "id": "side_alliance_label",
+      "role": "label_text",
+      "bbox": [
+        1162,
+        426,
+        104,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "ALLIANCE",
+      "metadata": {
+        "font_hint": "bold white side button label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_alliance_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        1241,
+        357,
+        30,
+        30
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_alliance_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "side_alliance_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        1248,
+        361,
+        16,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "7",
+      "metadata": {
+        "font_hint": "bold white notification number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_arena_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        1164,
+        474,
+        104,
+        104
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_arena_button_bg.png",
+      "metadata": {
+        "asset_id": "side_event_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_event_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "arena_swords_icon",
+      "role": "event_icon",
+      "bbox": [
+        1179,
+        478,
+        65,
+        50
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/arena_swords_icon.png",
+      "metadata": {
+        "asset_id": "arena_swords_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/arena_swords_icon.png"
+      }
+    },
+    {
+      "id": "side_arena_label",
+      "role": "label_text",
+      "bbox": [
+        1174,
+        539,
+        84,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "ARENA",
+      "metadata": {
+        "font_hint": "bold white side button label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "side_arena_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        1238,
+        471,
+        30,
+        30
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/side_arena_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "side_arena_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        1245,
+        475,
+        16,
+        22
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "1",
+      "metadata": {
+        "font_hint": "bold white notification number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "chat_button_bg",
+      "role": "small_nav_button_background",
+      "bbox": [
+        34,
+        592,
+        84,
+        98
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/chat_button_bg.png",
+      "metadata": {
+        "asset_id": "chat_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/chat_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "chat_icon",
+      "role": "nav_icon",
+      "bbox": [
+        50,
+        612,
+        52,
+        44
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/chat_icon.png",
+      "metadata": {
+        "asset_id": "chat_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/chat_icon.png"
+      }
+    },
+    {
+      "id": "chat_label",
+      "role": "label_text",
+      "bbox": [
+        47,
+        664,
+        58,
+        26
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "CHAT",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "chat_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        91,
+        581,
+        31,
+        31
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/chat_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "chat_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        99,
+        585,
+        15,
+        20
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "2",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "mail_button_bg",
+      "role": "small_nav_button_background",
+      "bbox": [
+        126,
+        592,
+        84,
+        98
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/mail_button_bg.png",
+      "metadata": {
+        "asset_id": "mail_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/mail_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "mail_icon",
+      "role": "nav_icon",
+      "bbox": [
+        142,
+        617,
+        54,
+        42
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/mail_icon.png",
+      "metadata": {
+        "asset_id": "mail_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/mail_icon.png"
+      }
+    },
+    {
+      "id": "mail_label",
+      "role": "label_text",
+      "bbox": [
+        140,
+        664,
+        58,
+        26
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "MAIL",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "mail_badge_bg",
+      "role": "notification_badge_background",
+      "bbox": [
+        198,
+        581,
+        31,
+        31
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/mail_badge_bg.png",
+      "metadata": {
+        "asset_id": "side_notification_badge_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/side_notification_badge_bg.png"
+      },
+      "remove_text": true
+    },
+    {
+      "id": "mail_badge_text",
+      "role": "dynamic_text",
+      "bbox": [
+        206,
+        585,
+        15,
+        20
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "1",
+      "metadata": {
+        "font_hint": "bold white game UI text",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "build_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        329,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/build_button_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "build_icon",
+      "role": "nav_icon",
+      "bbox": [
+        356,
+        586,
+        58,
+        52
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/build_icon.png",
+      "metadata": {
+        "asset_id": "build_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/build_icon.png"
+      }
+    },
+    {
+      "id": "build_label",
+      "role": "label_text",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "BUILD",
+      "metadata": {
+        "font_hint": "bold white bottom nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "army_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        462,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/army_button_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "army_icon",
+      "role": "nav_icon",
+      "bbox": [
+        490,
+        584,
+        58,
+        54
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/army_icon.png",
+      "metadata": {
+        "asset_id": "army_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/army_icon.png"
+      }
+    },
+    {
+      "id": "army_label",
+      "role": "label_text",
+      "bbox": [
+        486,
+        664,
+        68,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "ARMY",
+      "metadata": {
+        "font_hint": "bold white bottom nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "hero_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        595,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/hero_button_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "hero_icon",
+      "role": "nav_icon",
+      "bbox": [
+        620,
+        582,
+        62,
+        56
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/hero_icon.png",
+      "metadata": {
+        "asset_id": "hero_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/hero_icon.png"
+      }
+    },
+    {
+      "id": "hero_label",
+      "role": "label_text",
+      "bbox": [
+        620,
+        664,
+        66,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "HERO",
+      "metadata": {
+        "font_hint": "bold white bottom nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "quest_nav_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        728,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_nav_button_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "quest_nav_icon",
+      "role": "nav_icon",
+      "bbox": [
+        756,
+        585,
+        58,
+        52
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_nav_icon.png",
+      "metadata": {
+        "asset_id": "quest_nav_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_nav_icon.png"
+      }
+    },
+    {
+      "id": "quest_nav_label",
+      "role": "label_text",
+      "bbox": [
+        748,
+        664,
+        80,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "QUEST",
+      "metadata": {
+        "font_hint": "bold white bottom nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "map_button_bg",
+      "role": "nav_button_background",
+      "bbox": [
+        861,
+        570,
+        112,
+        120
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/map_button_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "map_icon",
+      "role": "nav_icon",
+      "bbox": [
+        886,
+        585,
+        62,
+        52
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/map_icon.png",
+      "metadata": {
+        "asset_id": "map_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/map_icon.png"
+      }
+    },
+    {
+      "id": "map_label",
+      "role": "label_text",
+      "bbox": [
+        898,
+        664,
+        58,
+        27
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "MAP",
+      "metadata": {
+        "font_hint": "bold white bottom nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "go_button_bg",
+      "role": "primary_button_background",
+      "bbox": [
+        1040,
+        545,
+        194,
+        166
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/go_button_bg.png",
+      "metadata": {
+        "asset_id": "go_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/go_button_bg.png"
+      },
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "children_hint": [
+        "go_button_castle_icon",
+        "go_button_text"
+      ]
+    },
+    {
+      "id": "go_button_castle_icon",
+      "role": "button_icon",
+      "bbox": [
+        1100,
+        565,
+        82,
+        60
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/go_button_castle_icon.png",
+      "metadata": {
+        "asset_id": "go_button_castle_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/go_button_castle_icon.png"
+      }
+    },
+    {
+      "id": "go_button_text",
+      "role": "button_label",
+      "bbox": [
+        1114,
+        646,
+        72,
+        36
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "GO",
+      "metadata": {
+        "font_hint": "large bold white primary action label",
+        "confidence": "high"
+      }
+    }
+  ]
+}

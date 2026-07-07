@@ -1,0 +1,152 @@
+{
+  "status": "top_resource_strip_realgen_experiment_complete",
+  "generated_at": "2026-07-07T05:08:59.641607+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/top_resource_strip_source_reference_crop.png",
+  "component_bbox": [
+    338,
+    0,
+    914,
+    72
+  ],
+  "sprites": [
+    {
+      "id": "top_resource_strip_frame",
+      "output": "assets_png/top_resource_strip_frame.png",
+      "type": "composite_hud_frame",
+      "transparent": true,
+      "strategy": "reference_guided_realgen_to_standalone_composite_sprite",
+      "prompt_subject": "four fixed resource bars with icons and plus buttons; no labels, no values, no sky background"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "wood_label",
+      "text": "WOOD",
+      "bbox": [
+        445,
+        17,
+        70,
+        18
+      ]
+    },
+    {
+      "id": "wood_value",
+      "text": "2.5M",
+      "bbox": [
+        445,
+        37,
+        75,
+        22
+      ]
+    },
+    {
+      "id": "food_label",
+      "text": "FOOD",
+      "bbox": [
+        665,
+        17,
+        70,
+        18
+      ]
+    },
+    {
+      "id": "food_value",
+      "text": "3.2M",
+      "bbox": [
+        665,
+        37,
+        75,
+        22
+      ]
+    },
+    {
+      "id": "gold_label",
+      "text": "GOLD",
+      "bbox": [
+        890,
+        17,
+        70,
+        18
+      ]
+    },
+    {
+      "id": "gold_value",
+      "text": "4.7M",
+      "bbox": [
+        890,
+        37,
+        75,
+        22
+      ]
+    },
+    {
+      "id": "gems_label",
+      "text": "GEMS",
+      "bbox": [
+        1115,
+        17,
+        70,
+        18
+      ]
+    },
+    {
+      "id": "gems_value",
+      "text": "1,250",
+      "bbox": [
+        1114,
+        37,
+        78,
+        22
+      ]
+    }
+  ],
+  "outputs": {
+    "generated_chroma": "generated_src/top_resource_strip_frame_chroma.png",
+    "transparent_untrimmed": "assets_png/top_resource_strip_frame_untrimmed.png",
+    "transparent_sprite": "assets_png/top_resource_strip_frame.png",
+    "fit_raw": "assets_fit_raw/top_resource_strip_frame.png",
+    "estimated_clean_bg": "crops/top_resource_strip_estimated_clean_bg.png",
+    "focused_comparison": "focused_top_resource_strip_comparison.png",
+    "full_comparison": "full_top_resource_strip_comparison.png",
+    "sprite_overview": "sprite_overview.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "reconstruction_with_top_resource_strip_frame": "reconstruction_with_top_resource_strip_frame.png"
+  },
+  "validation": {
+    "alpha_corner_values": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "fit_alpha_corner_values": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "trimmed_sprite_size": [
+      2114,
+      186
+    ],
+    "fit_size": [
+      914,
+      72
+    ],
+    "background_note": "realgen crop is composited over an estimated clean sky background because the transparent sprite should not include sky pixels",
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 57.61,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "realgen_frame_text_vs_source_mean_abs_rgb_delta": 53.92,
+      "current_vs_source_ui_mask_delta": 60.78,
+      "realgen_frame_text_vs_source_ui_mask_delta": 58.34,
+      "realgen_frame_text_vs_source_generated_alpha_mask_delta": 76.84
+    },
+    "read": [
+      "The source crop was used only as reference/edit target, not as a final sprite.",
+      "The generated resource strip frame is a transparent composite sprite with fixed icons and plus buttons, and text is overlaid as Text Nodes.",
+      "The generated strip changes spacing, bar proportions, icon scale, and plus-button rendering compared with the source crop."
+    ]
+  }
+}

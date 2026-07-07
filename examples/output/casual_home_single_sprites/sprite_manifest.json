@@ -5,7 +5,7 @@
   "layer_ir": "examples/output/casual_home_single_sprites/layer_ir.json",
   "layout_ir": "examples/output/casual_home_single_sprites/layout_ir.json",
   "bbox_overlay": "examples/output/casual_home_single_sprites/bbox_overlay.png",
-  "status": "layout_ir_ready",
+  "status": "mock_assets_generated",
   "confirmed_at": "2026-07-07",
   "rules": {
     "do_not_use_rect_crop_as_sprite": true,
@@ -260,5 +260,15 @@
     {"id": "bottom_quest_label", "text": "QUEST"},
     {"id": "bottom_home_label", "text": "HOME"},
     {"id": "bottom_decor_label", "text": "DECOR"}
-  ]
+  ],
+  "generated_at": "2026-07-07T02:18:29.407584+00:00",
+  "generated_outputs": {
+    "generated_src": "examples/output/casual_home_single_sprites/generated_src",
+    "assets_png": "examples/output/casual_home_single_sprites/assets_png",
+    "assets_fit_raw": "examples/output/casual_home_single_sprites/assets_fit_raw",
+    "sprite_overview": "examples/output/casual_home_single_sprites/sprite_overview.png",
+    "reconstruction": "examples/output/casual_home_single_sprites/reconstruction.png",
+    "comparison": "examples/output/casual_home_single_sprites/comparison.png"
+  },
+  "generation_note": "Procedural mock standalone sprites generated from sprite_manifest semantics; these are not rectangular crops from the source image."
 }

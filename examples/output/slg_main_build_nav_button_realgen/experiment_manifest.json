@@ -1,0 +1,52 @@
+{
+  "status": "realgen_experiment_complete",
+  "generated_at": "2026-07-07T04:03:36.982385+00:00",
+  "component_id": "build_nav_button",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "source_reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "current_reconstruction_crop": "examples/output/slg_main_fidelity_experiment/current_crops/build_nav_button_current_reconstruction_crop.png",
+  "crop_proxy_upper_bound": "examples/output/slg_main_fidelity_experiment/proxy_crops_not_final_sprites/build_nav_button_crop_proxy_not_final_sprite.png",
+  "generation_mode": "built_in_image_gen_chroma_key_then_local_alpha",
+  "generated_default_path": "/Users/happyelements/.codex/generated_images/019f3a4b-2a2c-7212-9fd3-c3d71b91e9af/ig_0b156bc4609c3a76016a4c7987aec4819197f6d1c669496e44.png",
+  "outputs": {
+    "generated_chroma_source": "examples/output/slg_main_build_nav_button_realgen/generated_src/build_nav_button_composite_chroma.png",
+    "asset_png": "examples/output/slg_main_build_nav_button_realgen/assets_png/build_nav_button_composite.png",
+    "fit_raw": "examples/output/slg_main_build_nav_button_realgen/assets_fit_raw/build_nav_button_composite.png",
+    "focused_realgen_comparison": "examples/output/slg_main_build_nav_button_realgen/focused_realgen_comparison.png",
+    "full_realgen_comparison": "examples/output/slg_main_build_nav_button_realgen/full_realgen_comparison.png",
+    "reconstruction_with_realgen": "examples/output/slg_main_build_nav_button_realgen/reconstruction_with_realgen_build_nav_button.png",
+    "sprite_overview": "examples/output/slg_main_build_nav_button_realgen/sprite_overview.png"
+  },
+  "validation": {
+    "asset_mode": "RGBA",
+    "asset_size": [
+      894,
+      987
+    ],
+    "fit_raw_size": [
+      130,
+      152
+    ],
+    "fit_subject_size_inside_bbox": [
+      130,
+      144
+    ],
+    "key_color_sampled": "#f603f2",
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "realgen_vs_source_mean_abs_rgb_delta": 53.61
+    }
+  },
+  "read": [
+    "This is a real generated composite sprite, not a rectangular source crop.",
+    "It intentionally includes the fixed BUILD label and notification dot to test visual fidelity of a compact composite control.",
+    "The generated art is cleaner and bulkier than the source crop, so the first realgen attempt does not reach the crop proxy upper bound.",
+    "This suggests component-level generation helps with structure, but text/scale/style constraints need either tighter reference-guided generation or a hybrid of generated base plus engine text."
+  ]
+}

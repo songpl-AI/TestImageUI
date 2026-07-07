@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLG 主界面 Sprite 还原方案验证报告</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #5f6b7d;
+      --line: #d9e1ec;
+      --blue: #1d5fd1;
+      --green: #12805c;
+      --amber: #9a6400;
+      --red: #b42318;
+      --dark: #22252b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 36px 0 64px;
+    }
+
+    header {
+      background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 34px 38px;
+      box-shadow: 0 12px 40px rgba(43, 72, 113, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 42px 0 14px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 10px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .summary-grid,
+    .cards {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .card,
+    section,
+    figure,
+    .callout {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    section {
+      margin-top: 20px;
+      padding: 26px 30px;
+    }
+
+    .card {
+      padding: 18px 18px 16px;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #111827;
+      font-size: 15px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eaf1ff;
+      color: #164ca5;
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: 1px;
+    }
+
+    .badge.warn {
+      background: #fff4df;
+      color: var(--amber);
+    }
+
+    .badge.bad {
+      background: #fff0ee;
+      color: var(--red);
+    }
+
+    .badge.good {
+      background: #e9f8f1;
+      color: var(--green);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 4px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef3fa;
+      color: #243246;
+      font-weight: 700;
+    }
+
+    td.num {
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .delta-bar {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 13px;
+    }
+
+    .bar-track {
+      height: 11px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e6ebf2;
+    }
+
+    .bar {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .bar.bad {
+      background: var(--red);
+    }
+
+    .bar.warn {
+      background: #d88b00;
+    }
+
+    figure {
+      margin: 18px 0;
+      padding: 14px;
+      overflow: auto;
+    }
+
+    figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      background: var(--dark);
+    }
+
+    figcaption {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 4px;
+    }
+
+    .flow div {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfdff;
+      min-height: 92px;
+      font-size: 14px;
+    }
+
+    .flow b {
+      display: block;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
+    .callout {
+      padding: 16px 18px;
+      margin: 16px 0;
+      background: #fffdf5;
+      border-color: #efd08a;
+    }
+
+    .callout strong {
+      color: #6d4a00;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: #edf2f7;
+      color: #233044;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .summary-grid,
+      .cards,
+      .flow,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        width: min(100vw - 24px, 1180px);
+        padding-top: 18px;
+      }
+
+      header,
+      section {
+        padding: 22px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: 100%;
+        padding: 0;
+      }
+
+      section,
+      header,
+      figure {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="meta">TestImageUI / SLG Main / Sprite Regeneration Fidelity Report / 2026-07-07</div>
+      <h1>SLG 主界面 Sprite 还原方案验证报告</h1>
+      <p>
+        本报告整理最近围绕 <code>slg_main</code> 做的几轮验证：从最初的独立 sprite 重建差异，到 crop proxy 上限实验，再到 BUILD 按钮和顶部资源条的真实生成实验。
+        目标不是证明哪张图更好看，而是判断当前方案在“工程可用”和“接近原图视觉”之间的真实边界。
+      </p>
+      <div class="summary-grid">
+        <div class="card">
+          <strong>核心结论</strong>
+          <p>当前 AI 独立/组合 sprite 生成路线适合做 mock、原型和工程结构验证，不适合承诺源图级高保真还原。</p>
+        </div>
+        <div class="card">
+          <strong>主要原因</strong>
+          <p>源图是在全局上下文里一次性生成的；独立生成会丢失统一光源、材质、相邻关系和微小比例约束。</p>
+        </div>
+        <div class="card">
+          <strong>建议方向</strong>
+          <p>若要求接近原图，应考虑人工修图、PSD 化、受控分割补图或基于 style/material sheet 重新设计整套资产。</p>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. 前因后果</h2>
+      <p>
+        一开始的完整流程已经能把横屏 SLG 主界面拆成语义化资产：独立 PNG、Text Node、Layer IR、Layout IR、bbox overlay、sprite overview 和 reconstruction。
+        但是用户在对比图中指出：差异不是几个红框局部，而是整体材质、描边、比例、字体、光照、细节密度都有明显不一致。
+      </p>
+      <p>
+        因此后续问题从“能不能拆 sprite”转成了更具体的验证：如果不继续过度设计，只选少量代表组件，能不能找到一种低复杂度方案，让真实生成的独立 sprite 接近原始 AI 效果图？
+      </p>
+      <div class="flow">
+        <div><b>完整拆分</b>40 个源 sprite，61 个 fit 实例，40 个 Text Node。</div>
+        <div><b>发现问题</b>工程结构成立，但重建视觉明显漂移。</div>
+        <div><b>上限测试</b>用 crop proxy 测量“如果直接贴原像素”的理论上限。</div>
+        <div><b>真实生成</b>测试 whole、decomposed、cleanup、wide composite。</div>
+        <div><b>决策</b>明确当前方案能做什么、不能做什么。</div>
+      </div>
+      <figure>
+        <img src="assets/source_slg_main.png" alt="SLG 主界面源图">
+        <figcaption>源图：横屏 SLG 主界面，后续所有局部实验都以这张图的对应区域作为 source 参考。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/01_full_independent_comparison.png" alt="完整独立 sprite 重建对比">
+        <figcaption>完整独立 sprite 流程：结构和回贴链路可运行，但整体视觉与源图存在明显风格漂移。</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <h2>2. 数据口径</h2>
+      <p>
+        本报告中的 delta 指 <strong>mean absolute RGB delta</strong>：把实验 crop 与 source crop 的 RGB 通道做平均绝对差。数值越低，越接近源图；<code>0.00</code> 表示像素完全一致。
+      </p>
+      <div class="callout">
+        <strong>注意：</strong>
+        crop proxy 的 <code>0.00</code> 不是可交付结果。它只是把源图局部矩形像素贴回去，用来测量“理论上限”。最终 sprite 不能直接用 crop proxy，因为它包含背景、文字、遮挡和其它 UI 上下文，不是干净可复用资产。
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>术语</th>
+            <th>含义</th>
+            <th>是否可作为最终 sprite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>current independent</code></td>
+            <td>当前独立 sprite + Text Node 按 IR 回贴后的局部结果。</td>
+            <td><span class="badge good">可作为工程流程结果</span></td>
+          </tr>
+          <tr>
+            <td><code>crop proxy</code></td>
+            <td>直接从 source 裁出的局部像素，只用于测量上限。</td>
+            <td><span class="badge bad">不可作为最终 sprite</span></td>
+          </tr>
+          <tr>
+            <td><code>whole realgen</code></td>
+            <td>把整个组合控件重新生成成一张透明 sprite。</td>
+            <td><span class="badge warn">可测试，不推荐默认使用</span></td>
+          </tr>
+          <tr>
+            <td><code>decomposed realgen</code></td>
+            <td>按工程边界拆成底板、icon、badge、Text Node 等。</td>
+            <td><span class="badge good">工程边界更正确</span></td>
+          </tr>
+          <tr>
+            <td><code>cleanup / inpaint</code></td>
+            <td>以源局部为参考，删除遮挡子元素并补全底板。</td>
+            <td><span class="badge warn">可测试，但不保证高保真</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. 总览数据</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>组件</th>
+            <th>实验方案</th>
+            <th>工程边界</th>
+            <th>相对 source 的 delta</th>
+            <th>结果判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>BUILD 按钮</td>
+            <td>当前独立 sprite</td>
+            <td>底板、锤子、红点、文字分开</td>
+            <td class="num">45.20</td>
+            <td>基线，有明显漂移</td>
+          </tr>
+          <tr>
+            <td>BUILD 按钮</td>
+            <td>crop proxy</td>
+            <td>源图局部像素，不是 sprite</td>
+            <td class="num">0.00</td>
+            <td>理论上限</td>
+          </tr>
+          <tr>
+            <td>BUILD 按钮</td>
+            <td>whole realgen</td>
+            <td>整按钮一张透明 sprite，含文字</td>
+            <td class="num">53.61</td>
+            <td>比基线更差</td>
+          </tr>
+          <tr>
+            <td>BUILD 按钮</td>
+            <td>decomposed realgen + Text Node</td>
+            <td>button_bg + hammer_icon + badge_dot + Text Node</td>
+            <td class="num">45.64</td>
+            <td>工程边界正确，但视觉无收益</td>
+          </tr>
+          <tr>
+            <td>BUILD 按钮</td>
+            <td>cleanup bg + 复用 icon/Text</td>
+            <td>只清理/补全按钮底板，文字仍为 Text Node</td>
+            <td class="num">47.56</td>
+            <td>生成干净，但按钮被标准化</td>
+          </tr>
+          <tr>
+            <td>顶部资源条</td>
+            <td>当前独立 sprite</td>
+            <td>资源条底、icon、加号、Text Node 分开</td>
+            <td class="num">57.61</td>
+            <td>基线，漂移更明显</td>
+          </tr>
+          <tr>
+            <td>顶部资源条</td>
+            <td>realgen frame + Text Nodes</td>
+            <td>四条资源栏组合 frame，文字仍为 Text Node</td>
+            <td class="num">53.92</td>
+            <td>小幅改善，但仍远离上限</td>
+          </tr>
+          <tr>
+            <td>顶部资源条</td>
+            <td>realgen frame + Text Nodes，UI mask</td>
+            <td>只看 UI 区域，降低天空背景影响</td>
+            <td class="num">58.34 vs 基线 60.78</td>
+            <td>UI 区域也只是小幅改善</td>
+          </tr>
+          <tr>
+            <td>顶部资源条</td>
+            <td>realgen frame + Text Nodes，generated alpha mask</td>
+            <td>只看生成 sprite 覆盖区域和 Text Node 附近</td>
+            <td class="num">76.84</td>
+            <td>说明生成资产自身与源图 UI 细节差异仍然很大</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>关键 delta 对比</h3>
+      <div class="delta-bar"><span>BUILD 基线</span><div class="bar-track"><div class="bar warn" style="width: 75.3%"></div></div></div>
+      <div class="delta-bar"><span>BUILD whole</span><div class="bar-track"><div class="bar bad" style="width: 89.4%"></div></div></div>
+      <div class="delta-bar"><span>BUILD 拆分</span><div class="bar-track"><div class="bar warn" style="width: 76.1%"></div></div></div>
+      <div class="delta-bar"><span>BUILD cleanup</span><div class="bar-track"><div class="bar warn" style="width: 79.3%"></div></div></div>
+      <div class="delta-bar"><span>资源条基线</span><div class="bar-track"><div class="bar bad" style="width: 96.0%"></div></div></div>
+      <div class="delta-bar"><span>资源条 realgen</span><div class="bar-track"><div class="bar bad" style="width: 89.9%"></div></div></div>
+      <p class="small">条形图按 60 delta 近似归一化，只用于辅助阅读；正式判断以上表数据为准。</p>
+    </section>
+
+    <section>
+      <h2>4. 实验一：Crop Proxy 上限</h2>
+      <p>
+        第一步不是直接继续生图，而是先回答一个窄问题：如果把局部组件作为一个整体替换，理论上能不能显著缩小差距？
+        因此选了两个代表区域：顶部资源条 <code>top_resource_strip</code> 和底部 <code>build_nav_button</code>。
+      </p>
+      <figure>
+        <img src="assets/02_proxy_focused_comparison.png" alt="crop proxy focused comparison">
+        <figcaption>source / current independent / crop proxy 三栏局部对比。proxy 能接近源图，但它只是源图裁切像素。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/03_proxy_full_comparison.png" alt="crop proxy full comparison">
+        <figcaption>整图中的 proxy 替换效果：说明组合控件路线有理论收益，但不能直接把 proxy 当最终素材。</figcaption>
+      </figure>
+      <h3>阶段结论</h3>
+      <ul>
+        <li><code>build_nav_button</code> 当前基线 delta 为 <strong>45.20</strong>，proxy 为 <strong>0.00</strong>。</li>
+        <li><code>top_resource_strip</code> 当前基线 delta 为 <strong>57.61</strong>，proxy 为 <strong>0.00</strong>。</li>
+        <li>proxy 证明了“局部整体替换”有上限收益，但没有证明真实生成能达到这个上限。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5. 实验二：BUILD 按钮 whole realgen</h2>
+      <p>
+        接着测试最直接的想法：把整个 BUILD 按钮生成成一张透明组合 sprite。这个方案减少了多 layer 组装误差，但会把 <code>BUILD</code> 文字也烘焙进图片，工程可编辑性较弱。
+      </p>
+      <figure>
+        <img src="assets/04_build_whole_realgen_focused.png" alt="BUILD whole realgen focused comparison">
+        <figcaption>whole realgen 生成出了完整按钮，但按钮比例、字重、锤子尺寸和材质都被重新解释。</figcaption>
+      </figure>
+      <h3>结果</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>方案</th>
+            <th>delta</th>
+            <th>观察</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>current independent</td>
+            <td class="num">45.20</td>
+            <td>按钮结构可运行，但和源图差距明显。</td>
+          </tr>
+          <tr>
+            <td>whole realgen</td>
+            <td class="num">53.61</td>
+            <td>比基线更差，说明整按钮生成并没有接近 proxy 上限。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        原因不是“没有生成出来”，而是模型把按钮变成了更标准、更厚重、更高清的大按钮。它在审美上合理，但不是源图中的那个小按钮。
+      </p>
+    </section>
+
+    <section>
+      <h2>6. 实验三：BUILD 按钮拆分生成</h2>
+      <p>
+        用户指出 whole button 作为一张整图验证意义有限，于是改成更工程化的边界：
+        <code>button_bg + hammer_icon + badge_dot + Text Node</code>。这样文字可编辑，背景、icon、badge 也能作为独立 sprite 使用。
+      </p>
+      <figure>
+        <img src="assets/05_build_decomposed_focused.png" alt="BUILD decomposed focused comparison">
+        <figcaption>拆分版本工程边界更正确，但视觉上仍和源图不一致。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/06_build_decomposed_sprites.png" alt="BUILD decomposed sprite overview">
+        <figcaption>拆分后的真实 sprite：底板、锤子、红点均为透明独立资产。</figcaption>
+      </figure>
+      <h3>结果</h3>
+      <ul>
+        <li>current independent：<strong>45.20</strong></li>
+        <li>whole realgen：<strong>53.61</strong></li>
+        <li>decomposed realgen + Text Node：<strong>45.64</strong></li>
+      </ul>
+      <p>
+        这次证明了一个重要边界：拆分边界可以改善工程可编辑性，但不能自动提高视觉相似度。只要底板、锤子、红点本身的生成风格漂移，最终组合仍然会漂。
+      </p>
+    </section>
+
+    <section>
+      <h2>7. 实验四：BUILD 按钮 cleanup / inpaint</h2>
+      <p>
+        下一步验证“从源局部图清理/补全”是否比从零生成更接近源图。目标只做按钮底板：
+        删除锤子、红点、<code>BUILD</code> 文字和背景，补全被遮挡区域，再复用上一轮 icon 和 Text Node 回贴。
+      </p>
+      <figure>
+        <img src="assets/07_build_cleanup_focused.png" alt="BUILD cleanup focused comparison">
+        <figcaption>cleanup 版本生成了干净底板，但底板又被模型标准化。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/08_build_cleanup_sprites.png" alt="BUILD cleanup sprite overview">
+        <figcaption>cleanup 的底板是透明独立 PNG，工程上成立，但视觉上仍不接近源图。</figcaption>
+      </figure>
+      <h3>结果</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>方案</th>
+            <th>delta</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>decomposed realgen + Text Node</td>
+            <td class="num">45.64</td>
+            <td>上一轮拆分方案。</td>
+          </tr>
+          <tr>
+            <td>cleanup bg + 复用 icon/Text</td>
+            <td class="num">47.56</td>
+            <td>没有改善，反而略差。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        原因在于被锤子、红点和文字遮挡的底板像素并不存在于扁平图中。模型只能按自己的 UI 先验去补图，于是补成了更规整、更厚、更高清的标准按钮，而不是恢复源图的真实底板。
+      </p>
+    </section>
+
+    <section>
+      <h2>8. 实验五：顶部资源条组合 frame</h2>
+      <p>
+        为了避免只在按钮类组件上得出结论，又换成了不同类型组件：顶部资源条。
+        本轮没有把文字和数字烘焙进 sprite，而是生成 <code>top_resource_strip_frame</code>：四个固定资源 icon、四条资源栏底板、四个绿色加号，标签和数值继续由 Text Node 回贴。
+      </p>
+      <figure>
+        <img src="assets/09_top_strip_focused.png" alt="top resource strip focused comparison">
+        <figcaption>顶部资源条：realgen frame 有小幅改善，但 spacing、条宽、icon identity 和颜色发生漂移。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/10_top_strip_sprites.png" alt="top resource strip sprite overview">
+        <figcaption>资源条 frame 是透明组合 sprite，不包含标签和数值。</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/11_top_strip_full.png" alt="top resource strip full comparison">
+        <figcaption>整屏对比：资源条区域略好于细拆版本，但仍与源图有明显差别。</figcaption>
+      </figure>
+      <h3>结果</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>方案</th>
+            <th>全 crop delta</th>
+            <th>UI mask delta</th>
+            <th>观察</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>current independent</td>
+            <td class="num">57.61</td>
+            <td class="num">60.78</td>
+            <td>细拆资源条漂移明显。</td>
+          </tr>
+          <tr>
+            <td>realgen frame + Text Nodes</td>
+            <td class="num">53.92</td>
+            <td class="num">58.34</td>
+            <td>小幅改善，但没有接近 proxy 上限。</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="small">
+        另有 generated alpha mask delta：<strong>76.84</strong>。该指标只看生成 frame 覆盖区域和 Text Node 附近，说明真正的生成资产细节与源图差异仍然很大。
+      </p>
+      <p>
+        这次不是完全负结果：宽组合控件比细拆版本稍微接近一点。
+        但问题仍然明显：模型把多槽位控件重新排版为更规整的 HUD 组，资源条更长、更均匀；宝石从紫色偏成银蓝色，gold icon 也变成更标准的圆章。
+      </p>
+    </section>
+
+    <section>
+      <h2>9. 原因分析</h2>
+      <div class="two-col">
+        <div class="card">
+          <strong>为什么源图更统一</strong>
+          <p>源图是一次性在全局画面中生成的。模型同时看到天空、城堡、按钮、资源条和整体光照，所以局部元素共享同一套材质和视觉上下文。</p>
+        </div>
+        <div class="card">
+          <strong>为什么独立 sprite 会漂</strong>
+          <p>逐个生成 sprite 时，上下文被切碎。每次生成都会重新解释比例、边缘、高光、磨损、icon 形状和细节密度。</p>
+        </div>
+        <div class="card">
+          <strong>为什么 cleanup 也不稳</strong>
+          <p>扁平图中被遮挡的像素无法真实恢复。inpaint 是按模型先验补图，不是还原原始图层。</p>
+        </div>
+        <div class="card">
+          <strong>为什么组合控件只小幅改善</strong>
+          <p>组合能减少组装误差，但模型仍会重排 spacing、重画 icon、改变材质。宽 HUD 组件尤其容易被“重新设计”。</p>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>关键判断：</strong>
+        当前瓶颈已经不主要是 bbox、IR 或回贴链路，而是“真实生成素材无法稳定继承源图那次全局生成的局部视觉细节”。
+      </div>
+    </section>
+
+    <section>
+      <h2>10. 当前方案边界</h2>
+      <div class="two-col">
+        <div>
+          <h3>可以做到</h3>
+          <ul>
+            <li>锁定布局位置、尺寸、层级和 Text Node。</li>
+            <li>生成透明、语义命名、可审计的独立 PNG。</li>
+            <li>区分 <code>assets_png</code> 源素材与 <code>assets_fit_raw</code> 布局实例。</li>
+            <li>把动态文字、数值、按钮文案保留为可编辑 Text Node。</li>
+            <li>输出 Sprite Plan、manifest、IR、bbox overlay、overview 和 comparison。</li>
+            <li>为 mock、原型、二次美术参考提供结构化资产。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>确定做不好</h3>
+          <ul>
+            <li>不能保证重新生成 sprite 与源图像素级一致。</li>
+            <li>不能稳定复刻源图的精确材质、描边、颗粒、高光和阴影。</li>
+            <li>不能从单张扁平图中恢复被文字或 icon 遮挡的真实底板。</li>
+            <li>不能同时最大化“细粒度复用”和“整屏几乎等同源图”。</li>
+            <li>不能靠 prompt 稳定锁住 icon identity、slot spacing 和小尺寸 UI 字重。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>11. 汇报建议</h2>
+      <h3>建议对外结论</h3>
+      <p>
+        这条流程已经证明了工程化拆解能力：可以从一张 AI UI 效果图建立 Sprite Plan、Layer IR、Layout IR、Text Node 和可回贴验证的透明素材。
+        但如果目标是“和原始效果图几乎一样”，当前纯 AI 重新生成 sprite 的方案不够可靠。
+      </p>
+      <h3>建议后续路线</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>目标</th>
+            <th>推荐路线</th>
+            <th>原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>做产品原型 / mock / 流程验证</td>
+            <td>继续当前 Sprite Plan + IR + 独立 sprite 生成流程</td>
+            <td>结构清晰、可复盘、可迭代，成本低。</td>
+          </tr>
+          <tr>
+            <td>做接近源图的高保真还原</td>
+            <td>人工修图、PSD 化、受控分割 + 手工补遮挡</td>
+            <td>需要确定性图层和人工判断，不能只靠重新生成。</td>
+          </tr>
+          <tr>
+            <td>做一整套正式 UI 资产</td>
+            <td>基于 style/material sheet 重新设计资产族</td>
+            <td>不要以单张扁平图为唯一真值，而是让美术统一重制。</td>
+          </tr>
+          <tr>
+            <td>局部快速替换</td>
+            <td>只对非关键、低身份要求的区域使用组合 sprite</td>
+            <td>资源条实验显示组合有小幅收益，但 icon identity 和 spacing 仍会漂。</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="callout">
+        <strong>一句话版本：</strong>
+        当前方案能把 AI 效果图“工程化”，但不能把它“无损分层还原”。若汇报对象关心落地风险，应把高保真还原从自动生成方案中拆出来，单独走人工或半人工资产化流程。
+      </div>
+    </section>
+
+    <section>
+      <h2>12. 附：关键产物路径</h2>
+      <ul>
+        <li><code>examples/output/slg_main_fidelity_experiment/</code>：crop proxy 上限实验。</li>
+        <li><code>examples/output/slg_main_build_nav_button_realgen/</code>：BUILD 整按钮真实生成实验。</li>
+        <li><code>examples/output/slg_main_build_nav_button_decomposed/</code>：BUILD 拆分真实生成实验。</li>
+        <li><code>examples/output/slg_main_build_button_bg_cleanup/</code>：BUILD 底板 cleanup / inpaint 实验。</li>
+        <li><code>examples/output/slg_main_top_resource_strip_realgen/</code>：顶部资源条组合 frame 实验。</li>
+        <li><code>examples/output/slg_main_fidelity_report/</code>：本 HTML 汇报文件与截图资产。</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

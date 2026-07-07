@@ -1,0 +1,89 @@
+{
+  "status": "decomposed_realgen_experiment_complete",
+  "generated_at": "2026-07-07T04:25:14.432022+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "sprites": [
+    {
+      "id": "build_button_bg",
+      "output": "assets_png/build_button_bg.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "bottom nav button background only, no icon, no red dot, no text"
+    },
+    {
+      "id": "build_hammer_icon",
+      "output": "assets_png/build_hammer_icon.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone diagonal hammer icon only"
+    },
+    {
+      "id": "build_badge_dot",
+      "output": "assets_png/build_badge_dot.png",
+      "type": "notification_badge",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "standalone red notification dot, no number"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "build_label",
+      "text": "BUILD",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ]
+    }
+  ],
+  "outputs": {
+    "sprite_overview": "sprite_overview.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "focused_decomposed_comparison": "focused_decomposed_comparison.png",
+    "full_decomposed_comparison": "full_decomposed_comparison.png",
+    "reconstruction_with_decomposed": "reconstruction_with_decomposed_build_nav_button.png"
+  },
+  "validation": {
+    "key_colors": {
+      "build_button_bg": "#ee06e7",
+      "build_hammer_icon": "#f504f1",
+      "build_badge_dot": "#f804ed"
+    },
+    "fit_subject_sizes": {
+      "build_button_bg": [
+        112,
+        120
+      ],
+      "build_hammer_icon": [
+        50,
+        52
+      ],
+      "build_badge_dot": [
+        29,
+        29
+      ]
+    },
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "whole_realgen_vs_source_mean_abs_rgb_delta": 53.61,
+      "decomposed_vs_source_mean_abs_rgb_delta": 45.64
+    }
+  },
+  "read": [
+    "This experiment uses three real generated independent sprites plus a Text Node, not a whole-button generated sprite.",
+    "The red badge bbox was estimated from the source crop red pixels with rim padding.",
+    "The result tests whether a more engineering-like decomposition improves visual fidelity without baking text."
+  ]
+}
