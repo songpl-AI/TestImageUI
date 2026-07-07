@@ -1,0 +1,169 @@
+{
+  "production_board": "examples/output/match3_sync_asset_generation_experiment/pastoral_match3_production_board.png",
+  "board_size": [
+    941,
+    1672
+  ],
+  "split_y": 1054,
+  "full_effect_size": [
+    941,
+    1054
+  ],
+  "asset_sheet_size": [
+    941,
+    618
+  ],
+  "asset_sheet_grid": {
+    "rows": 4,
+    "cols": 4,
+    "margin_x": 12,
+    "margin_y": 18,
+    "gutter_x": 7,
+    "gutter_y": 8,
+    "cell_w": 224,
+    "cell_h": 139,
+    "cells": {
+      "top_currency_bar_bg": [
+        12,
+        18,
+        224,
+        139
+      ],
+      "heart_icon": [
+        243,
+        18,
+        224,
+        139
+      ],
+      "coin_icon": [
+        474,
+        18,
+        224,
+        139
+      ],
+      "gem_icon": [
+        705,
+        18,
+        224,
+        139
+      ],
+      "plus_button": [
+        12,
+        165,
+        224,
+        139
+      ],
+      "player_avatar_frame": [
+        243,
+        165,
+        224,
+        139
+      ],
+      "event_banner_panel": [
+        474,
+        165,
+        224,
+        139
+      ],
+      "level_node_active": [
+        705,
+        165,
+        224,
+        139
+      ],
+      "level_node_locked": [
+        12,
+        312,
+        224,
+        139
+      ],
+      "play_button_bg": [
+        243,
+        312,
+        224,
+        139
+      ],
+      "bottom_nav_button_bg": [
+        474,
+        312,
+        224,
+        139
+      ],
+      "red_badge_dot": [
+        705,
+        312,
+        224,
+        139
+      ],
+      "home_icon": [
+        12,
+        459,
+        224,
+        139
+      ],
+      "team_icon": [
+        243,
+        459,
+        224,
+        139
+      ],
+      "garden_icon": [
+        474,
+        459,
+        224,
+        139
+      ],
+      "shop_icon": [
+        705,
+        459,
+        224,
+        139
+      ]
+    }
+  },
+  "play_probe": {
+    "source_bbox_in_full_effect": [
+      298,
+      816,
+      355,
+      96
+    ],
+    "play_button_bg_cell_bbox_in_asset_sheet": [
+      243,
+      312,
+      224,
+      139
+    ],
+    "play_button_bg_bbox_in_source_crop": [
+      10,
+      8,
+      335,
+      78
+    ],
+    "play_text_node_bbox_in_source_crop": [
+      111,
+      23,
+      138,
+      52
+    ],
+    "mean_rgb_delta_full_crop": 112.09,
+    "mean_rgb_delta_recon_alpha_mask": 81.62,
+    "known_limitations": [
+      "play_button_bg cell is extracted from the board asset sheet, not a true transparent generated file.",
+      "source full_effect button includes flower decorations and local shadows that the play_button_bg asset does not fully contain.",
+      "Text Node styling is approximate and needs tuning.",
+      "This validates one component only."
+    ],
+    "stretch_fit_variant": {
+      "play_button_bg_bbox_in_source_crop": [
+        10,
+        8,
+        335,
+        78
+      ],
+      "mean_rgb_delta_full_crop": 84.3,
+      "mean_rgb_delta_recon_alpha_mask": 61.21,
+      "known_limitation": "non-uniform stretch is a proxy; proper engine use should define 9-slice borders rather than scaling corners/leaves."
+    }
+  }
+}

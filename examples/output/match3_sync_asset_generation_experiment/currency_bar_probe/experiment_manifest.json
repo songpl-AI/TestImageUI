@@ -1,0 +1,49 @@
+{
+  "id": "pastoral_match3_currency_bar_probe_20260707",
+  "branch": "codex/sync-effect-asset-generation",
+  "goal": "Validate whether synchronized asset_sheet sprites can reconstruct the full_effect heart currency bar as bar_bg + heart_icon + plus_button + Text Node.",
+  "status": "completed_with_asset_identity_mismatch",
+  "outputs": {
+    "comparison": "focused_currency_bar_fit_strategy_comparison.png",
+    "sprite_overview": "sprite_overview.png",
+    "metrics": "metrics.json",
+    "sprite_manifest": "sprite_manifest.json",
+    "layer_ir": "layer_ir.json",
+    "layout_ir": "layout_ir.json"
+  },
+  "metrics": {
+    "source_bbox_abs": [
+      186,
+      22,
+      216,
+      78
+    ],
+    "source_crop_size": [
+      216,
+      78
+    ],
+    "background_sample_rgb": [
+      95,
+      183,
+      234
+    ],
+    "contain_fit": {
+      "full_crop_mean_rgb_delta": 66.34,
+      "ui_mask_mean_rgb_delta": 66.34
+    },
+    "stretch_fit": {
+      "full_crop_mean_rgb_delta": 67.39,
+      "ui_mask_mean_rgb_delta": 67.39
+    },
+    "visual_state_proxy_not_sprite": {
+      "full_crop_mean_rgb_delta": 0.0,
+      "ui_mask_mean_rgb_delta": 0.0
+    },
+    "observations": [
+      "Asset sheet top_currency_bar_bg is a cream rounded panel with leaves; full_effect heart currency bar uses a dark brown capsule frame.",
+      "The asset sheet heart icon has no number; source heart state includes number 5, so Text Node is required.",
+      "Contain vs stretch cannot fix asset identity mismatch; nine_slice would only solve scaling if the correct dark bar asset existed."
+    ]
+  },
+  "conclusion": "The synchronized route works structurally for isolated icons/buttons, but this generated asset sheet did not provide the same dark currency bar background used in full_effect; scale strategy cannot solve identity mismatch."
+}

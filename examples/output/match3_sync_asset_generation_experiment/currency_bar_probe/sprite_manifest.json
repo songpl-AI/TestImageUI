@@ -1,0 +1,110 @@
+{
+  "screen": "pastoral_match3_home",
+  "probe": "heart_currency_bar",
+  "source_image": "examples/output/match3_sync_asset_generation_experiment/play_button_probe/split/full_effect.png",
+  "asset_sheet_image": "examples/output/match3_sync_asset_generation_experiment/play_button_probe/split/asset_sheet.png",
+  "source_bbox_abs": [
+    186,
+    22,
+    216,
+    78
+  ],
+  "assets": [
+    {
+      "id": "top_currency_bar_bg",
+      "type": "currency_bar_bg",
+      "source": "asset_sheet_cell",
+      "cell_bbox": [
+        12,
+        18,
+        224,
+        139
+      ],
+      "output": "assets_png/top_currency_bar_bg.png",
+      "transparent": true,
+      "contains_dynamic_text": false,
+      "known_issue": "identity_mismatch_with_full_effect_dark_brown_bar"
+    },
+    {
+      "id": "heart_icon",
+      "type": "currency_icon",
+      "source": "asset_sheet_cell",
+      "cell_bbox": [
+        243,
+        18,
+        224,
+        139
+      ],
+      "output": "assets_png/heart_icon.png",
+      "transparent": true,
+      "contains_dynamic_text": false
+    },
+    {
+      "id": "plus_button",
+      "type": "button_icon",
+      "source": "asset_sheet_cell",
+      "cell_bbox": [
+        12,
+        165,
+        224,
+        139
+      ],
+      "output": "assets_png/plus_button.png",
+      "transparent": true,
+      "contains_dynamic_text": false
+    }
+  ],
+  "text_nodes": [
+    {
+      "type": "dynamic_text",
+      "text": "5",
+      "bbox": [
+        29,
+        20,
+        36,
+        38
+      ],
+      "z": 30,
+      "font": {
+        "family": "rounded bold approximation",
+        "size_px": 31,
+        "fill": "#fff6e0",
+        "stroke": "#b83a19"
+      }
+    }
+  ],
+  "metrics": {
+    "source_bbox_abs": [
+      186,
+      22,
+      216,
+      78
+    ],
+    "source_crop_size": [
+      216,
+      78
+    ],
+    "background_sample_rgb": [
+      95,
+      183,
+      234
+    ],
+    "contain_fit": {
+      "full_crop_mean_rgb_delta": 66.34,
+      "ui_mask_mean_rgb_delta": 66.34
+    },
+    "stretch_fit": {
+      "full_crop_mean_rgb_delta": 67.39,
+      "ui_mask_mean_rgb_delta": 67.39
+    },
+    "visual_state_proxy_not_sprite": {
+      "full_crop_mean_rgb_delta": 0.0,
+      "ui_mask_mean_rgb_delta": 0.0
+    },
+    "observations": [
+      "Asset sheet top_currency_bar_bg is a cream rounded panel with leaves; full_effect heart currency bar uses a dark brown capsule frame.",
+      "The asset sheet heart icon has no number; source heart state includes number 5, so Text Node is required.",
+      "Contain vs stretch cannot fix asset identity mismatch; nine_slice would only solve scaling if the correct dark bar asset existed."
+    ]
+  }
+}

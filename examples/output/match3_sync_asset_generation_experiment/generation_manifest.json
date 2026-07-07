@@ -1,0 +1,39 @@
+{
+  "screen": "pastoral_match3_home",
+  "branch": "codex/sync-effect-asset-generation",
+  "status": "generated",
+  "mode": "built_in_image_gen",
+  "source_default_generated_image": "/Users/happyelements/.codex/generated_images/019f3a4b-2a2c-7212-9fd3-c3d71b91e9af/ig_0142f13d8914e140016a4cc48d831c8191bbc79f7697ae525a.png",
+  "workspace_image": "pastoral_match3_production_board.png",
+  "canvas": {
+    "width": 941,
+    "height": 1672,
+    "orientation": "portrait"
+  },
+  "prompt_files": {
+    "template": "strict_asset_layer_plan_template.md",
+    "asset_layer_plan": "asset_layer_plan.md",
+    "actual_prompt": "strict_match3_prompt.txt"
+  },
+  "board_structure": {
+    "full_effect": "top section, complete vertical match-3 home UI",
+    "asset_sheet": "bottom section, fixed 4x4 grid"
+  },
+  "initial_assessment": {
+    "overall": "positive",
+    "strengths": [
+      "clear full_effect and asset_sheet separation",
+      "asset sheet mostly follows 4x4 grid",
+      "dynamic text mostly stays in full_effect",
+      "pastoral style is consistent",
+      "planned assets are identifiable"
+    ],
+    "limitations": [
+      "asset sheet items are not yet transparent standalone PNGs",
+      "some asset roles differ slightly from their full_effect counterparts",
+      "generated siblings are not exact PSD layers",
+      "requires sprite plan and extraction validation next"
+    ]
+  },
+  "recommended_next_step": "Split the board into full_effect and asset_sheet regions, then run a small Sprite Plan and reconstruction test for PLAY button or top currency bar."
+}

@@ -1,0 +1,80 @@
+{
+  "source_crop": "crops/source_heart_currency_bar_crop.png",
+  "source_bbox_abs": [
+    186,
+    22,
+    216,
+    78
+  ],
+  "canvas_size": [
+    216,
+    78
+  ],
+  "layers": [
+    {
+      "id": "top_currency_bar_bg_layer",
+      "kind": "sprite",
+      "asset_id": "top_currency_bar_bg",
+      "bbox": [
+        36,
+        8,
+        173,
+        55
+      ],
+      "z": 10,
+      "scale_mode_tested": [
+        "contain",
+        "stretch"
+      ],
+      "scale_mode_recommended_if_asset_is_correct": "nine_slice",
+      "needs_manual_review": [
+        "asset_identity",
+        "nine_slice_insets"
+      ]
+    },
+    {
+      "id": "heart_icon_layer",
+      "kind": "sprite",
+      "asset_id": "heart_icon",
+      "bbox": [
+        0,
+        0,
+        84,
+        78
+      ],
+      "z": 20,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "heart_count_text",
+      "kind": "dynamic_text",
+      "text": "5",
+      "bbox": [
+        29,
+        20,
+        36,
+        38
+      ],
+      "z": 30,
+      "font_style": {
+        "family": "rounded bold approximation",
+        "size_px": 31,
+        "fill": "#fff6e0",
+        "stroke": "#b83a19"
+      }
+    },
+    {
+      "id": "plus_button_layer",
+      "kind": "sprite",
+      "asset_id": "plus_button",
+      "bbox": [
+        158,
+        15,
+        52,
+        52
+      ],
+      "z": 40,
+      "scale_mode": "contain"
+    }
+  ]
+}

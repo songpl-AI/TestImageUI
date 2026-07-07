@@ -1,0 +1,54 @@
+{
+  "screen": "pastoral_match3_home",
+  "component": "play_button_probe",
+  "status": "probe_complete",
+  "source_image": "split/full_effect.png",
+  "source_crop": "crops/source_play_button_crop.png",
+  "asset_sheet": "split/asset_sheet.png",
+  "asset_sheet_grid_overlay": "asset_sheet_grid_overlay.png",
+  "assets": [
+    {
+      "id": "play_button_bg",
+      "type": "button_bg",
+      "output": "assets_png/play_button_bg.png",
+      "source_reference": "reference_cells/play_button_bg_reference_cell_not_final_sprite.png",
+      "transparent": true,
+      "text_allowed": false,
+      "strategy": "asset_sheet_extract_then_alpha_clean",
+      "scale_modes_tested": ["contain", "stretch"],
+      "recommended_scale_mode": "nine_slice",
+      "known_limitation": "Asset sheet background is related to full-effect button but omits flower decoration and should not be treated as an exact hidden layer."
+    },
+    {
+      "id": "play_button_text",
+      "type": "dynamic_text",
+      "output": null,
+      "preview": "assets_fit_raw/play_button_text_node_preview.png",
+      "transparent": false,
+      "text_allowed": true,
+      "strategy": "text_node",
+      "text": "PLAY"
+    }
+  ],
+  "outputs": {
+    "sprite_plan": "sprite_plan.md",
+    "layer_ir": "layer_ir.json",
+    "layout_ir": "layout_ir.json",
+    "sprite_overview": "sprite_overview.png",
+    "focused_comparison_contain": "focused_play_button_comparison.png",
+    "focused_comparison_fit_strategy": "focused_play_button_fit_strategy_comparison.png",
+    "reconstruction_contain": "reconstruction_play_button.png",
+    "reconstruction_stretch": "reconstruction_play_button_stretch_fit.png"
+  },
+  "metrics": {
+    "contain_fit": {
+      "mean_rgb_delta_full_crop": 112.09,
+      "mean_rgb_delta_recon_alpha_mask": 81.62
+    },
+    "stretch_fit": {
+      "mean_rgb_delta_full_crop": 84.3,
+      "mean_rgb_delta_recon_alpha_mask": 61.21
+    }
+  },
+  "decision": "Continue the synchronized asset-sheet route, but require scale_mode / nine_slice metadata and explicit decoration ownership."
+}

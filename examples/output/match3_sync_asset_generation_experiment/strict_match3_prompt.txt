@@ -1,0 +1,66 @@
+Use case: ui-mockup
+Asset type: game UI production board for a sprite split pipeline
+Primary request: Generate a portrait casual match-3 main home screen production board in a warm pastoral countryside style.
+
+Canvas:
+- Portrait 1080x1920 production board, no device frame, no watermark.
+- The board is split into two clearly separated vertical sections:
+  1. FULL_EFFECT section on top, occupying about 70% of the canvas: a complete vertical match-3 home UI mockup.
+  2. ASSET_SHEET section on bottom, occupying about 30% of the canvas: a strict fixed 4x4 grid of isolated reusable UI assets.
+
+Asset / Layer Plan:
+- The FULL_EFFECT and ASSET_SHEET must follow the same visual style and the same planned asset identities.
+- Stable asset ids represented visually:
+  - top_currency_bar_bg: reusable rounded currency bar background, no numbers and no icons in asset sheet.
+  - heart_icon, coin_icon, gem_icon: standalone currency icons.
+  - plus_button: small green rounded plus button.
+  - player_avatar_frame: empty round avatar frame with leaves and wood trim.
+  - event_banner_panel: reusable banner panel, no text in asset sheet.
+  - level_node_active: bright round level node button, no number in asset sheet.
+  - level_node_locked: locked round level node button, no number in asset sheet.
+  - play_button_bg: large primary button background, no PLAY text in asset sheet.
+  - bottom_nav_button_bg: reusable bottom tab background, no icon or label in asset sheet.
+  - red_badge_dot: small red notification badge.
+  - home_icon, team_icon, garden_icon, shop_icon: standalone bottom navigation icons.
+- Text Nodes in FULL_EFFECT only:
+  - title_text: exact text "GARDEN VALE".
+  - play_button_text: exact text "PLAY".
+  - level_number: exact text "128".
+  - coins_amount: exact text "12,450".
+  - gems_amount: exact text "320".
+- Do not bake dynamic numbers or button labels into reusable asset sheet backgrounds.
+
+FULL_EFFECT requirements:
+- A polished vertical match-3 home screen with a soft orchard village background, low contrast behind UI.
+- Top currency HUD with hearts, coins, gems, and plus buttons.
+- Top-left player avatar frame.
+- Upper-middle seasonal event banner.
+- Center winding level path panel with round level nodes, one active level marked "128".
+- Right side compact buttons for daily reward, mail, and shop.
+- Large bottom-center PLAY button.
+- Bottom navigation row with home, team, garden, and shop tabs.
+- UI hierarchy clear, orthographic, visually separable, no strong perspective.
+
+ASSET_SHEET requirements:
+- Strict fixed 4 rows x 4 columns grid.
+- Equal-size cells with dashed or subtle boundaries.
+- One asset per cell, centered with generous padding.
+- Cell order:
+  Row 1: top_currency_bar_bg, heart_icon, coin_icon, gem_icon.
+  Row 2: plus_button, player_avatar_frame, event_banner_panel, level_node_active.
+  Row 3: level_node_locked, play_button_bg, bottom_nav_button_bg, red_badge_dot.
+  Row 4: home_icon, team_icon, garden_icon, shop_icon.
+- No scene background inside cells; use a flat warm neutral or pale green backing.
+- No overlaps between cells.
+- No dynamic text, numbers, labels, or fake asset id captions inside asset cells.
+
+Style:
+- Pastoral countryside match-3 UI, cozy garden village, spring orchard, rounded wooden UI, cream panels, soft green leaves, berry-red accents, honey-gold highlights.
+- Crisp polished 2D game UI, clean edges, consistent material, same outline thickness, same lighting direction, friendly casual game feel.
+
+Avoid:
+- garbled text, extra labels, too many tiny words.
+- dynamic text baked into asset sheet backgrounds.
+- UI fused into the landscape background.
+- decorative vines crossing asset cell boundaries.
+- cropped key elements, watermarks, brand logos, device frame.

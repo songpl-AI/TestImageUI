@@ -1,0 +1,79 @@
+{
+  "screen": "slg_sync_asset_generation_experiment",
+  "status": "synchronized_generation_build_button_probe",
+  "source_image": "generated_src/full_hud.png",
+  "production_board": "generated_src/production_board.png",
+  "component_id": "build_nav_button",
+  "source_crop_bbox": [420, 735, 175, 175],
+  "generation_strategy": {
+    "type": "synchronized_effect_and_asset_family",
+    "prompt": "production_board_prompt.txt",
+    "notes": [
+      "The full HUD and standalone assets were generated from the same production-board prompt/run.",
+      "Standalone assets are not cropped from the BUILD source crop.",
+      "Magenta chroma was removed locally for assets_png outputs."
+    ]
+  },
+  "assets": [
+    {
+      "id": "bottom_nav_button_bg",
+      "type": "button_bg",
+      "output": "assets_png/bottom_nav_button_bg.png",
+      "generated_src": "generated_src/bottom_nav_button_bg_chroma.png",
+      "transparent": true,
+      "text_allowed": false,
+      "strategy": "synchronized_generated_sprite_chroma_key"
+    },
+    {
+      "id": "build_hammer_icon",
+      "type": "icon",
+      "output": "assets_png/build_hammer_icon.png",
+      "generated_src": "generated_src/build_hammer_icon_chroma.png",
+      "transparent": true,
+      "text_allowed": false,
+      "strategy": "synchronized_generated_sprite_chroma_key"
+    },
+    {
+      "id": "red_badge_dot",
+      "type": "badge_dot",
+      "output": "assets_png/red_badge_dot.png",
+      "generated_src": "generated_src/red_badge_dot_chroma.png",
+      "transparent": true,
+      "text_allowed": false,
+      "strategy": "synchronized_generated_sprite_chroma_key"
+    },
+    {
+      "id": "build_label_text",
+      "type": "dynamic_text",
+      "output": null,
+      "transparent": false,
+      "text_allowed": true,
+      "strategy": "text_node"
+    },
+    {
+      "id": "build_button_visual_state",
+      "type": "visual_state_sprite_diagnostic",
+      "output": "assets_png/build_button_visual_state.png",
+      "generated_src": "generated_src/build_button_visual_state_chroma.png",
+      "transparent": true,
+      "text_allowed": true,
+      "strategy": "diagnostic_only_baked_state"
+    }
+  ],
+  "outputs": {
+    "sprite_plan": "sprite_plan.md",
+    "layer_ir": "layer_ir.json",
+    "layout_ir": "layout_ir.json",
+    "sprite_overview": "sprite_overview.png",
+    "focused_comparison": "focused_build_button_sync_comparison.png",
+    "reconstruction": "reconstruction_build_button_from_sync_assets.png",
+    "reconstruction_on_source_bg": "reconstruction_build_button_on_source_bg.png",
+    "experiment_manifest": "experiment_manifest.json"
+  },
+  "known_limitations": [
+    "The generated full HUD and generated standalone assets are still sibling variants, not exact PSD layers.",
+    "Text Node style requires tuning.",
+    "Shadow ownership is still ambiguous and should be marked needs_manual_shadow_review.",
+    "This first probe validates one component only."
+  ]
+}

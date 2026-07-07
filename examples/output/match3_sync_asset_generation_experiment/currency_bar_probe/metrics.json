@@ -1,0 +1,34 @@
+{
+  "source_bbox_abs": [
+    186,
+    22,
+    216,
+    78
+  ],
+  "source_crop_size": [
+    216,
+    78
+  ],
+  "background_sample_rgb": [
+    95,
+    183,
+    234
+  ],
+  "contain_fit": {
+    "full_crop_mean_rgb_delta": 66.34,
+    "ui_mask_mean_rgb_delta": 66.34
+  },
+  "stretch_fit": {
+    "full_crop_mean_rgb_delta": 67.39,
+    "ui_mask_mean_rgb_delta": 67.39
+  },
+  "visual_state_proxy_not_sprite": {
+    "full_crop_mean_rgb_delta": 0.0,
+    "ui_mask_mean_rgb_delta": 0.0
+  },
+  "observations": [
+    "Asset sheet top_currency_bar_bg is a cream rounded panel with leaves; full_effect heart currency bar uses a dark brown capsule frame.",
+    "The asset sheet heart icon has no number; source heart state includes number 5, so Text Node is required.",
+    "Contain vs stretch cannot fix asset identity mismatch; nine_slice would only solve scaling if the correct dark bar asset existed."
+  ]
+}

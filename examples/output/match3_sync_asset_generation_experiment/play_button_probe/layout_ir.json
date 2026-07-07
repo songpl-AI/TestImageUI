@@ -1,0 +1,39 @@
+{
+  "screen": "pastoral_match3_play_button_probe",
+  "canvas": [
+    355,
+    96
+  ],
+  "nodes": [
+    {
+      "id": "play_button_bg",
+      "type": "button_bg",
+      "asset_strategy": "asset_sheet_extract_then_alpha_clean",
+      "source_asset_png": "assets_png/play_button_bg.png",
+      "fit_raw": "assets_fit_raw/play_button_bg.png",
+      "bbox": [
+        10,
+        8,
+        335,
+        78
+      ],
+      "z": 10,
+      "known_limitation": "asset sheet button lacks some full_effect flower/shadow details"
+    },
+    {
+      "id": "play_button_text",
+      "type": "text_node",
+      "text": "PLAY",
+      "fit_raw_preview": "assets_fit_raw/play_button_text_node_preview.png",
+      "bbox": [
+        111,
+        23,
+        138,
+        52
+      ],
+      "z": 20,
+      "known_limitation": "font and stroke are approximate"
+    }
+  ],
+  "reconstruction": "reconstruction_play_button.png"
+}

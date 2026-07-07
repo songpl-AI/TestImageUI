@@ -1,0 +1,33 @@
+{
+  "screen": "pastoral_match3_home_v2",
+  "probe": "play_button",
+  "canvas": {
+    "width": 347,
+    "height": 104
+  },
+  "nodes": [
+    {
+      "id": "play_button_bg_layer",
+      "type": "Image",
+      "asset_fit_raw": "assets_fit_raw/play_button_bg_stretch_fit.png",
+      "bbox": [
+        8,
+        4,
+        331,
+        91
+      ],
+      "scale_mode": "stretch_probe_nine_slice_expected"
+    },
+    {
+      "id": "play_button_text",
+      "type": "Text",
+      "text": "PLAY",
+      "bbox": [
+        91,
+        22,
+        166,
+        61
+      ]
+    }
+  ]
+}

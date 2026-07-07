@@ -1,0 +1,67 @@
+{
+  "screen": "pastoral_match3_home_v2",
+  "probe": "play_button",
+  "source_image": "../split/full_effect.png",
+  "asset_sheet_image": "../split/asset_sheet.png",
+  "source_bbox_abs": [
+    274,
+    833,
+    347,
+    104
+  ],
+  "assets": [
+    {
+      "id": "play_button_bg",
+      "source": "asset_sheet_cell",
+      "cell_bbox": [
+        229,
+        337,
+        216,
+        161
+      ],
+      "output": "assets_png/play_button_bg.png",
+      "transparent": true
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "play_button_text",
+      "text": "PLAY",
+      "bbox": [
+        91,
+        22,
+        166,
+        61
+      ]
+    }
+  ],
+  "metrics": {
+    "source_bbox_abs": [
+      274,
+      833,
+      347,
+      104
+    ],
+    "source_crop_size": [
+      347,
+      104
+    ],
+    "contain_fit": {
+      "full_crop_mean_rgb_delta": 51.59,
+      "ui_mask_mean_rgb_delta": 51.59
+    },
+    "stretch_fit": {
+      "full_crop_mean_rgb_delta": 54.17,
+      "ui_mask_mean_rgb_delta": 54.17
+    },
+    "visual_state_proxy_not_sprite": {
+      "full_crop_mean_rgb_delta": 0.0,
+      "ui_mask_mean_rgb_delta": 0.0
+    },
+    "observations": [
+      "V2 play_button_bg uses the correct green primary button variant and is cleaner than a post-hoc crop.",
+      "Stretch fit is much closer than contain for the wide button bbox, but flower decorations remain separate/missing from the asset sheet.",
+      "The remaining mismatch is mostly scale_mode/nine-slice plus decoration ownership, not asset variant mismatch."
+    ]
+  }
+}

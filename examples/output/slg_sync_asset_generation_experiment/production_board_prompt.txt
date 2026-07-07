@@ -1,0 +1,33 @@
+Use case: game UI production board for a sprite split pipeline.
+Create one polished 2D game UI production board for a horizontal SLG / kingdom builder mobile game.
+Canvas: wide landscape production board, no device frame, no watermark.
+
+Board layout:
+- LEFT: a complete 16:9 in-game main HUD mockup preview, showing a fantasy kingdom map background with clean UI overlay.
+- RIGHT: an isolated asset family sheet using the same exact visual style as the LEFT preview.
+
+Shared style across both sides:
+- premium fantasy SLG game UI, painterly but crisp 2D game interface
+- deep blue enamel panels, beveled gold trims, warm highlights, small red notification badges, polished resource icons
+- consistent material, same outline thickness, same lighting direction, same icon rendering style
+- clean orthographic UI, no strong perspective
+
+LEFT full HUD preview must include:
+- top resource strip with four resource capsules: wood, food, gold, gems
+- bottom navigation row with five buttons: HERO, BUILD, ARMY, QUEST, MAP
+- BUILD button includes a hammer icon and a small red notification badge
+- right-side quest panel with 3 compact quest rows
+- top-left player profile frame and power panel
+- dynamic text should be short and legible, but not ornate
+
+RIGHT isolated asset family sheet must include clean standalone assets, each separated with padding and no background scene:
+- bottom_nav_button_bg, build_hammer_icon, red_badge_dot
+- resource_capsule_bg, wood_icon, food_icon, gold_icon, gem_icon, plus_button
+- quest_panel_bg, quest_row_bg, quest_scroll_icon
+- player_avatar_frame, power_panel_bg
+- no dynamic text baked into asset sheet items
+
+Engineering constraints:
+- UI parts should be visually separable for later standalone sprite generation
+- asset sheet items should be isolated, centered in their cells, with transparent-looking or flat neutral backing, no overlaps between items
+- avoid tiny illegible text, garbled text, decorative elements crossing UI borders, fused UI/background edges, photorealism

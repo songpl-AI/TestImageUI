@@ -4,28 +4,60 @@ import argparse
 import shutil
 from pathlib import Path
 
-from PIL import Image
-
-from src.assets.pipeline import generate_direct_assets, generate_regenerated_assets
-from src.assets.regen_tasks import export_regenerate_tasks
-from src.exporters.layout_ir import build_layout_ir, save_layout_ir
-from src.ir.layer_ir import load_layer_ir, validate_layer_ir
-from src.reconstruction.renderer import build_comparison, reconstruct
-from src.report.markdown_report import build_report
+from src.spec.planner import export_spec_plan
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="AI UI split pipeline MVP")
-    parser.add_argument("--input", required=True, type=Path, help="source UI effect image")
-    parser.add_argument("--layer-ir", required=True, type=Path, help="Layer IR JSON")
+    parser.add_argument("--input", type=Path, help="source UI effect image")
+    parser.add_argument("--layer-ir", type=Path, help="Layer IR JSON")
+    parser.add_argument("--brief", type=Path, help="natural-language generation brief JSON")
     parser.add_argument("--output", required=True, type=Path, help="output directory")
     parser.add_argument(
         "--mode",
         default="full",
-        choices=["validate", "direct", "regenerate", "prepare-regenerate", "rebuild", "full"],
+        choices=["plan-spec", "validate", "direct", "regenerate", "prepare-regenerate", "rebuild", "full"],
         help="pipeline mode",
     )
     args = parser.parse_args()
+
+    if args.mode == "plan-spec":
+        if not args.brief:
+            parser.error("--brief is required when --mode plan-spec")
+        result = export_spec_plan(args.brief, args.output)
+        print(f"Wrote {result.ui_spec_path}")
+        print(f"Wrote {result.layer_ir_path}")
+        print(f"Wrote {result.layout_ir_path}")
+        print(f"Wrote {result.sprite_manifest_path}")
+        print(f"Wrote {result.full_effect_prompt_path}")
+        print(f"Wrote {result.production_board_prompt_path}")
+        print(f"Wrote {result.sprite_plan_path}")
+        print(f"Wrote {result.validation_report_path}")
+        print(f"Asset prompts: {result.asset_prompt_count}")
+        if result.validation_errors:
+            print("Spec validation failed:")
+            for error in result.validation_errors:
+                print(f"- {error}")
+            return 1
+        if result.validation_warnings:
+            print("Spec validation warnings:")
+            for warning in result.validation_warnings:
+                print(f"- {warning}")
+        return 0
+
+    if not args.input:
+        parser.error("--input is required unless --mode plan-spec")
+    if not args.layer_ir:
+        parser.error("--layer-ir is required unless --mode plan-spec")
+
+    from PIL import Image
+
+    from src.assets.pipeline import generate_direct_assets, generate_regenerated_assets
+    from src.assets.regen_tasks import export_regenerate_tasks
+    from src.exporters.layout_ir import build_layout_ir, save_layout_ir
+    from src.ir.layer_ir import load_layer_ir, validate_layer_ir
+    from src.reconstruction.renderer import build_comparison, reconstruct
+    from src.report.markdown_report import build_report
 
     source_image = Image.open(args.input).convert("RGBA")
     layer_ir = load_layer_ir(args.layer_ir)

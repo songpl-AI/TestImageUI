@@ -213,3 +213,25 @@
 - 修正动作：输出至少两类 mask 对照：实体 mask 和实体+shadow mask；比较 sprite_overview 的底板洁净度、回贴 delta 和视觉漂移。若 shadow 拆层没有提升，不要继续盲目更换 inpaint 模型，应把 shadow 归属交给人工确认或依赖 PSD/人工修图。
 - 验证方式：同时检查 `build_button_bg*.png` 是否残留 icon 阴影、`focused_lama*_comparison.png` 的局部效果、Text Node/fixed text 两套 delta，以及 visual-state diagnostic 仍然作为视觉上限。
 - 来源：SLG `build_nav_button_lama_inpaint_extract` 实验中，SAM/rembg layered + Text Node delta 为 21.89，LaMa layered + Text Node delta 为 20.67；SAM/rembg fixed text delta 为 15.84，LaMa fixed text delta 为 14.59；提升存在但不大，且 button_bg 仍可见锤子阴影/遮挡痕迹。随后 `build_nav_button_shadow_layer_extract` 实验中，previous LaMa + fixed text 为 14.59，shadow small + fixed text 为 14.71，shadow medium + fixed text 为 15.33，说明自动 shadow 拆层会略微变差。
+
+### KI-20260707-sync-asset-sheet-needs-scale-mode
+
+- 状态：active
+- 触发条件：使用同步生成的 `full_effect + asset_sheet` production board，并从 asset sheet 提取按钮底板、货币条、面板等可拉伸 UI 背景做回贴。
+- 问题表现：asset sheet 中的无字按钮底板是干净独立素材，但用 contain/等比 fit 回贴到 full_effect 的宽按钮 bbox 时明显过短；改用 stretch fit 更接近，但会拉伸边角、叶子或装饰。
+- 根因：按钮底、货币条、面板等 UI 背景在引擎里通常依赖九宫格/切片拉伸，而不是用自然尺寸等比缩放。同步生成能改善风格一致性，但不会自动给出 `scale_mode`、九宫格边界和装饰归属。
+- 预防规则：Asset / Layer Plan 与 Layer IR 中必须为可拉伸背景记录 `scale_mode`，至少区分 `contain`、`stretch`、`nine_slice`；对按钮花朵、叶子、角标等装饰，明确是 baked into bg 还是 separate decoration layer。
+- 修正动作：回贴验证时至少输出 contain 与 stretch 两个对照；若 stretch 明显优于 contain，则不要继续调 prompt，优先补 `nine_slice` 元数据和装饰归属人工确认项。
+- 验证方式：输出 source / contain fit / stretch fit 对比图；检查 `assets_fit_raw` 的画布是否来自 IR bbox；记录 full-crop delta 与 alpha-mask delta，但以视觉和装饰归属判断为主。
+- 来源：Pastoral Match-3 `play_button_probe` 中，`play_button_bg` contain fit 的 full-crop delta 为 112.09、alpha-mask delta 为 81.62；stretch fit 改善为 84.30 / 61.21，但仍缺少 full_effect 中的花朵装饰和正确九宫格边界。
+
+### KI-20260707-sync-asset-sheet-variant-mismatch
+
+- 状态：active
+- 触发条件：使用同步生成的 `full_effect + asset_sheet` production board，并假设同名 asset id 的 asset-sheet 单元就是 full-effect 中对应 layer 的可复用底图。
+- 问题表现：asset sheet 的网格结构和命名看起来正确，但某个资产的视觉 variant 与 full-effect 中实际使用的 layer 不一致；例如 asset sheet 给出浅色 cream panel，而 full-effect 顶部资源条使用深棕 capsule slot。
+- 根因：prompt 只约束了“需要哪些 asset id”，没有强约束“asset_sheet 单元必须是 full_effect 同名 layer 的同款 base art，只移除动态文字和子元素”。模型会把 asset sheet 当成同风格素材清单，而不是严格的图层引用表。
+- 预防规则：Asset / Layer Plan 必须写清楚每个 full_effect layer id 与 asset_sheet cell 的一一对应关系；asset_sheet 中的 base layer 必须保持相同 silhouette、材质、颜色、描边、边角和装饰归属，只能删除文字、icon、数字等 child layers。
+- 修正动作：发现 variant mismatch 时，不要继续调 contain/stretch/nine_slice；先回到 prompt contract，要求重新生成正确 asset variant。只有拿到正确 base art 后，才验证 `scale_mode` 和九宫格。
+- 验证方式：对至少两个不同类型组件做局部回贴对比；如果 contain/stretch 指标接近且都很差，同时肉眼看到颜色/材质/形状不一致，应判定为 asset identity mismatch。
+- 来源：Pastoral Match-3 `currency_bar_probe` 中，`top_currency_bar_bg + heart_icon + plus_button + Text Node("5")` 的 contain delta 为 66.34，stretch delta 为 67.39；问题是浅色 asset-sheet bar 与深棕 full-effect bar 不同款，缩放策略无法修复。

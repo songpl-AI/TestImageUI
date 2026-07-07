@@ -1,0 +1,57 @@
+{
+  "screen": "pastoral_match3_home_v2",
+  "probe": "heart_currency_bar",
+  "canvas": {
+    "width": 193,
+    "height": 67
+  },
+  "nodes": [
+    {
+      "id": "top_currency_bar_bg_layer",
+      "type": "Image",
+      "asset_fit_raw": "assets_fit_raw/top_currency_bar_bg_stretch_fit.png",
+      "bbox": [
+        28,
+        9,
+        160,
+        49
+      ],
+      "scale_mode": "stretch_probe_nine_slice_expected"
+    },
+    {
+      "id": "heart_icon_layer",
+      "type": "Image",
+      "asset_fit_raw": "assets_fit_raw/heart_icon_fit.png",
+      "bbox": [
+        0,
+        0,
+        71,
+        67
+      ],
+      "scale_mode": "contain"
+    },
+    {
+      "id": "heart_count_text",
+      "type": "Text",
+      "text": "5",
+      "bbox": [
+        24,
+        17,
+        31,
+        34
+      ]
+    },
+    {
+      "id": "plus_button_layer",
+      "type": "Image",
+      "asset_fit_raw": "assets_fit_raw/plus_button_fit.png",
+      "bbox": [
+        142,
+        12,
+        48,
+        48
+      ],
+      "scale_mode": "contain"
+    }
+  ]
+}

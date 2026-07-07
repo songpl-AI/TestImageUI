@@ -1,0 +1,705 @@
+{
+  "version": "0.1",
+  "screen_name": "spec_driven_shop_bundle",
+  "ui_type": "shop_bundle",
+  "source": {
+    "brief_path": "examples/input/spec_driven_shop_request.json",
+    "natural_language": "Generate a vertical mobile game shop bundle screen for a pastoral match-3 game. It should have a spring garden mood, a centered shop panel, three product cards, a currency counter, a close button, a red hot-deal ribbon, and one primary buy button. The result must be suitable for later standalone sprite generation and layout reconstruction."
+  },
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "style": {
+    "theme": "pastoral spring shop with garden leaves, soft sunlight, fruit and flower accents",
+    "game_genre": "casual match-3 mobile game",
+    "visual_style": "polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, consistent painterly highlights",
+    "palette": [
+      "mint green",
+      "cream",
+      "warm gold",
+      "berry red",
+      "soft sky blue"
+    ],
+    "material": "painted enamel, soft fabric panel centers, polished gold trim, subtle candy-like highlights"
+  },
+  "contract": {
+    "source_of_truth": "ui_spec_json",
+    "full_effect": "visual target only; it must not define final positions or sizes",
+    "assets_png": "reusable clean source sprites; natural dimensions are not layout dimensions",
+    "assets_fit_raw": "one fitted instance per layer bbox for reconstruction",
+    "text_policy": "dynamic text remains Text Node; only fixed title art may be sprite text",
+    "image_generation_risk": "full effect and asset sheet may drift; validate with reconstruction"
+  },
+  "layers": [
+    {
+      "id": "background_scene",
+      "type": "image",
+      "role": "background_scene",
+      "bbox": [
+        0,
+        0,
+        720,
+        1280
+      ],
+      "z": 0,
+      "asset_id": "background_scene",
+      "asset_strategy": "regenerate",
+      "transparent": false,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "cover",
+      "prompt_subject": "low contrast spring garden background behind a mobile game shop UI",
+      "text": null
+    },
+    {
+      "id": "main_panel_bg",
+      "type": "image",
+      "role": "panel_background",
+      "bbox": [
+        60,
+        186,
+        600,
+        922
+      ],
+      "z": 10,
+      "asset_id": "main_panel_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "large rounded shop panel background with gold trim, no text, no icons",
+      "text": null
+    },
+    {
+      "id": "title_board",
+      "type": "image",
+      "role": "title_board",
+      "bbox": [
+        180,
+        109,
+        360,
+        154
+      ],
+      "z": 20,
+      "asset_id": "title_board",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "ornate green and gold title plate without text",
+      "text": null
+    },
+    {
+      "id": "title_logo",
+      "type": "image",
+      "role": "fixed_art_text",
+      "bbox": [
+        198,
+        147,
+        324,
+        77
+      ],
+      "z": 21,
+      "asset_id": "title_logo",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "fixed art title text \"SPRING SHOP\" in polished game UI lettering",
+      "text": "SPRING SHOP"
+    },
+    {
+      "id": "currency_bar_bg",
+      "type": "image",
+      "role": "currency_bar_background",
+      "bbox": [
+        446,
+        70,
+        202,
+        70
+      ],
+      "z": 25,
+      "asset_id": "currency_bar_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "compact capsule currency bar background, no icon, no number",
+      "text": null
+    },
+    {
+      "id": "coin_icon",
+      "type": "image",
+      "role": "currency_icon",
+      "bbox": [
+        457,
+        78,
+        32,
+        32
+      ],
+      "z": 26,
+      "asset_id": "coin_icon",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "small gold coin icon with clean transparent edge",
+      "text": null
+    },
+    {
+      "id": "currency_amount_text",
+      "type": "text",
+      "role": "dynamic_text_currency_amount",
+      "bbox": [
+        497,
+        78,
+        108,
+        51
+      ],
+      "z": 27,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "3200"
+    },
+    {
+      "id": "close_button",
+      "type": "image",
+      "role": "close_button",
+      "bbox": [
+        605,
+        166,
+        58,
+        58
+      ],
+      "z": 30,
+      "asset_id": "close_button",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "round close button with gold rim and red center, no background",
+      "text": null
+    },
+    {
+      "id": "hot_deal_ribbon_bg",
+      "type": "image",
+      "role": "subtitle_ribbon_background",
+      "bbox": [
+        204,
+        347,
+        312,
+        65
+      ],
+      "z": 35,
+      "asset_id": "hot_deal_ribbon_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "stretch",
+      "prompt_subject": "wide red and gold subtitle ribbon background, no text",
+      "text": null
+    },
+    {
+      "id": "hot_deal_text",
+      "type": "text",
+      "role": "dynamic_text_subtitle",
+      "bbox": [
+        252,
+        361,
+        216,
+        37
+      ],
+      "z": 36,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "HOT DEAL"
+    },
+    {
+      "id": "product_card_1_bg",
+      "type": "image",
+      "role": "product_card_background",
+      "bbox": [
+        108,
+        444,
+        153,
+        433
+      ],
+      "z": 50,
+      "asset_id": "product_card_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "reusable product card background with rounded cream center and green-gold frame, no text, no icon",
+      "text": null
+    },
+    {
+      "id": "product_card_1_item_icon",
+      "type": "image",
+      "role": "reward_item_icon",
+      "bbox": [
+        139,
+        505,
+        92,
+        92
+      ],
+      "z": 51,
+      "asset_id": "reward_icon_1",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "standalone shop reward icon variant 1, matching spring match-3 UI style",
+      "text": null
+    },
+    {
+      "id": "product_card_1_discount_badge_bg",
+      "type": "image",
+      "role": "discount_badge_background",
+      "bbox": [
+        184,
+        429,
+        73,
+        56
+      ],
+      "z": 52,
+      "asset_id": "discount_badge_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "stretch",
+      "prompt_subject": "small red discount ribbon badge background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_1_discount_text",
+      "type": "text",
+      "role": "dynamic_text_discount",
+      "bbox": [
+        191,
+        438,
+        58,
+        35
+      ],
+      "z": 53,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "20%"
+    },
+    {
+      "id": "product_card_1_count_text",
+      "type": "text",
+      "role": "dynamic_text_item_count",
+      "bbox": [
+        151,
+        673,
+        67,
+        35
+      ],
+      "z": 54,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "x50"
+    },
+    {
+      "id": "product_card_1_price_tag_bg",
+      "type": "image",
+      "role": "price_tag_background",
+      "bbox": [
+        132,
+        756,
+        104,
+        65
+      ],
+      "z": 55,
+      "asset_id": "price_tag_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "small rounded price tag background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_1_price_text",
+      "type": "text",
+      "role": "dynamic_text_price",
+      "bbox": [
+        149,
+        767,
+        70,
+        39
+      ],
+      "z": 56,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "$3"
+    },
+    {
+      "id": "product_card_2_bg",
+      "type": "image",
+      "role": "product_card_background",
+      "bbox": [
+        285,
+        444,
+        153,
+        433
+      ],
+      "z": 60,
+      "asset_id": "product_card_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "reusable product card background with rounded cream center and green-gold frame, no text, no icon",
+      "text": null
+    },
+    {
+      "id": "product_card_2_item_icon",
+      "type": "image",
+      "role": "reward_item_icon",
+      "bbox": [
+        316,
+        505,
+        92,
+        92
+      ],
+      "z": 61,
+      "asset_id": "reward_icon_2",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "standalone shop reward icon variant 2, matching spring match-3 UI style",
+      "text": null
+    },
+    {
+      "id": "product_card_2_discount_badge_bg",
+      "type": "image",
+      "role": "discount_badge_background",
+      "bbox": [
+        361,
+        429,
+        73,
+        56
+      ],
+      "z": 62,
+      "asset_id": "discount_badge_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "stretch",
+      "prompt_subject": "small red discount ribbon badge background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_2_discount_text",
+      "type": "text",
+      "role": "dynamic_text_discount",
+      "bbox": [
+        368,
+        438,
+        58,
+        35
+      ],
+      "z": 63,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "40%"
+    },
+    {
+      "id": "product_card_2_count_text",
+      "type": "text",
+      "role": "dynamic_text_item_count",
+      "bbox": [
+        328,
+        673,
+        67,
+        35
+      ],
+      "z": 64,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "x3"
+    },
+    {
+      "id": "product_card_2_price_tag_bg",
+      "type": "image",
+      "role": "price_tag_background",
+      "bbox": [
+        309,
+        756,
+        104,
+        65
+      ],
+      "z": 65,
+      "asset_id": "price_tag_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "small rounded price tag background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_2_price_text",
+      "type": "text",
+      "role": "dynamic_text_price",
+      "bbox": [
+        326,
+        767,
+        70,
+        39
+      ],
+      "z": 66,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "$6"
+    },
+    {
+      "id": "product_card_3_bg",
+      "type": "image",
+      "role": "product_card_background",
+      "bbox": [
+        462,
+        444,
+        153,
+        433
+      ],
+      "z": 70,
+      "asset_id": "product_card_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "reusable product card background with rounded cream center and green-gold frame, no text, no icon",
+      "text": null
+    },
+    {
+      "id": "product_card_3_item_icon",
+      "type": "image",
+      "role": "reward_item_icon",
+      "bbox": [
+        493,
+        505,
+        92,
+        92
+      ],
+      "z": 71,
+      "asset_id": "reward_icon_3",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "contain",
+      "prompt_subject": "standalone shop reward icon variant 3, matching spring match-3 UI style",
+      "text": null
+    },
+    {
+      "id": "product_card_3_discount_badge_bg",
+      "type": "image",
+      "role": "discount_badge_background",
+      "bbox": [
+        538,
+        429,
+        73,
+        56
+      ],
+      "z": 72,
+      "asset_id": "discount_badge_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "scale_mode": "stretch",
+      "prompt_subject": "small red discount ribbon badge background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_3_discount_text",
+      "type": "text",
+      "role": "dynamic_text_discount",
+      "bbox": [
+        545,
+        438,
+        58,
+        35
+      ],
+      "z": 73,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "60%"
+    },
+    {
+      "id": "product_card_3_count_text",
+      "type": "text",
+      "role": "dynamic_text_item_count",
+      "bbox": [
+        505,
+        673,
+        67,
+        35
+      ],
+      "z": 74,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "x1"
+    },
+    {
+      "id": "product_card_3_price_tag_bg",
+      "type": "image",
+      "role": "price_tag_background",
+      "bbox": [
+        486,
+        756,
+        104,
+        65
+      ],
+      "z": 75,
+      "asset_id": "price_tag_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "small rounded price tag background, no text",
+      "text": null
+    },
+    {
+      "id": "product_card_3_price_text",
+      "type": "text",
+      "role": "dynamic_text_price",
+      "bbox": [
+        503,
+        767,
+        70,
+        39
+      ],
+      "z": 76,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "$9"
+    },
+    {
+      "id": "buy_button_bg",
+      "type": "image",
+      "role": "button_background",
+      "bbox": [
+        223,
+        933,
+        274,
+        109
+      ],
+      "z": 90,
+      "asset_id": "buy_button_bg",
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "scale_mode": "nine_slice",
+      "prompt_subject": "large green primary buy button background with gold trim, no text",
+      "text": null
+    },
+    {
+      "id": "buy_button_text",
+      "type": "text",
+      "role": "dynamic_text_button_label",
+      "bbox": [
+        281,
+        951,
+        158,
+        58
+      ],
+      "z": 91,
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "scale_mode": "text",
+      "text": "BUY"
+    }
+  ]
+}

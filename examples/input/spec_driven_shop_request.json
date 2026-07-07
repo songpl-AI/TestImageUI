@@ -1,0 +1,41 @@
+{
+  "screen_name": "spec_driven_shop_bundle",
+  "ui_type": "shop_bundle",
+  "natural_language": "Generate a vertical mobile game shop bundle screen for a pastoral match-3 game. It should have a spring garden mood, a centered shop panel, three product cards, a currency counter, a close button, a red hot-deal ribbon, and one primary buy button. The result must be suitable for later standalone sprite generation and layout reconstruction.",
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "game_genre": "casual match-3 mobile game",
+  "theme": "pastoral spring shop with garden leaves, soft sunlight, fruit and flower accents",
+  "visual_style": "polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, consistent painterly highlights",
+  "material": "painted enamel, soft fabric panel centers, polished gold trim, subtle candy-like highlights",
+  "palette": [
+    "mint green",
+    "cream",
+    "warm gold",
+    "berry red",
+    "soft sky blue"
+  ],
+  "text": {
+    "title": "SPRING SHOP",
+    "deal_label": "HOT DEAL",
+    "buy_button": "BUY",
+    "currency_amount": "3200",
+    "prices": [
+      "$3",
+      "$6",
+      "$9"
+    ],
+    "item_counts": [
+      "x50",
+      "x3",
+      "x1"
+    ],
+    "discounts": [
+      "20%",
+      "40%",
+      "60%"
+    ]
+  }
+}

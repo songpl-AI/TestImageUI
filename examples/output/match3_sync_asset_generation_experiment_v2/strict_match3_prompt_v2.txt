@@ -1,0 +1,99 @@
+Use case: ui-mockup
+Asset type: game UI production board for a sprite split pipeline
+Primary request: Generate a portrait casual match-3 mobile home screen production board in a pastoral countryside garden style.
+
+Canvas:
+- One tall portrait bitmap, no device frame, no watermark, no brand logo.
+- The board must have exactly two stacked sections:
+  1. Top section: FULL_EFFECT, a complete playable-looking vertical match-3 home UI mockup.
+  2. Bottom section: ASSET_SHEET, a fixed 4x4 grid of isolated reusable UI assets.
+- Keep the section boundary visually clear. The asset sheet should occupy the bottom part of the image.
+
+Art direction:
+- Pastoral spring countryside, soft orchard, cozy cottage, fruit garden, rounded wood UI, warm honey-gold trim, glossy green buttons, cream parchment panels, red berry and leaf accents.
+- Crisp polished 2D casual game UI, thick clean outline, consistent material, consistent lighting direction, orthographic front-facing UI.
+- Background supports the UI and stays lower contrast than foreground. No background decoration should cross important UI borders.
+
+FULL_EFFECT requirements:
+- A complete vertical match-3 home screen with:
+  - top avatar frame
+  - top heart, coin, and gem currency bars
+  - title logo text "GARDEN VALE"
+  - event banner panel
+  - winding level map with locked level nodes and one active level node
+  - right-side gift, mail, and shop buttons
+  - large bottom-center PLAY button
+  - bottom nav bar with four tabs
+- Dynamic text must be short, clear, and replaceable:
+  - title_text fixed art candidate: "GARDEN VALE"
+  - play_button_text: "PLAY"
+  - active_level_number: "128"
+  - heart_count: "5"
+  - coins_amount: "12,450"
+  - gems_amount: "320"
+
+ASSET / LAYER PLAN:
+- Stable asset ids must be represented visually and consistently.
+- The asset sheet cells must be the exact reusable base layer or icon used by the matching full_effect layer.
+- Every full_effect layer that has a matching asset_sheet id must use the same base art variant.
+- The asset_sheet cell must show the same silhouette, color family, material, border thickness, corner style, lighting, and decoration ownership as the matching full_effect layer.
+- Do not invent a different but same-style replacement asset for the asset sheet.
+- For base backgrounds, remove only dynamic text and child layers such as icons, numbers, badges, and plus buttons.
+- For icons, show the same icon art used in full_effect, isolated and centered.
+- For nine-slice candidates, keep corners and decorative end caps visually separable from the stretchable center.
+
+CRITICAL binding examples:
+- full_effect top currency bars must use top_currency_bar_bg as their base layer.
+- asset_sheet top_currency_bar_bg must be the same dark-brown capsule resource-slot base from full_effect, with no heart, no coin, no gem, no plus button, and no numbers.
+- full_effect PLAY button must use play_button_bg as its base layer.
+- asset_sheet play_button_bg must be the same green rounded primary button base from full_effect, with no "PLAY" text and no child text.
+- asset_sheet bottom_nav_button_bg must match the full_effect bottom tab button base, without icons or labels.
+
+ASSET_SHEET fixed grid:
+- Fixed 4 rows x 4 columns, equal-size cells.
+- One isolated asset per cell, centered, with generous padding.
+- Use a flat pale neutral background inside the sheet, with clear thin cell separators.
+- No dynamic text baked into reusable assets.
+- No labels, captions, ids, or fake text inside asset cells.
+- No overlaps between cells.
+
+Cell order:
+Row 1:
+1. top_currency_bar_bg: dark-brown capsule resource-slot base, nine_slice_expected, no numbers, no icons, no plus button
+2. heart_icon: clean standalone red heart icon, same as full_effect heart currency icon, no number
+3. coin_icon: clean standalone gold coin icon, same as full_effect coin currency icon, no number
+4. gem_icon: clean standalone purple gem icon, same as full_effect gem currency icon, no number
+
+Row 2:
+1. plus_button: clean standalone green plus button, same as full_effect currency plus button
+2. player_avatar_frame: empty round wooden avatar frame, no portrait
+3. event_banner_panel: same event banner base used in full_effect, no text
+4. level_node_active: active green level node base, no number
+
+Row 3:
+1. level_node_locked: locked level node button state, no number
+2. play_button_bg: same green primary PLAY button base from full_effect, nine_slice_expected, no text
+3. bottom_nav_button_bg: same bottom tab button base from full_effect, no icon, no label
+4. red_badge_dot: clean standalone notification badge dot
+
+Row 4:
+1. home_icon: clean standalone home icon
+2. team_icon: clean standalone team icon
+3. garden_icon: clean standalone flower pot or garden icon
+4. shop_icon: clean standalone shop icon
+
+Engineering constraints:
+- This image will be used for Sprite Plan, Layer IR, Layout IR, and reconstruction validation.
+- UI elements should be visually separable for later standalone sprite generation.
+- Buttons, panels, bars, icons, badges, and level nodes must have clear boundaries.
+- Dynamic text should be short, legible, and easy to replace as Text Nodes.
+- Do not fuse UI edges into the background.
+
+Avoid:
+- device frame, watermark, brand logo
+- garbled text, extra labels, tiny fake text
+- asset ids printed in the image
+- UI elements fused into the background
+- strong perspective, tilted UI, cropped key elements
+- shadows crossing asset sheet cell boundaries
+- asset sheet cells that are merely same-style alternatives instead of the exact full_effect base layer

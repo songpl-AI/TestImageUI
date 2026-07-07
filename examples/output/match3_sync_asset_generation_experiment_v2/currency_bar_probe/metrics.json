@@ -1,0 +1,29 @@
+{
+  "source_bbox_abs": [
+    189,
+    26,
+    193,
+    67
+  ],
+  "source_crop_size": [
+    193,
+    67
+  ],
+  "contain_fit": {
+    "full_crop_mean_rgb_delta": 55.3,
+    "ui_mask_mean_rgb_delta": 55.3
+  },
+  "stretch_fit": {
+    "full_crop_mean_rgb_delta": 54.7,
+    "ui_mask_mean_rgb_delta": 54.7
+  },
+  "visual_state_proxy_not_sprite": {
+    "full_crop_mean_rgb_delta": 0.0,
+    "ui_mask_mean_rgb_delta": 0.0
+  },
+  "observations": [
+    "V2 asset_sheet top_currency_bar_bg is now the correct dark-brown capsule variant, unlike V1.",
+    "Stretch fit is still needed for the currency bar base because the visible full-effect slot is wider/shorter than the natural extracted sheet asset.",
+    "Remaining delta comes from fit/insets, the text rendering approximation, and small plus/heart scale differences rather than a cream-vs-brown variant mismatch."
+  ]
+}

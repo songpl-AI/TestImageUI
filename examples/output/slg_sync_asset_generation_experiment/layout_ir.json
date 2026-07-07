@@ -1,0 +1,51 @@
+{
+  "screen": "slg_sync_asset_generation_build_button",
+  "canvas": [
+    175,
+    175
+  ],
+  "nodes": [
+    {
+      "id": "bottom_nav_button_bg",
+      "bbox": [
+        3,
+        2,
+        162,
+        162
+      ],
+      "z": 10
+    },
+    {
+      "id": "build_hammer_icon",
+      "bbox": [
+        43,
+        20,
+        80,
+        74
+      ],
+      "z": 20
+    },
+    {
+      "id": "red_badge_dot",
+      "bbox": [
+        132,
+        20,
+        31,
+        31
+      ],
+      "z": 30
+    },
+    {
+      "id": "build_label_text",
+      "bbox": [
+        34,
+        130,
+        108,
+        32
+      ],
+      "z": 40,
+      "text": "BUILD",
+      "font_size": 26
+    }
+  ]
+}

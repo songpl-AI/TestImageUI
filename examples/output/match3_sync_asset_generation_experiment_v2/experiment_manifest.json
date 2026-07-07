@@ -1,0 +1,68 @@
+{
+  "id": "pastoral_match3_sync_asset_generation_v2_20260707",
+  "branch": "codex/sync-effect-asset-generation",
+  "source_generation": "pastoral_match3_production_board_v2.png",
+  "goal": "Validate stricter layer-to-asset binding for full_effect + asset_sheet generation.",
+  "split_y": 1105,
+  "probes": {
+    "currency_bar": {
+      "source_bbox_abs": [
+        189,
+        26,
+        193,
+        67
+      ],
+      "source_crop_size": [
+        193,
+        67
+      ],
+      "contain_fit": {
+        "full_crop_mean_rgb_delta": 55.3,
+        "ui_mask_mean_rgb_delta": 55.3
+      },
+      "stretch_fit": {
+        "full_crop_mean_rgb_delta": 54.7,
+        "ui_mask_mean_rgb_delta": 54.7
+      },
+      "visual_state_proxy_not_sprite": {
+        "full_crop_mean_rgb_delta": 0.0,
+        "ui_mask_mean_rgb_delta": 0.0
+      },
+      "observations": [
+        "V2 asset_sheet top_currency_bar_bg is now the correct dark-brown capsule variant, unlike V1.",
+        "Stretch fit is still needed for the currency bar base because the visible full-effect slot is wider/shorter than the natural extracted sheet asset.",
+        "Remaining delta comes from fit/insets, the text rendering approximation, and small plus/heart scale differences rather than a cream-vs-brown variant mismatch."
+      ]
+    },
+    "play_button": {
+      "source_bbox_abs": [
+        274,
+        833,
+        347,
+        104
+      ],
+      "source_crop_size": [
+        347,
+        104
+      ],
+      "contain_fit": {
+        "full_crop_mean_rgb_delta": 51.59,
+        "ui_mask_mean_rgb_delta": 51.59
+      },
+      "stretch_fit": {
+        "full_crop_mean_rgb_delta": 54.17,
+        "ui_mask_mean_rgb_delta": 54.17
+      },
+      "visual_state_proxy_not_sprite": {
+        "full_crop_mean_rgb_delta": 0.0,
+        "ui_mask_mean_rgb_delta": 0.0
+      },
+      "observations": [
+        "V2 play_button_bg uses the correct green primary button variant and is cleaner than a post-hoc crop.",
+        "Visually, stretch fit better matches the wide button body, but this full-crop metric is affected by side flowers and garden background pixels; contain can score lower despite being obviously too small.",
+        "The remaining mismatch is mostly scale_mode/nine-slice plus decoration ownership, not asset variant mismatch."
+      ]
+    }
+  },
+  "conclusion": "V2 fixes the obvious currency_bar asset variant mismatch. Remaining problems shift to fit strategy, nine-slice metadata, Text Node styling, and decoration ownership."
+}

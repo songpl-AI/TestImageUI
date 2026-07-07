@@ -1,0 +1,11 @@
+- Generate a clean standalone game UI sprite for asset `main_panel_bg`.
+- Subject: large rounded shop panel background with gold trim, no text, no icons.
+- Match the shared style: polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, consistent painterly highlights; painted enamel, soft fabric panel centers, polished gold trim, subtle candy-like highlights.
+- Palette anchor: mint green, cream, warm gold, berry red, soft sky blue.
+- The sprite must match the same visual variant used in the full_effect UI Spec.
+- Center the subject with modest padding; the generated natural size is not the engineering layout size.
+- Scale mode after generation: nine_slice.
+- Output with transparent background, or on a perfectly uniform chroma-key background for later alpha extraction.
+- Do not include any text, letters, numbers, labels, icons from child layers, or neighboring UI elements.
+- Keep corners and edges suitable for nine-slice scaling; avoid baked text or centered child content.
+- This is an engineering sprite, not a rectangular crop from the full image.

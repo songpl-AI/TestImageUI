@@ -1,0 +1,41 @@
+{
+  "canvas_size": [
+    347,
+    104
+  ],
+  "source_bbox_abs": [
+    274,
+    833,
+    347,
+    104
+  ],
+  "layers": {
+    "play_button_bg_layer": {
+      "asset_id": "play_button_bg",
+      "bbox": [
+        8,
+        4,
+        331,
+        91
+      ],
+      "z": 10,
+      "scale_modes": [
+        "contain",
+        "stretch",
+        "nine_slice_expected"
+      ],
+      "notes": "Full-effect source crop includes flower decorations at both sides; asset sheet play_button_bg is only the reusable green base."
+    },
+    "play_button_text": {
+      "type": "dynamic_text",
+      "text": "PLAY",
+      "bbox": [
+        91,
+        22,
+        166,
+        61
+      ],
+      "z": 20
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "full_crop_sync_assets_vs_source_delta": 85.15,
+  "alpha_mask_sync_assets_vs_source_delta": 58.8,
+  "full_crop_visual_state_vs_source_delta": 83.59,
+  "alpha_mask_visual_state_vs_source_delta": 56.78,
+  "asset_natural_sizes": {
+    "bottom_nav_button_bg": [
+      888,
+      988
+    ],
+    "build_hammer_icon": [
+      875,
+      916
+    ],
+    "red_badge_dot": [
+      445,
+      446
+    ],
+    "build_button_visual_state": [
+      891,
+      983
+    ]
+  },
+  "source_crop_bbox_in_full_hud": [
+    420,
+    735,
+    175,
+    175
+  ],
+  "layout": {
+    "canvas": [
+      175,
+      175
+    ],
+    "layers": [
+      {
+        "id": "bottom_nav_button_bg",
+        "bbox": [
+          3,
+          2,
+          162,
+          162
+        ],
+        "z": 10
+      },
+      {
+        "id": "build_hammer_icon",
+        "bbox": [
+          43,
+          20,
+          80,
+          74
+        ],
+        "z": 20
+      },
+      {
+        "id": "red_badge_dot",
+        "bbox": [
+          132,
+          20,
+          31,
+          31
+        ],
+        "z": 30
+      },
+      {
+        "id": "build_label_text",
+        "bbox": [
+          34,
+          130,
+          108,
+          32
+        ],
+        "z": 40,
+        "text": "BUILD",
+        "font_size": 26
+      }
+    ]
+  },
+  "notes": [
+    "This is a synchronized-generation experiment: full HUD and asset family were generated from the same production-board prompt/run.",
+    "Assets are generated standalone on magenta chroma and then keyed locally; they are not cropped from the source BUILD button.",
+    "The generated visual-state button is diagnostic only because it bakes icon, badge, and text."
+  ],
+  "metrics_after_fit_tuning": {
+    "rough_button_mask_sync_assets_vs_source_delta": 68.91,
+    "generated_alpha_sync_assets_vs_source_delta": 55.89,
+    "rough_button_mask_visual_state_vs_source_delta": 68.52,
+    "generated_alpha_visual_state_vs_source_delta": 55.67
+  }
+}

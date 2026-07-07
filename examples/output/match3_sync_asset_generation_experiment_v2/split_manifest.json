@@ -1,0 +1,116 @@
+{
+  "split_y": 1105,
+  "sheet_size": [
+    889,
+    665
+  ],
+  "grid_bbox": [
+    13,
+    15,
+    863,
+    642
+  ],
+  "cols": 4,
+  "rows": 4,
+  "cell_w": 216,
+  "cell_h": 161,
+  "notes": "Generated image has subtle grid lines; coordinates are probe-level estimates for validation.",
+  "cell_bboxes": {
+    "top_currency_bar_bg": [
+      13,
+      15,
+      216,
+      161
+    ],
+    "heart_icon": [
+      229,
+      15,
+      216,
+      161
+    ],
+    "coin_icon": [
+      445,
+      15,
+      216,
+      161
+    ],
+    "gem_icon": [
+      661,
+      15,
+      215,
+      161
+    ],
+    "plus_button": [
+      13,
+      176,
+      216,
+      161
+    ],
+    "player_avatar_frame": [
+      229,
+      176,
+      216,
+      161
+    ],
+    "event_banner_panel": [
+      445,
+      176,
+      216,
+      161
+    ],
+    "level_node_active": [
+      661,
+      176,
+      215,
+      161
+    ],
+    "level_node_locked": [
+      13,
+      337,
+      216,
+      161
+    ],
+    "play_button_bg": [
+      229,
+      337,
+      216,
+      161
+    ],
+    "bottom_nav_button_bg": [
+      445,
+      337,
+      216,
+      161
+    ],
+    "red_badge_dot": [
+      661,
+      337,
+      215,
+      161
+    ],
+    "home_icon": [
+      13,
+      498,
+      216,
+      159
+    ],
+    "team_icon": [
+      229,
+      498,
+      216,
+      159
+    ],
+    "garden_icon": [
+      445,
+      498,
+      216,
+      159
+    ],
+    "shop_icon": [
+      661,
+      498,
+      215,
+      159
+    ]
+  }
+}
