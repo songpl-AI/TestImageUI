@@ -1,0 +1,12 @@
+Use case: ui-mockup
+Asset type: source effect image for a game UI split pipeline
+Primary request: Generate a vertical casual mobile game home screen UI mockup suitable for later Sprite Plan, Layer IR, standalone sprite generation, and UI reconstruction.
+Canvas: vertical 720x1280 mobile screen, no device frame.
+Game type: cozy casual match-3 / light decoration game.
+Theme: sunny candy garden village, cheerful, polished, accessible for a casual audience.
+Core components: soft colorful background scene, top player profile badge with level, top coin and gem currency bars, settings button, central level gate / map node card, large primary PLAY button, side event button, side quest button, gift chest icon, bottom navigation bar with four separate tabs.
+Style: crisp 2D casual game UI, polished vector-like raster, clean edges, rounded shapes, consistent candy-like materials, soft shadows, bright but controlled colors.
+Composition: clear UI hierarchy, centered main interaction, enough spacing between components, each panel/button/icon visually separable for later standalone sprite generation. Background supports the UI and stays lower contrast than foreground. No background decorations crossing UI borders.
+Text (verbatim): "LEVEL 24", "PLAY", "SHOP", "QUEST", "EVENT", "1200", "85".
+Engineering constraints: UI elements should be visually separable for later standalone sprite generation; buttons, cards, badges, currency bars, icons, bottom nav tabs, and decorative elements should have clear boundaries; dynamic text should be short, legible, and easy to replace; avoid tiny text.
+Avoid: device frame, watermark, brand logos, real people, excessive tiny text, garbled text, photorealism, UI elements fused into the background, strong perspective, cropped key elements, dense clutter.

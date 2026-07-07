@@ -1,4 +1,4 @@
 interface:
   display_name: "UI Sprite 单图生成"
-  short_description: "从 AI UI 效果图规划并生成干净独立的 sprite 单图。"
-  default_prompt: "先分析这张 AI UI 效果图，输出需要生成的 sprite_plan.md 供人工确认；确认后再生成独立透明 PNG，不要把矩形裁图当成 sprite。"
+  short_description: "从 AI UI 效果图规划 sprite，并用布局 IR 锁定尺寸位置后生成独立单图。"
+  default_prompt: "先分析这张 AI UI 效果图，输出 sprite_plan.md 供人工确认；确认后补 sprite_manifest.json、layer_ir.json/layout_ir.json 和 bbox_overlay.png，再生成独立透明 PNG，并通过 fitted assets 和重建图验证尺寸位置。不要把矩形裁图当成 sprite。"

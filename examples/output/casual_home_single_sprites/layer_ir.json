@@ -1,0 +1,866 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 720,
+    "height": 1280
+  },
+  "source_image": "examples/input/casual_home.png",
+  "metadata": {
+    "status": "draft_bbox_locked",
+    "created_from": "examples/output/casual_home_single_sprites/sprite_plan.md",
+    "sprite_manifest": "examples/output/casual_home_single_sprites/sprite_manifest.json",
+    "bbox_policy": "第一版人工/视觉估算 bbox；复杂区域使用 metadata.confidence 标记，后续可用 bbox overlay 人工微调。",
+    "asset_size_policy": "工程尺寸来自 bbox；AI 生成的 assets_png 自然尺寸不作为工程尺寸。",
+    "output_policy": "Layer output 指向 placement-specific fitted asset；可复用源素材记录在 metadata.source_asset_png。"
+  },
+  "layers": [
+    {
+      "id": "bg_candy_village",
+      "role": "screen_background",
+      "bbox": [
+        0,
+        0,
+        720,
+        1280
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": false,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bg_candy_village.png",
+      "metadata": {
+        "asset_id": "bg_candy_village",
+        "confidence": "high",
+        "notes": "包含前景糖果和花草；不包含 HUD、按钮、中央关卡卡片和文字。",
+        "source_asset_png": "assets_png/bg_candy_village.png"
+      }
+    },
+    {
+      "id": "level_card_bg",
+      "role": "level_card_background",
+      "bbox": [
+        155,
+        276,
+        410,
+        644
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "children_hint": [
+        "inner_scene_window",
+        "level_ribbon_bg",
+        "level_title_text",
+        "star_slot_left",
+        "star_slot_center",
+        "star_slot_right",
+        "play_button_bg",
+        "play_button_label"
+      ],
+      "output": "assets_fit_raw/level_card_bg.png",
+      "metadata": {
+        "asset_id": "level_card_bg",
+        "confidence": "medium",
+        "needs_bbox_review": true,
+        "source_asset_png": "assets_png/level_card_bg.png"
+      }
+    },
+    {
+      "id": "inner_scene_window",
+      "role": "scene_window",
+      "bbox": [
+        222,
+        397,
+        276,
+        320
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/inner_scene_window.png",
+      "metadata": {
+        "asset_id": "inner_scene_window",
+        "confidence": "medium",
+        "needs_bbox_review": true,
+        "source_asset_png": "assets_png/inner_scene_window.png"
+      }
+    },
+    {
+      "id": "level_ribbon_bg",
+      "role": "ribbon_background",
+      "bbox": [
+        180,
+        300,
+        360,
+        108
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "output": "assets_fit_raw/level_ribbon_bg.png",
+      "metadata": {
+        "asset_id": "level_ribbon_bg",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/level_ribbon_bg.png"
+      }
+    },
+    {
+      "id": "level_title_text",
+      "role": "dynamic_text",
+      "bbox": [
+        254,
+        326,
+        212,
+        58
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "LEVEL 24",
+      "metadata": {
+        "font_hint": "bold rounded white text with pink shadow",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "star_slot_left",
+      "role": "rating_icon",
+      "bbox": [
+        242,
+        693,
+        78,
+        76
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/star_slot_left.png",
+      "metadata": {
+        "asset_id": "star_slot",
+        "reuse_asset_id": "star_slot",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/star_slot.png"
+      }
+    },
+    {
+      "id": "star_slot_center",
+      "role": "rating_icon",
+      "bbox": [
+        324,
+        693,
+        78,
+        76
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/star_slot_center.png",
+      "metadata": {
+        "asset_id": "star_slot",
+        "reuse_asset_id": "star_slot",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/star_slot.png"
+      }
+    },
+    {
+      "id": "star_slot_right",
+      "role": "rating_icon",
+      "bbox": [
+        407,
+        693,
+        78,
+        76
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/star_slot_right.png",
+      "metadata": {
+        "asset_id": "star_slot",
+        "reuse_asset_id": "star_slot",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/star_slot.png"
+      }
+    },
+    {
+      "id": "play_button_bg",
+      "role": "button_background",
+      "bbox": [
+        204,
+        785,
+        310,
+        112
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "nine_slice_candidate": true,
+      "output": "assets_fit_raw/play_button_bg.png",
+      "metadata": {
+        "asset_id": "play_button_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/play_button_bg.png"
+      }
+    },
+    {
+      "id": "play_button_label",
+      "role": "button_label",
+      "bbox": [
+        266,
+        812,
+        188,
+        64
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "PLAY",
+      "metadata": {
+        "font_hint": "extra bold white rounded button label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "event_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        20,
+        479,
+        128,
+        146
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/event_button_bg.png",
+      "metadata": {
+        "asset_id": "event_button_bg",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/event_button_bg.png"
+      }
+    },
+    {
+      "id": "event_gift_icon",
+      "role": "icon",
+      "bbox": [
+        46,
+        499,
+        78,
+        72
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/event_gift_icon.png",
+      "metadata": {
+        "asset_id": "event_gift_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/event_gift_icon.png"
+      }
+    },
+    {
+      "id": "event_label_text",
+      "role": "label_text",
+      "bbox": [
+        33,
+        578,
+        108,
+        40
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "EVENT",
+      "metadata": {
+        "font_hint": "bold white uppercase label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "quest_button_bg",
+      "role": "side_button_background",
+      "bbox": [
+        21,
+        652,
+        128,
+        148
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/quest_button_bg.png",
+      "metadata": {
+        "asset_id": "quest_button_bg",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/quest_button_bg.png"
+      }
+    },
+    {
+      "id": "quest_clipboard_icon",
+      "role": "icon",
+      "bbox": [
+        54,
+        668,
+        72,
+        82
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_clipboard_icon.png",
+      "metadata": {
+        "asset_id": "quest_clipboard_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_clipboard_icon.png"
+      }
+    },
+    {
+      "id": "quest_label_text",
+      "role": "label_text",
+      "bbox": [
+        31,
+        760,
+        114,
+        39
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "QUEST",
+      "metadata": {
+        "font_hint": "bold white uppercase label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gift_chest_icon",
+      "role": "icon",
+      "bbox": [
+        557,
+        579,
+        146,
+        126
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gift_chest_icon.png",
+      "metadata": {
+        "asset_id": "gift_chest_icon",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/gift_chest_icon.png"
+      }
+    },
+    {
+      "id": "gift_label_bg",
+      "role": "label_background",
+      "bbox": [
+        562,
+        732,
+        136,
+        60
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "output": "assets_fit_raw/gift_label_bg.png",
+      "metadata": {
+        "asset_id": "gift_label_bg",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/gift_label_bg.png"
+      }
+    },
+    {
+      "id": "gift_label_text",
+      "role": "label_text",
+      "bbox": [
+        606,
+        744,
+        62,
+        38
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "GIFT",
+      "metadata": {
+        "font_hint": "bold white uppercase label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "player_avatar_frame",
+      "role": "profile_badge_background",
+      "bbox": [
+        0,
+        29,
+        186,
+        158
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/player_avatar_frame.png",
+      "metadata": {
+        "asset_id": "player_avatar_frame",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/player_avatar_frame.png"
+      }
+    },
+    {
+      "id": "player_avatar_icon",
+      "role": "avatar_icon",
+      "bbox": [
+        43,
+        45,
+        105,
+        102
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/player_avatar_icon.png",
+      "metadata": {
+        "asset_id": "player_avatar_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/player_avatar_icon.png"
+      }
+    },
+    {
+      "id": "player_level_text",
+      "role": "dynamic_text",
+      "bbox": [
+        8,
+        130,
+        55,
+        48
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "12",
+      "metadata": {
+        "font_hint": "bold white level number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "player_progress_bar",
+      "role": "progress_bar_background",
+      "bbox": [
+        54,
+        143,
+        103,
+        23
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "output": "assets_fit_raw/player_progress_bar.png",
+      "metadata": {
+        "asset_id": "player_progress_bar",
+        "confidence": "high",
+        "source_asset_png": "assets_png/player_progress_bar.png"
+      }
+    },
+    {
+      "id": "coin_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [
+        209,
+        52,
+        210,
+        65
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "output": "assets_fit_raw/coin_bar_bg.png",
+      "metadata": {
+        "asset_id": "coin_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/coin_bar_bg.png"
+      }
+    },
+    {
+      "id": "coin_icon",
+      "role": "currency_icon",
+      "bbox": [
+        222,
+        60,
+        54,
+        54
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/coin_icon.png",
+      "metadata": {
+        "asset_id": "coin_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/coin_icon.png"
+      }
+    },
+    {
+      "id": "coin_amount_text",
+      "role": "dynamic_text",
+      "bbox": [
+        286,
+        68,
+        88,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "1200",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "coin_plus_button",
+      "role": "small_button",
+      "bbox": [
+        373,
+        60,
+        53,
+        53
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/coin_plus_button.png",
+      "metadata": {
+        "asset_id": "coin_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/coin_plus_button.png"
+      }
+    },
+    {
+      "id": "gem_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [
+        441,
+        52,
+        176,
+        65
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "output": "assets_fit_raw/gem_bar_bg.png",
+      "metadata": {
+        "asset_id": "gem_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/gem_bar_bg.png"
+      }
+    },
+    {
+      "id": "gem_icon",
+      "role": "currency_icon",
+      "bbox": [
+        448,
+        60,
+        63,
+        54
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gem_icon.png",
+      "metadata": {
+        "asset_id": "gem_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/gem_icon.png"
+      }
+    },
+    {
+      "id": "gem_amount_text",
+      "role": "dynamic_text",
+      "bbox": [
+        519,
+        68,
+        56,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "85",
+      "metadata": {
+        "font_hint": "bold white resource number",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gem_plus_button",
+      "role": "small_button",
+      "bbox": [
+        575,
+        60,
+        53,
+        53
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/gem_plus_button.png",
+      "metadata": {
+        "asset_id": "gem_plus_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/gem_plus_button.png"
+      }
+    },
+    {
+      "id": "settings_button",
+      "role": "icon_button",
+      "bbox": [
+        634,
+        48,
+        71,
+        71
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/settings_button.png",
+      "metadata": {
+        "asset_id": "settings_button",
+        "confidence": "high",
+        "source_asset_png": "assets_png/settings_button.png"
+      }
+    },
+    {
+      "id": "bottom_nav_bar_bg",
+      "role": "nav_bar_background",
+      "bbox": [
+        0,
+        1093,
+        720,
+        187
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bottom_nav_bar_bg.png",
+      "metadata": {
+        "asset_id": "bottom_nav_bar_bg",
+        "confidence": "high",
+        "source_asset_png": "assets_png/bottom_nav_bar_bg.png"
+      }
+    },
+    {
+      "id": "bottom_tab_shop_bg",
+      "role": "nav_tab_background",
+      "bbox": [
+        24,
+        1105,
+        137,
+        162
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bottom_tab_shop_bg.png",
+      "metadata": {
+        "asset_id": "bottom_tab_bg_normal",
+        "reuse_asset_id": "bottom_tab_bg_normal",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/bottom_tab_bg_normal.png"
+      }
+    },
+    {
+      "id": "bottom_tab_quest_bg",
+      "role": "nav_tab_background",
+      "bbox": [
+        192,
+        1106,
+        134,
+        161
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bottom_tab_quest_bg.png",
+      "metadata": {
+        "asset_id": "bottom_tab_bg_normal",
+        "reuse_asset_id": "bottom_tab_bg_normal",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/bottom_tab_bg_normal.png"
+      }
+    },
+    {
+      "id": "bottom_tab_home_bg",
+      "role": "nav_tab_background_selected",
+      "bbox": [
+        345,
+        1088,
+        176,
+        181
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bottom_tab_home_bg.png",
+      "metadata": {
+        "asset_id": "bottom_tab_bg_selected",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/bottom_tab_bg_selected.png"
+      }
+    },
+    {
+      "id": "bottom_tab_decor_bg",
+      "role": "nav_tab_background",
+      "bbox": [
+        559,
+        1107,
+        139,
+        160
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "output": "assets_fit_raw/bottom_tab_decor_bg.png",
+      "metadata": {
+        "asset_id": "bottom_tab_bg_normal",
+        "reuse_asset_id": "bottom_tab_bg_normal",
+        "confidence": "medium",
+        "source_asset_png": "assets_png/bottom_tab_bg_normal.png"
+      }
+    },
+    {
+      "id": "shop_icon",
+      "role": "nav_icon",
+      "bbox": [
+        52,
+        1122,
+        78,
+        74
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/shop_icon.png",
+      "metadata": {
+        "asset_id": "shop_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/shop_icon.png"
+      }
+    },
+    {
+      "id": "quest_icon",
+      "role": "nav_icon",
+      "bbox": [
+        225,
+        1115,
+        69,
+        84
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/quest_icon.png",
+      "metadata": {
+        "asset_id": "quest_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/quest_icon.png"
+      }
+    },
+    {
+      "id": "home_icon",
+      "role": "nav_icon",
+      "bbox": [
+        382,
+        1110,
+        102,
+        88
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/home_icon.png",
+      "metadata": {
+        "asset_id": "home_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/home_icon.png"
+      }
+    },
+    {
+      "id": "decor_icon",
+      "role": "nav_icon",
+      "bbox": [
+        587,
+        1122,
+        96,
+        80
+      ],
+      "asset_strategy": "regenerate",
+      "transparent": true,
+      "output": "assets_fit_raw/decor_icon.png",
+      "metadata": {
+        "asset_id": "decor_icon",
+        "confidence": "high",
+        "source_asset_png": "assets_png/decor_icon.png"
+      }
+    },
+    {
+      "id": "bottom_shop_label",
+      "role": "label_text",
+      "bbox": [
+        50,
+        1217,
+        88,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "SHOP",
+      "metadata": {
+        "font_hint": "bold white uppercase nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "bottom_quest_label",
+      "role": "label_text",
+      "bbox": [
+        208,
+        1217,
+        100,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "QUEST",
+      "metadata": {
+        "font_hint": "bold white uppercase nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "bottom_home_label",
+      "role": "label_text",
+      "bbox": [
+        383,
+        1218,
+        98,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "HOME",
+      "metadata": {
+        "font_hint": "bold white uppercase nav label",
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "bottom_decor_label",
+      "role": "label_text",
+      "bbox": [
+        578,
+        1218,
+        102,
+        42
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "DECOR",
+      "metadata": {
+        "font_hint": "bold white uppercase nav label",
+        "confidence": "high"
+      }
+    }
+  ]
+}

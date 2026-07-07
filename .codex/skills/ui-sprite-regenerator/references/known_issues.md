@@ -92,3 +92,25 @@
 - 修正动作：重新生成 chroma-key 源图，换 key color；必要时调整 `remove_chroma_key.py` 参数。
 - 验证方式：最终 PNG 为 RGBA，四角透明，主体边缘没有明显色边或缺损。
 - 来源：透明 sprite 生成流程。
+
+### KI-20260707-size-position-consistency
+
+- 状态：active
+- 触发条件：人工确认 Sprite Plan 后，准备逐个重新生成 sprite。
+- 问题表现：AI 生成的单图自然尺寸、主体占比、padding 或风格细节不一致，无法稳定还原到原 UI；或者只有 sprite 清单，没有位置和层级信息。
+- 根因：把“生成哪些单图”和“这些单图放在哪里、多大、谁盖住谁”混为一谈，并把 AI 生成图的自然尺寸误当成工程尺寸。
+- 预防规则：Sprite Plan 确认后，必须补 `sprite_manifest.json` 与 `layer_ir.json` / `layout_ir.json` 或等价结构；尺寸、位置、层级、锚点由 IR 锁定，不能靠 AI 猜。
+- 修正动作：为每个 sprite / Text Node 记录 bbox 和层级；生成独立 `assets_png` 后，再 fit 到固定 bbox 透明画布生成 `assets_fit_raw`；最后按 IR 输出 `reconstruction.png` / `comparison.png`。
+- 验证方式：`assets_fit_raw` 的画布尺寸等于 IR bbox；重建图中元素位置、大小、层级和 Text Node 与源图可对照。
+- 来源：Casual Home 图确认后，用户提出“怎么知道单图大小和位置，重新生成是否会一致”的疑问。
+
+### KI-20260707-reuse-asset-vs-layout-instance
+
+- 状态：active
+- 触发条件：同一个 sprite 源素材需要在 UI 中出现多次，例如星星、普通 tab 背景、重复按钮底。
+- 问题表现：把一个可复用源素材当成多个独立素材重复生成，或让多个布局节点直接引用同一个已 fit 的 PNG，导致尺寸、padding 或位置不可控。
+- 根因：混淆 `assets_png` 源素材和 `assets_fit_raw` 布局实例。
+- 预防规则：`assets_png/<asset_id>.png` 只表示可复用的干净源素材；每个布局节点必须有独立的 `assets_fit_raw/<layer_id>.png`，即使它们来自同一个源素材。
+- 修正动作：在 `layer_ir.json` 中用 layer id 表示布局实例，用 `metadata.asset_id` / `metadata.source_asset_png` 记录源素材；layout 节点引用 `assets_fit_raw/<layer_id>.png`。
+- 验证方式：同一 `asset_id` 可以被多个 layer 复用，但 `assets_fit_raw` 输出数量应等于需要图片回贴的 layer 数量。
+- 来源：Casual Home 图中 `star_slot` 和 `bottom_tab_bg_normal` 需要复用同一源素材但对应多个布局实例。

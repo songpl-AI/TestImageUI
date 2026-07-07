@@ -1,0 +1,264 @@
+{
+  "source_image": "examples/input/casual_home.png",
+  "raw_reference_image": "examples/input/casual_home_raw.png",
+  "output_dir": "examples/output/casual_home_single_sprites",
+  "layer_ir": "examples/output/casual_home_single_sprites/layer_ir.json",
+  "layout_ir": "examples/output/casual_home_single_sprites/layout_ir.json",
+  "bbox_overlay": "examples/output/casual_home_single_sprites/bbox_overlay.png",
+  "status": "layout_ir_ready",
+  "confirmed_at": "2026-07-07",
+  "rules": {
+    "do_not_use_rect_crop_as_sprite": true,
+    "dynamic_text_as_text_node": true,
+    "transparent_assets_use_chroma_key_then_alpha": true,
+    "default_chroma_key": "#00ff00"
+  },
+  "sprites": [
+    {
+      "id": "bg_candy_village",
+      "output": "assets_png/bg_candy_village.png",
+      "type": "background",
+      "transparent": false,
+      "strategy": "standalone_background",
+      "prompt_subject": "完整的糖果花园村庄主界面背景，包含天空、道路、远景屋子、草地、前景糖果和花草，但不包含任何 HUD、按钮、数字、文字、icon 或中央关卡卡片"
+    },
+    {
+      "id": "player_avatar_frame",
+      "output": "assets_png/player_avatar_frame.png",
+      "type": "profile_badge_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "左上角玩家头像框和等级徽章底座，保留圆形框、金色描边、底部紫色进度槽造型，不包含猫头像、等级数字或进度文字"
+    },
+    {
+      "id": "player_avatar_icon",
+      "output": "assets_png/player_avatar_icon.png",
+      "type": "avatar_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "可爱的猫头像 icon，匹配源图休闲游戏 3D 卡通风格，不包含头像框、等级数字或背景"
+    },
+    {
+      "id": "player_progress_bar",
+      "output": "assets_png/player_progress_bar.png",
+      "type": "progress_bar_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "小型紫色玩家经验进度条底图，圆角、糖果质感、轻微高光，不包含数字或头像"
+    },
+    {
+      "id": "coin_bar_bg",
+      "output": "assets_png/coin_bar_bg.png",
+      "type": "currency_bar_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "金币资源条底图，圆角胶囊形、蓝紫色内底、浅色描边，不包含金币 icon、数字或加号按钮"
+    },
+    {
+      "id": "coin_icon",
+      "output": "assets_png/coin_icon.png",
+      "type": "currency_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "单个金币 icon，明亮金黄色、卡通 3D、高光和厚描边，不包含资源条或数字"
+    },
+    {
+      "id": "coin_plus_button",
+      "output": "assets_png/coin_plus_button.png",
+      "type": "small_button",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "小型圆形加号按钮，绿色或蓝绿色糖果质感，中心是清晰加号，不包含资源条或数字"
+    },
+    {
+      "id": "gem_bar_bg",
+      "output": "assets_png/gem_bar_bg.png",
+      "type": "currency_bar_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "宝石资源条底图，圆角胶囊形、蓝紫色内底、浅色描边，不包含宝石 icon、数字或加号按钮"
+    },
+    {
+      "id": "gem_icon",
+      "output": "assets_png/gem_icon.png",
+      "type": "currency_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "单个粉紫色宝石 icon，卡通 3D 切面、高光、厚描边，不包含资源条或数字"
+    },
+    {
+      "id": "gem_plus_button",
+      "output": "assets_png/gem_plus_button.png",
+      "type": "small_button",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "小型圆形加号按钮，绿色或蓝绿色糖果质感，中心是清晰加号，不包含资源条或数字"
+    },
+    {
+      "id": "settings_button",
+      "output": "assets_png/settings_button.png",
+      "type": "icon_button",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "右上角设置按钮，圆形蓝紫按钮底和白色齿轮 icon，卡通休闲游戏风格"
+    },
+    {
+      "id": "level_card_bg",
+      "output": "assets_png/level_card_bg.png",
+      "type": "level_card_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "中央关卡入口主卡片外框底图，紫色厚边框、糖果质感、圆角拱门造型，不包含 LEVEL 文字、星星、内部场景或 PLAY 按钮"
+    },
+    {
+      "id": "level_ribbon_bg",
+      "output": "assets_png/level_ribbon_bg.png",
+      "type": "ribbon_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "中央卡片顶部标题丝带底图，粉色或紫粉色糖果质感、浅色描边，不包含 LEVEL 24 或任何文字"
+    },
+    {
+      "id": "inner_scene_window",
+      "output": "assets_png/inner_scene_window.png",
+      "type": "scene_window",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "中央关卡卡片里的小型场景窗口，显示糖果道路和小花园入口，四周干净裁边，不包含外框、标题、星星或 PLAY 按钮"
+    },
+    {
+      "id": "star_slot",
+      "output": "assets_png/star_slot.png",
+      "type": "rating_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "单个空星星评分 icon，金色描边、浅黄色填充、卡通 3D 厚描边，不包含其它星星或背景"
+    },
+    {
+      "id": "play_button_bg",
+      "output": "assets_png/play_button_bg.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "大型绿色 PLAY 按钮底图，圆角胶囊形、厚描边、高光和阴影，不包含 PLAY 文字或其它 icon"
+    },
+    {
+      "id": "event_button_bg",
+      "output": "assets_png/event_button_bg.png",
+      "type": "side_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "左侧活动入口按钮底板，黄色圆角底座加紫色小标签底，不包含礼物 icon 或 EVENT 文字"
+    },
+    {
+      "id": "event_gift_icon",
+      "output": "assets_png/event_gift_icon.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "活动礼物盒 icon，粉紫礼盒、金色缎带、卡通 3D，高光和厚描边，不包含按钮底板或文字"
+    },
+    {
+      "id": "quest_button_bg",
+      "output": "assets_png/quest_button_bg.png",
+      "type": "side_button_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "左侧任务入口按钮底板，黄色圆角底座加紫色小标签底，不包含剪贴板 icon 或 QUEST 文字"
+    },
+    {
+      "id": "quest_clipboard_icon",
+      "output": "assets_png/quest_clipboard_icon.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "任务剪贴板 icon，卡通 3D、纸张和夹子造型、高光厚描边，不包含按钮底板或文字"
+    },
+    {
+      "id": "gift_label_bg",
+      "output": "assets_png/gift_label_bg.png",
+      "type": "label_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "右侧 GIFT 标签的蓝色小标签底图，圆角、糖果质感、浅色描边，不包含 GIFT 文字或宝箱"
+    },
+    {
+      "id": "gift_chest_icon",
+      "output": "assets_png/gift_chest_icon.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "宝箱 icon，蓝紫色箱体、金色锁扣、卡通 3D、高光厚描边，不包含标签底或文字"
+    },
+    {
+      "id": "bottom_nav_bar_bg",
+      "output": "assets_png/bottom_nav_bar_bg.png",
+      "type": "nav_bar_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "底部整条紫色导航栏背景，横向圆角面板、糖果质感、浅色描边，不包含 tab、icon 或文字"
+    },
+    {
+      "id": "bottom_tab_bg_normal",
+      "output": "assets_png/bottom_tab_bg_normal.png",
+      "type": "nav_tab_bg",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "底部导航普通状态 tab 底图，小型圆角按钮底，紫色或蓝紫色，不包含 icon 或文字"
+    },
+    {
+      "id": "bottom_tab_bg_selected",
+      "output": "assets_png/bottom_tab_bg_selected.png",
+      "type": "nav_tab_bg_selected",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "底部导航选中状态 tab 底图，更亮、更凸起的小型圆角按钮底，带高光，不包含 icon 或文字"
+    },
+    {
+      "id": "shop_icon",
+      "output": "assets_png/shop_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "商店购物袋 icon，休闲游戏卡通 3D 风格，不包含 tab 底或 SHOP 文字"
+    },
+    {
+      "id": "quest_icon",
+      "output": "assets_png/quest_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "任务清单 icon，休闲游戏卡通 3D 风格，不包含 tab 底或 QUEST 文字"
+    },
+    {
+      "id": "home_icon",
+      "output": "assets_png/home_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "主页小房子 icon，休闲游戏卡通 3D 风格，不包含 tab 底或 HOME 文字"
+    },
+    {
+      "id": "decor_icon",
+      "output": "assets_png/decor_icon.png",
+      "type": "nav_icon",
+      "transparent": true,
+      "strategy": "standalone_sprite",
+      "prompt_subject": "装饰画笔或装饰工具 icon，休闲游戏卡通 3D 风格，不包含 tab 底或 DECOR 文字"
+    }
+  ],
+  "text_nodes": [
+    {"id": "player_level_text", "text": "12"},
+    {"id": "coin_amount_text", "text": "1200"},
+    {"id": "gem_amount_text", "text": "85"},
+    {"id": "level_title_text", "text": "LEVEL 24"},
+    {"id": "play_button_label", "text": "PLAY"},
+    {"id": "event_label_text", "text": "EVENT"},
+    {"id": "quest_label_text", "text": "QUEST"},
+    {"id": "gift_label_text", "text": "GIFT"},
+    {"id": "bottom_shop_label", "text": "SHOP"},
+    {"id": "bottom_quest_label", "text": "QUEST"},
+    {"id": "bottom_home_label", "text": "HOME"},
+    {"id": "bottom_decor_label", "text": "DECOR"}
+  ]
+}

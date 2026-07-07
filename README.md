@@ -224,7 +224,8 @@ python3 -m src.main \
 
 ```text
 不要把原图矩形 crop 当成最终 sprite。
-先输出 Sprite Plan，人工确认后再生成独立透明 PNG。
+先输出 Sprite Plan，人工确认后先补 sprite manifest 与 Layout/Layer IR。
+独立 sprite 的自然尺寸不等于工程尺寸，尺寸和位置必须由 IR 锁定。
 运行前读取 known_issues.md，遇到新坑要记录。
 ```
 
@@ -233,21 +234,31 @@ python3 -m src.main \
 ```text
 output/<screen>_single_sprites/
   sprite_plan.md
+  sprite_manifest.json
+  layer_ir.json
+  layout_ir.json
   generated_src/
     <id>_chroma.png
   assets_png/
     <id>.png
   assets_fit_raw/
     <id>.png
+  bbox_overlay.png
   sprite_overview.png
+  reconstruction.png
+  comparison.png
 ```
 
 其中：
 
+- `sprite_manifest.json` 保存人工确认后的可执行生成清单。
+- `layer_ir.json` / `layout_ir.json` 保存 bbox、层级、锚点、Text Node 和资源引用。
 - `generated_src/` 保存原始生成图，通常是 chroma-key 背景。
-- `assets_png/` 保存最终独立透明 PNG。
-- `assets_fit_raw/` 保存按目标 rect 装进透明画布后的版本，方便回贴。
+- `assets_png/` 保存最终独立透明源 sprite，按语义素材命名，允许复用。
+- `assets_fit_raw/` 保存按 IR bbox 装进透明画布后的布局实例，方便回贴。
+- `bbox_overlay.png` 把 bbox 画在源图上，用于人工检查大小、位置和层级。
 - `sprite_overview.png` 用棋盘格背景展示每个独立 sprite。
+- `reconstruction.png` / `comparison.png` 用于验证大小、位置、层级和视觉一致性。
 
 ## 示例数据
 
@@ -283,6 +294,21 @@ examples/output/mermaid_pass_single_sprites/
 ```
 
 其中 `mermaid_pass_single_sprites/assets_png/` 是一次真正的独立 sprite 生成实验，不是矩形裁图。
+
+### Casual Home
+
+用于验证主界面 UI 的 Sprite Plan、人工确认、manifest、Layout/Layer IR 与 bbox overlay：
+
+```text
+examples/input/casual_home.png
+examples/input/casual_home_raw.png
+examples/output/casual_home_single_sprites/
+```
+
+这一组样例特别用于验证两件事：
+
+- AI 生成的独立 sprite 自然尺寸不等于工程尺寸。
+- 可复用源素材和布局实例要分开，例如 `assets_png/star_slot.png` 可以生成多个 `assets_fit_raw/star_slot_*.png`。
 
 ## 核心数据结构
 
@@ -333,6 +359,8 @@ examples/output/mermaid_pass_single_sprites/
 
 - 矩形 crop 不是 sprite
 - 必须先出 Sprite Plan
+- Sprite Plan 之后必须补 Layout/Layer IR 锁定大小、位置和层级
+- `assets_png` 源素材和 `assets_fit_raw` 布局实例不能混淆
 - raw 图和标准化图不要混用
 - 动态文字不要生成 PNG
 - 重建前素材必须齐全且尺寸匹配
@@ -365,8 +393,11 @@ examples/output/mermaid_pass_single_sprites/
 1. 放入一张 AI UI 效果图。
 2. 先用 `ui-sprite-regenerator` 输出 Sprite Plan。
 3. 人工确认需要拆分和生成的元素。
-4. 使用 Codex 或其它图像生成能力逐个生成独立 sprite。
-5. 用 Python pipeline 重建并输出 comparison。
-6. 将新问题写入 Known Issues。
+4. 补 `sprite_manifest.json`、`layer_ir.json` 和 `layout_ir.json`，锁定 bbox、层级、锚点和 Text Node。
+5. 生成 `bbox_overlay.png`，人工检查 bbox 是否合理。
+6. 使用 Codex 或其它图像生成能力逐个生成独立 sprite 到 `assets_png/`。
+7. 把独立 sprite fit 到 IR bbox，生成 `assets_fit_raw/`。
+8. 用 Python pipeline 重建并输出 comparison。
+9. 将新问题写入 Known Issues。
 
 这个项目的价值不在于“一次生成完美资产”，而在于把 AI UI 图拆解这件事变成一个可复盘、可审核、可迭代的工程流程。

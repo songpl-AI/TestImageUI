@@ -1,0 +1,619 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "casual_home",
+    "canvas": {
+      "width": 720,
+      "height": 1280
+    },
+    "metadata": {
+      "source_image": "examples/input/casual_home.png",
+      "sprite_manifest": "examples/output/casual_home_single_sprites/sprite_manifest.json",
+      "layer_ir": "examples/output/casual_home_single_sprites/layer_ir.json",
+      "asset_policy": "layout 节点引用 placement-specific assets_fit_raw；assets_fit_raw 由 assets_png 按 layer_ir bbox 适配生成。"
+    },
+    "nodes": [
+      {
+        "id": "bg_candy_village",
+        "type": "Image",
+        "role": "screen_background",
+        "rect": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bg_candy_village.png"
+      },
+      {
+        "id": "level_card_bg",
+        "type": "Panel",
+        "role": "level_card_background",
+        "rect": [
+          155,
+          276,
+          410,
+          644
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/level_card_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "inner_scene_window",
+        "type": "Image",
+        "role": "scene_window",
+        "rect": [
+          222,
+          397,
+          276,
+          320
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/inner_scene_window.png"
+      },
+      {
+        "id": "level_ribbon_bg",
+        "type": "Image",
+        "role": "ribbon_background",
+        "rect": [
+          180,
+          300,
+          360,
+          108
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/level_ribbon_bg.png"
+      },
+      {
+        "id": "level_title_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          254,
+          326,
+          212,
+          58
+        ],
+        "anchor": "top_left",
+        "text": "LEVEL 24",
+        "style_hint": "bold rounded white text with pink shadow"
+      },
+      {
+        "id": "star_slot_left",
+        "type": "Image",
+        "role": "rating_icon",
+        "rect": [
+          242,
+          693,
+          78,
+          76
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/star_slot_left.png"
+      },
+      {
+        "id": "star_slot_center",
+        "type": "Image",
+        "role": "rating_icon",
+        "rect": [
+          324,
+          693,
+          78,
+          76
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/star_slot_center.png"
+      },
+      {
+        "id": "star_slot_right",
+        "type": "Image",
+        "role": "rating_icon",
+        "rect": [
+          407,
+          693,
+          78,
+          76
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/star_slot_right.png"
+      },
+      {
+        "id": "play_button_bg",
+        "type": "Button",
+        "role": "button_background",
+        "rect": [
+          204,
+          785,
+          310,
+          112
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/play_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "play_button_label",
+        "type": "Text",
+        "role": "button_label",
+        "rect": [
+          266,
+          812,
+          188,
+          64
+        ],
+        "anchor": "top_left",
+        "text": "PLAY",
+        "style_hint": "extra bold white rounded button label"
+      },
+      {
+        "id": "event_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          20,
+          479,
+          128,
+          146
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/event_button_bg.png"
+      },
+      {
+        "id": "event_gift_icon",
+        "type": "Image",
+        "role": "icon",
+        "rect": [
+          46,
+          499,
+          78,
+          72
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/event_gift_icon.png"
+      },
+      {
+        "id": "event_label_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          33,
+          578,
+          108,
+          40
+        ],
+        "anchor": "top_left",
+        "text": "EVENT",
+        "style_hint": "bold white uppercase label"
+      },
+      {
+        "id": "quest_button_bg",
+        "type": "Button",
+        "role": "side_button_background",
+        "rect": [
+          21,
+          652,
+          128,
+          148
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_button_bg.png"
+      },
+      {
+        "id": "quest_clipboard_icon",
+        "type": "Image",
+        "role": "icon",
+        "rect": [
+          54,
+          668,
+          72,
+          82
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_clipboard_icon.png"
+      },
+      {
+        "id": "quest_label_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          31,
+          760,
+          114,
+          39
+        ],
+        "anchor": "top_left",
+        "text": "QUEST",
+        "style_hint": "bold white uppercase label"
+      },
+      {
+        "id": "gift_chest_icon",
+        "type": "Image",
+        "role": "icon",
+        "rect": [
+          557,
+          579,
+          146,
+          126
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gift_chest_icon.png"
+      },
+      {
+        "id": "gift_label_bg",
+        "type": "Image",
+        "role": "label_background",
+        "rect": [
+          562,
+          732,
+          136,
+          60
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gift_label_bg.png"
+      },
+      {
+        "id": "gift_label_text",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          606,
+          744,
+          62,
+          38
+        ],
+        "anchor": "top_left",
+        "text": "GIFT",
+        "style_hint": "bold white uppercase label"
+      },
+      {
+        "id": "player_avatar_frame",
+        "type": "Image",
+        "role": "profile_badge_background",
+        "rect": [
+          0,
+          29,
+          186,
+          158
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_avatar_frame.png"
+      },
+      {
+        "id": "player_avatar_icon",
+        "type": "Image",
+        "role": "avatar_icon",
+        "rect": [
+          43,
+          45,
+          105,
+          102
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_avatar_icon.png"
+      },
+      {
+        "id": "player_level_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          8,
+          130,
+          55,
+          48
+        ],
+        "anchor": "top_left",
+        "text": "12",
+        "style_hint": "bold white level number"
+      },
+      {
+        "id": "player_progress_bar",
+        "type": "Image",
+        "role": "progress_bar_background",
+        "rect": [
+          54,
+          143,
+          103,
+          23
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/player_progress_bar.png"
+      },
+      {
+        "id": "coin_bar_bg",
+        "type": "Image",
+        "role": "currency_bar_background",
+        "rect": [
+          209,
+          52,
+          210,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/coin_bar_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "coin_icon",
+        "type": "Image",
+        "role": "currency_icon",
+        "rect": [
+          222,
+          60,
+          54,
+          54
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/coin_icon.png"
+      },
+      {
+        "id": "coin_amount_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          286,
+          68,
+          88,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "1200",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "coin_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          373,
+          60,
+          53,
+          53
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/coin_plus_button.png"
+      },
+      {
+        "id": "gem_bar_bg",
+        "type": "Image",
+        "role": "currency_bar_background",
+        "rect": [
+          441,
+          52,
+          176,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gem_bar_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "gem_icon",
+        "type": "Image",
+        "role": "currency_icon",
+        "rect": [
+          448,
+          60,
+          63,
+          54
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gem_icon.png"
+      },
+      {
+        "id": "gem_amount_text",
+        "type": "Text",
+        "role": "dynamic_text",
+        "rect": [
+          519,
+          68,
+          56,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "85",
+        "style_hint": "bold white resource number"
+      },
+      {
+        "id": "gem_plus_button",
+        "type": "Button",
+        "role": "small_button",
+        "rect": [
+          575,
+          60,
+          53,
+          53
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/gem_plus_button.png"
+      },
+      {
+        "id": "settings_button",
+        "type": "Button",
+        "role": "icon_button",
+        "rect": [
+          634,
+          48,
+          71,
+          71
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/settings_button.png"
+      },
+      {
+        "id": "bottom_nav_bar_bg",
+        "type": "Image",
+        "role": "nav_bar_background",
+        "rect": [
+          0,
+          1093,
+          720,
+          187
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bottom_nav_bar_bg.png"
+      },
+      {
+        "id": "bottom_tab_shop_bg",
+        "type": "Button",
+        "role": "nav_tab_background",
+        "rect": [
+          24,
+          1105,
+          137,
+          162
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bottom_tab_shop_bg.png"
+      },
+      {
+        "id": "bottom_tab_quest_bg",
+        "type": "Button",
+        "role": "nav_tab_background",
+        "rect": [
+          192,
+          1106,
+          134,
+          161
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bottom_tab_quest_bg.png"
+      },
+      {
+        "id": "bottom_tab_home_bg",
+        "type": "Button",
+        "role": "nav_tab_background_selected",
+        "rect": [
+          345,
+          1088,
+          176,
+          181
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bottom_tab_home_bg.png"
+      },
+      {
+        "id": "bottom_tab_decor_bg",
+        "type": "Button",
+        "role": "nav_tab_background",
+        "rect": [
+          559,
+          1107,
+          139,
+          160
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/bottom_tab_decor_bg.png"
+      },
+      {
+        "id": "shop_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          52,
+          1122,
+          78,
+          74
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/shop_icon.png"
+      },
+      {
+        "id": "quest_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          225,
+          1115,
+          69,
+          84
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/quest_icon.png"
+      },
+      {
+        "id": "home_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          382,
+          1110,
+          102,
+          88
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/home_icon.png"
+      },
+      {
+        "id": "decor_icon",
+        "type": "Image",
+        "role": "nav_icon",
+        "rect": [
+          587,
+          1122,
+          96,
+          80
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/decor_icon.png"
+      },
+      {
+        "id": "bottom_shop_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          50,
+          1217,
+          88,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "SHOP",
+        "style_hint": "bold white uppercase nav label"
+      },
+      {
+        "id": "bottom_quest_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          208,
+          1217,
+          100,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "QUEST",
+        "style_hint": "bold white uppercase nav label"
+      },
+      {
+        "id": "bottom_home_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          383,
+          1218,
+          98,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "HOME",
+        "style_hint": "bold white uppercase nav label"
+      },
+      {
+        "id": "bottom_decor_label",
+        "type": "Text",
+        "role": "label_text",
+        "rect": [
+          578,
+          1218,
+          102,
+          42
+        ],
+        "anchor": "top_left",
+        "text": "DECOR",
+        "style_hint": "bold white uppercase nav label"
+      }
+    ]
+  }
+}
