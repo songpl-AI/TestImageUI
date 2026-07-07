@@ -136,3 +136,36 @@
 - 修正动作：保存原始 cell source 作为审计材料；最终 `assets_png` 只保留目标主组件，去除相邻碎片和内部 key 色洞，再生成 `sprite_overview.png` 人工检查。
 - 验证方式：棋盘格总览中每张 sprite 不应含相邻素材碎片；透明镂空区域应显示棋盘格；紫色/宝石主体不能被误删。
 - 来源：SLG main UI asset family sheet 拆分时，`top_banner_decoration` 带入相邻半圆碎片，`player_avatar_frame` 和 `map_icon` 内部保留洋红色 key 色。
+
+### KI-20260707-composite-proxy-not-realgen-guarantee
+
+- 状态：watch
+- 触发条件：先用源图局部 crop proxy 验证组合控件能显著接近原图，再尝试真实生成同一组合控件 sprite 或拆分组件 sprite。
+- 问题表现：crop proxy 贴回后接近原图，但真实生成的组合 sprite 仍出现画风、比例、字重、icon 占比和材质密度漂移；即使改成 `button_bg + icon + badge + Text Node`，如果生成素材本身漂移，最终回贴仍不会更像源图。
+- 根因：crop proxy 是像素上限参照，真实生成仍会重新诠释按钮形状、字体、材质和 icon；组合控件或拆分组件能改善可编辑性和组装边界，但没有消除生成模型的视觉漂移。
+- 预防规则：不要把 crop proxy 的效果等同于真实生成可达效果；也不要假设“拆得更工程化”就会自动更像源图。先对 1 个组件做真实生成小实验，再决定是否推广到全屏。
+- 修正动作：若真实生成失败，优先判断瓶颈是拆分粒度、字体/Text Node、还是素材生成风格漂移；必要时改用更强 reference/edit/inpaint 路径，而不是继续全屏批量生成。
+- 验证方式：同时输出 source/current/crop proxy/realgen 局部对比；记录真实生成版本与 source crop 的 delta，不只看 crop proxy 上限。
+- 来源：SLG `build_nav_button` 实验中，crop proxy delta 为 0.00，当前独立 sprite delta 为 45.20，整按钮真实生成 delta 为 53.61，拆分真实生成 + Text Node delta 为 45.64；SLG `top_resource_strip` 实验中，当前独立 sprite delta 为 57.61，realgen frame + Text Nodes delta 为 53.92，只小幅改善。
+
+### KI-20260707-edit-cleanup-canonicalizes-ui
+
+- 状态：watch
+- 触发条件：把源图局部 crop 作为 edit target/reference，让模型删除遮挡子元素、文字或背景，并补全干净 UI 底板。
+- 问题表现：输出确实是干净独立 sprite，但比例、边框厚度、材质颗粒、磨损、高光和细节密度被模型重画成更规整、更高清的“标准 UI 模板”，回贴后仍不像源图。
+- 根因：单张扁平 crop 中被 icon、文字或 badge 遮挡的像素没有真实图层信息；edit/inpaint 会按模型先验补全，而不是恢复原始设计稿。没有 mask、材质表或原生分层资产时，局部参考不能锁死源图级细节。
+- 预防规则：不要把 edit/cleanup/inpaint 视为比重新生成更可靠的高保真保证；它只能作为小实验验证。若一个组件已经在 whole realgen、decomposed realgen、cleanup/inpaint 三条路径都失败，不要继续堆 prompt 复杂度。
+- 修正动作：记录 metrics 和对比图；若仍不接近 source，停止在该组件上继续 prompt 微调，转向其它代表组件验证或考虑人工修图、受控分割、PSD 化、style/material sheet 等替代方案。
+- 验证方式：输出 source/current/crop proxy/whole realgen/decomposed realgen/cleanup 局部对比；比较 mean RGB delta，并检查 `sprite_overview.png` 是否虽干净但风格标准化。
+- 来源：SLG `build_button_bg_cleanup` 实验中，cleanup/inpaint 生成了透明按钮底板，但局部 delta 为 47.56，差于拆分真实生成 + Text Node 的 45.64。
+
+### KI-20260707-multi-slot-composite-relayout
+
+- 状态：watch
+- 触发条件：把多个重复槽位或横向 HUD 控件作为一个大 composite sprite 生成，例如顶部资源条、任务标签组、多个货币条。
+- 问题表现：生成图满足透明和无文字约束，但会重新分配槽位间距、条宽、icon 大小、icon 颜色和加号样式；局部指标可能略有改善，但仍远离 crop proxy 上限。
+- 根因：模型把宽组合控件理解为“重新设计一组整齐 HUD 槽位”，而不是严格复刻源图中的不均匀间距、具体 icon identity 和小尺寸材质细节。
+- 预防规则：多槽位 composite 可以作为小实验，但不要因为它比细拆略好就推广到整屏；必须检查 spacing、icon identity、颜色和 Text Node 对齐。
+- 修正动作：若要继续追求高保真，优先考虑从确定性素材/人工修图/PSD 化/受控分割补图获取 icon 与 frame，而不是继续用 prompt 微调宽组合控件。
+- 验证方式：输出 source/current/crop proxy/realgen frame + Text Nodes 对比，并同时记录 full-crop delta 和 UI-mask delta。
+- 来源：SLG `top_resource_strip` 实验中，realgen frame + Text Nodes 的 full-crop delta 从 57.61 降到 53.92，UI-mask delta 从 60.78 降到 58.34，但 spacing 与 icon identity 明显漂移，宝石从紫色偏为银蓝色。
