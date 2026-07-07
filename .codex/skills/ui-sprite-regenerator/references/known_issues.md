@@ -114,3 +114,25 @@
 - 修正动作：在 `layer_ir.json` 中用 layer id 表示布局实例，用 `metadata.asset_id` / `metadata.source_asset_png` 记录源素材；layout 节点引用 `assets_fit_raw/<layer_id>.png`。
 - 验证方式：同一 `asset_id` 可以被多个 layer 复用，但 `assets_fit_raw` 输出数量应等于需要图片回贴的 layer 数量。
 - 来源：Casual Home 图中 `star_slot` 和 `bottom_tab_bg_normal` 需要复用同一源素材但对应多个布局实例。
+
+### KI-20260707-context-fragmentation-visual-drift
+
+- 状态：active
+- 触发条件：把一张完整 AI UI 图拆成多个独立 sprite 后，逐个生成或用程序化 mock 生成资产，再重建整屏。
+- 问题表现：重建图与原图的整体材质、光照、透视、线条粗细、色彩饱和度和细节密度明显不一致；各 sprite 之间也不像来自同一套美术。
+- 根因：原图是在同一个全局视觉上下文中一次性生成的，而独立 sprite 生成会丢失全局背景、相邻元素、统一光源、材质和细节密度；程序化 mock 只能验证链路，不能代表高保真美术还原。
+- 预防规则：区分“pipeline/mock 验证图”和“美术一致性结果”；真实生成时必须提供全屏源图、局部 crop、统一 style guide / palette / material sheet，优先先生成一张 asset family sheet，再拆成透明 sprite，避免逐个孤立生成。
+- 修正动作：对需要视觉一致性的项目，先建立 style anchor 和共用参考板；对每个 sprite prompt 引用同一全屏图与同一风格描述；生成后用 sprite overview 和 reconstruction 做一致性审核，不合格时成批重生成同一族资产。
+- 验证方式：`sprite_overview.png` 中同类资产的描边、材质、高光、阴影和饱和度一致；`comparison.png` 不应出现明显的矢量化、扁平化或不同画风拼贴感。
+- 来源：Casual Home mock reconstruction 中，用户指出原图与重建图差距大且存在明显不一致性。
+
+### KI-20260707-sheet-cell-overflow-and-key-holes
+
+- 状态：active
+- 触发条件：使用 asset family sheet 一次性生成 4x4 或网格化 sprite，并按网格单元拆出透明 PNG。
+- 问题表现：某些素材越过单元格边界，拆图后带入相邻 sprite 的金边碎片；头像框、地图 pin 等内部镂空区域仍保留 chroma-key 底色。
+- 根因：AI 生成的 sheet 不会严格遵守单元边界；只做 border-connected 去底会保留不连通的内部 key 色洞。
+- 预防规则：拆 sheet 时不能只按固定 cell crop 输出；应允许少量 cell overflow，去底后按目标中心选择主连通组件，并对非冲突色素材清理内部 key-like 像素。对宝石等主体接近 key 色的素材要豁免全局 key 删除。
+- 修正动作：保存原始 cell source 作为审计材料；最终 `assets_png` 只保留目标主组件，去除相邻碎片和内部 key 色洞，再生成 `sprite_overview.png` 人工检查。
+- 验证方式：棋盘格总览中每张 sprite 不应含相邻素材碎片；透明镂空区域应显示棋盘格；紫色/宝石主体不能被误删。
+- 来源：SLG main UI asset family sheet 拆分时，`top_banner_decoration` 带入相邻半圆碎片，`player_avatar_frame` 和 `map_icon` 内部保留洋红色 key 色。
