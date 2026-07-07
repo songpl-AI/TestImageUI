@@ -1,0 +1,152 @@
+{
+  "status": "shadow_layer_experiment_complete",
+  "generated_at": "2026-07-07T08:26:21.411817+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "source_size": [
+    1280,
+    720
+  ],
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "environment": {
+    "based_on": "SAM/rembg + LaMa previous experiments",
+    "inpaint_tool": "simple-lama-inpainting / big-lama.pt",
+    "device": "mps",
+    "selected_shadow_variant": "small"
+  },
+  "sprites": [
+    {
+      "id": "build_button_bg_shadow_clean",
+      "output": "assets_png/build_button_bg_shadow_clean.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "sam_button_mask_lama_inpaint_entity_and_shadow_holes",
+      "bbox": [
+        329,
+        570,
+        112,
+        120
+      ],
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "remove_icon_shadow": true
+    },
+    {
+      "id": "hammer_shadow",
+      "output": "assets_png/hammer_shadow.png",
+      "type": "drop_shadow",
+      "transparent": true,
+      "strategy": "source_darkening_shadow_layer",
+      "bbox": [
+        343,
+        591,
+        91,
+        72
+      ]
+    },
+    {
+      "id": "build_hammer_icon_sam_rembg_extract",
+      "output": "assets_png/build_hammer_icon_sam_rembg_extract.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "reuse_previous_sam_rembg_extract",
+      "bbox": [
+        344,
+        574,
+        82,
+        82
+      ]
+    },
+    {
+      "id": "build_badge_dot_sam_rembg_extract",
+      "output": "assets_png/build_badge_dot_sam_rembg_extract.png",
+      "type": "notification_badge",
+      "transparent": true,
+      "strategy": "reuse_previous_sam_rembg_extract",
+      "bbox": [
+        414,
+        580,
+        29,
+        31
+      ]
+    },
+    {
+      "id": "build_label_fixed_art_sam_extract",
+      "output": "assets_png/build_label_fixed_art_sam_extract.png",
+      "type": "fixed_art_text_optional",
+      "transparent": true,
+      "strategy": "reuse_previous_sam_extract",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ]
+    },
+    {
+      "id": "build_nav_button_visual_state_sam_rembg",
+      "output": "assets_png/build_nav_button_visual_state_sam_rembg.png",
+      "type": "visual_state_sprite_diagnostic",
+      "transparent": true,
+      "strategy": "reuse_previous_visual_state",
+      "bbox": [
+        320,
+        560,
+        130,
+        152
+      ]
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "build_label",
+      "text": "BUILD",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "default": true
+    }
+  ],
+  "outputs": {
+    "sprite_overview": "sprite_overview.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "fixed_comparison": "focused_shadow_layer_fixed_comparison.png",
+    "text_comparison": "focused_shadow_layer_text_comparison.png",
+    "ablation_comparison": "focused_shadow_ablation_comparison.png",
+    "full_comparison": "full_shadow_layer_comparison.png",
+    "debug": "debug/",
+    "reference_package": "reference_package/"
+  },
+  "validation": {
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "previous_sam_text_node_vs_source_mean_abs_rgb_delta": 21.89,
+      "previous_sam_fixed_text_vs_source_mean_abs_rgb_delta": 15.84,
+      "previous_lama_text_node_vs_source_mean_abs_rgb_delta": 20.67,
+      "previous_lama_fixed_text_vs_source_mean_abs_rgb_delta": 14.59,
+      "visual_state_diagnostic_vs_source_mean_abs_rgb_delta": 10.24,
+      "shadow_layer_small_text_node_vs_source_mean_abs_rgb_delta": 20.8,
+      "shadow_layer_small_fixed_text_vs_source_mean_abs_rgb_delta": 14.71,
+      "no_shadow_layer_small_fixed_text_vs_source_mean_abs_rgb_delta": 14.71,
+      "hammer_shadow_small_area_px": 128,
+      "shadow_layer_medium_text_node_vs_source_mean_abs_rgb_delta": 21.42,
+      "shadow_layer_medium_fixed_text_vs_source_mean_abs_rgb_delta": 15.33,
+      "no_shadow_layer_medium_fixed_text_vs_source_mean_abs_rgb_delta": 15.3,
+      "hammer_shadow_medium_area_px": 1378,
+      "selected_shadow_variant": "small"
+    },
+    "read": [
+      "This experiment explicitly adds hammer_shadow between button_bg and hammer_icon.",
+      "The shadow layer is a dark transparent approximation from source darkening cues; it is not a recovered PSD layer.",
+      "The selected variant is chosen by fixed-text delta, but sprite_overview cleanliness and shadow ablation must be checked visually."
+    ]
+  }
+}

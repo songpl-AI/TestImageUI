@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "screen": {
+    "width": 1280,
+    "height": 720,
+    "nodes": [
+      {
+        "id": "build_button_bg_shadow_clean",
+        "role": "nav_button_background",
+        "bbox": [
+          329,
+          570,
+          112,
+          120
+        ],
+        "asset_strategy": "sam_button_mask_lama_inpaint_entity_and_shadow_holes",
+        "transparent": true,
+        "output": "assets_fit_raw/build_button_bg_shadow_clean.png",
+        "metadata": {
+          "asset_id": "build_button_bg_shadow_clean",
+          "source_asset_png": "assets_png/build_button_bg_shadow_clean.png",
+          "fit_mode": "exact_size_no_scale",
+          "inpaint_mask": "reference_package/button_bg_inpaint_mask_with_shadow_small.png",
+          "known_limitation": "shadow-clean bg is still LaMa-inpainted, not a recovered hidden source layer"
+        }
+      },
+      {
+        "id": "hammer_shadow",
+        "role": "nav_icon_shadow",
+        "bbox": [
+          343,
+          591,
+          91,
+          72
+        ],
+        "asset_strategy": "source_darkening_shadow_layer",
+        "transparent": true,
+        "output": "assets_fit_raw/hammer_shadow.png",
+        "metadata": {
+          "asset_id": "hammer_shadow",
+          "source_asset_png": "assets_png/hammer_shadow.png",
+          "fit_mode": "exact_size_no_scale",
+          "shadow_mask": "reference_package/hammer_shadow_mask_small.png",
+          "z_order": "between button_bg and hammer_icon"
+        }
+      },
+      {
+        "id": "build_hammer_icon_sam_rembg_extract",
+        "role": "nav_icon",
+        "bbox": [
+          344,
+          574,
+          82,
+          82
+        ],
+        "asset_strategy": "reuse_sam2_mask_source_extract_rembg_alpha_refine",
+        "transparent": true,
+        "output": "assets_fit_raw/build_hammer_icon_sam_rembg_extract.png",
+        "metadata": {
+          "asset_id": "build_hammer_icon_sam_rembg_extract",
+          "source_asset_png": "assets_png/build_hammer_icon_sam_rembg_extract.png",
+          "fit_mode": "exact_size_no_scale"
+        }
+      },
+      {
+        "id": "build_badge_dot_sam_rembg_extract",
+        "role": "notification_badge_dot",
+        "bbox": [
+          414,
+          580,
+          29,
+          31
+        ],
+        "asset_strategy": "reuse_sam2_mask_source_extract_rembg_alpha_refine",
+        "transparent": true,
+        "output": "assets_fit_raw/build_badge_dot_sam_rembg_extract.png",
+        "metadata": {
+          "asset_id": "build_badge_dot_sam_rembg_extract",
+          "source_asset_png": "assets_png/build_badge_dot_sam_rembg_extract.png",
+          "fit_mode": "exact_size_no_scale"
+        }
+      },
+      {
+        "id": "build_label",
+        "role": "button_label",
+        "bbox": [
+          350,
+          664,
+          70,
+          27
+        ],
+        "asset_strategy": "text_node",
+        "transparent": true,
+        "text": "BUILD",
+        "metadata": {
+          "font_hint": "bold white button label with dark outline",
+          "fit_mode": "text_node"
+        }
+      },
+      {
+        "id": "build_label_fixed_art_sam_extract",
+        "role": "button_label_fixed_art_optional",
+        "bbox": [
+          350,
+          664,
+          70,
+          27
+        ],
+        "asset_strategy": "fixed_art_text_optional_reuse_sam_extract",
+        "transparent": true,
+        "output": "assets_fit_raw/build_label_fixed_art_sam_extract.png",
+        "metadata": {
+          "asset_id": "build_label_fixed_art_sam_extract",
+          "source_asset_png": "assets_png/build_label_fixed_art_sam_extract.png",
+          "default_reconstruction": false,
+          "alternative_to": "build_label"
+        }
+      },
+      {
+        "id": "build_nav_button_visual_state_sam_rembg",
+        "role": "visual_state_diagnostic",
+        "bbox": [
+          320,
+          560,
+          130,
+          152
+        ],
+        "asset_strategy": "visual_state_sprite_diagnostic_reuse",
+        "transparent": true,
+        "output": "assets_fit_raw/build_nav_button_visual_state_sam_rembg.png",
+        "metadata": {
+          "asset_id": "build_nav_button_visual_state_sam_rembg",
+          "source_asset_png": "assets_png/build_nav_button_visual_state_sam_rembg.png",
+          "not_final_engineering_sprite": true
+        }
+      }
+    ]
+  }
+}

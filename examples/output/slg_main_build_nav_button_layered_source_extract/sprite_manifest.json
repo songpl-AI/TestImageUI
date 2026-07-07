@@ -1,0 +1,109 @@
+{
+  "status": "layered_source_extract_experiment_complete",
+  "generated_at": "2026-07-07T07:27:40.781203+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "sprites": [
+    {
+      "id": "build_button_bg_source_clean",
+      "output": "assets_png/build_button_bg_source_clean.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "source_preserve_clean_local_fill",
+      "bbox": [
+        329,
+        570,
+        112,
+        120
+      ],
+      "remove_text": true,
+      "remove_occluding_children": true
+    },
+    {
+      "id": "build_hammer_icon_source_extract",
+      "output": "assets_png/build_hammer_icon_source_extract.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "source_mask_extract",
+      "bbox": [
+        344,
+        574,
+        82,
+        82
+      ]
+    },
+    {
+      "id": "build_badge_dot_source_extract",
+      "output": "assets_png/build_badge_dot_source_extract.png",
+      "type": "notification_badge",
+      "transparent": true,
+      "strategy": "source_mask_extract",
+      "bbox": [
+        414,
+        580,
+        29,
+        31
+      ]
+    },
+    {
+      "id": "build_label_fixed_art_source_extract",
+      "output": "assets_png/build_label_fixed_art_source_extract.png",
+      "type": "fixed_art_text_optional",
+      "transparent": true,
+      "strategy": "source_mask_extract",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "note": "Optional fidelity check; Text Node remains the default engineering layer."
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "build_label",
+      "text": "BUILD",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ]
+    }
+  ],
+  "outputs": {
+    "sprite_overview": "sprite_overview.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "focused_comparison": "focused_layered_source_extract_comparison.png",
+    "full_comparison": "full_layered_source_extract_comparison.png",
+    "reconstruction": "reconstruction_with_layered_source_extract_build_nav_button.png",
+    "reference_package": "reference_package/",
+    "reconstruction_fixed_text": "reconstruction_with_layered_source_extract_fixed_text_build_nav_button.png"
+  },
+  "validation": {
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "decomposed_vs_source_mean_abs_rgb_delta": 45.64,
+      "cleanup_bg_vs_source_mean_abs_rgb_delta": 47.56,
+      "visual_state_vs_source_mean_abs_rgb_delta": 4.63,
+      "layered_source_extract_text_node_vs_source_mean_abs_rgb_delta": 28.69,
+      "layered_source_extract_text_node_vs_source_layer_mask_delta": 26.18,
+      "layered_source_extract_fixed_text_vs_source_mean_abs_rgb_delta": 22.66,
+      "layered_source_extract_fixed_text_vs_source_layer_mask_delta": 17.44
+    },
+    "read": [
+      "This experiment uses real split layers, not a single visual-state button sprite.",
+      "The bg layer keeps source pixels outside child exclusion masks and fills only removed child/text areas.",
+      "reference_package contains crops and masks for a future crop+prompt+mask inpaint pass.",
+      "Optional fixed-art source text reduces text rendering drift but sacrifices editability/localization."
+    ]
+  }
+}

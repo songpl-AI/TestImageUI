@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "screen": {
+    "width": 1280,
+    "height": 720,
+    "nodes": [
+      {
+        "id": "build_button_bg_source_clean",
+        "role": "nav_button_background",
+        "bbox": [
+          329,
+          570,
+          112,
+          120
+        ],
+        "asset_strategy": "source_preserve_clean_local_fill",
+        "transparent": true,
+        "output": "assets_fit_raw/build_button_bg_source_clean.png",
+        "metadata": {
+          "asset_id": "build_button_bg_source_clean",
+          "source_asset_png": "assets_png/build_button_bg_source_clean.png",
+          "fit_mode": "exact_size_no_scale",
+          "reference_crop": "reference_package/build_button_bg_source_visible_crop.png",
+          "exclude_mask": "reference_package/build_button_bg_exclude_children_mask.png",
+          "known_limitation": "occluded pixels are locally filled, not truly recovered"
+        }
+      },
+      {
+        "id": "build_hammer_icon_source_extract",
+        "role": "nav_icon",
+        "bbox": [
+          344,
+          574,
+          82,
+          82
+        ],
+        "asset_strategy": "source_mask_extract",
+        "transparent": true,
+        "output": "assets_fit_raw/build_hammer_icon_source_extract.png",
+        "metadata": {
+          "asset_id": "build_hammer_icon_source_extract",
+          "source_asset_png": "assets_png/build_hammer_icon_source_extract.png",
+          "fit_mode": "exact_size_no_scale",
+          "target_mask": "reference_package/hammer_target_mask.png"
+        }
+      },
+      {
+        "id": "build_badge_dot_source_extract",
+        "role": "notification_badge_dot",
+        "bbox": [
+          414,
+          580,
+          29,
+          31
+        ],
+        "asset_strategy": "source_mask_extract",
+        "transparent": true,
+        "output": "assets_fit_raw/build_badge_dot_source_extract.png",
+        "metadata": {
+          "asset_id": "build_badge_dot_source_extract",
+          "source_asset_png": "assets_png/build_badge_dot_source_extract.png",
+          "fit_mode": "exact_size_no_scale",
+          "target_mask": "reference_package/badge_target_mask.png"
+        }
+      },
+      {
+        "id": "build_label",
+        "role": "button_label",
+        "bbox": [
+          350,
+          664,
+          70,
+          27
+        ],
+        "asset_strategy": "text_node",
+        "transparent": true,
+        "text": "BUILD",
+        "metadata": {
+          "font_hint": "bold white button label with dark outline",
+          "fit_mode": "text_node"
+        }
+      },
+      {
+        "id": "build_label_fixed_art_source_extract",
+        "role": "button_label_fixed_art_optional",
+        "bbox": [
+          350,
+          664,
+          70,
+          27
+        ],
+        "asset_strategy": "fixed_art_text_optional",
+        "transparent": true,
+        "output": "assets_fit_raw/build_label_fixed_art_source_extract.png",
+        "metadata": {
+          "asset_id": "build_label_fixed_art_source_extract",
+          "source_asset_png": "assets_png/build_label_fixed_art_source_extract.png",
+          "fit_mode": "exact_size_no_scale",
+          "default_reconstruction": false,
+          "alternative_to": "build_label"
+        }
+      }
+    ]
+  }
+}

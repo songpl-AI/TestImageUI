@@ -1,0 +1,1 @@
+LaMa input is the source reference crop. Mask is the SAM/rembg child-exclusion mask inside the button silhouette. Only button_bg hidden holes are inpainted; hammer, badge, and label layers are reused from the previous SAM/rembg experiment.

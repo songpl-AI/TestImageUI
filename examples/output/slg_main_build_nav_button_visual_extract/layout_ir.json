@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "screen": {
+    "width": 1280,
+    "height": 720,
+    "nodes": [
+      {
+        "id": "build_nav_button_visual_state",
+        "role": "nav_button_visual_state",
+        "bbox": [
+          320,
+          560,
+          130,
+          152
+        ],
+        "asset_strategy": "source_preserving_mask_extract",
+        "transparent": true,
+        "output": "assets_fit_raw/build_nav_button_visual_state.png",
+        "metadata": {
+          "asset_id": "build_nav_button_visual_state",
+          "source_asset_png": "assets_png/build_nav_button_visual_state.png",
+          "fit_mode": "exact_size_no_scale",
+          "contains_text": true,
+          "manual_position_adjustment_allowed": true,
+          "not_final_crop_proxy": true,
+          "mask": "debug/build_nav_button_visual_state_mask.png"
+        }
+      }
+    ]
+  }
+}

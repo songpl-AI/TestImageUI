@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLG 主界面 Sprite 还原方案综合报告</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --paper: #ffffff;
+      --ink: #172033;
+      --muted: #607086;
+      --line: #d9dee8;
+      --navy: #243b66;
+      --blue: #2364c8;
+      --green: #13795b;
+      --amber: #9a6700;
+      --red: #b3261e;
+      --violet: #6542a5;
+      --code: #f2f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.62;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      width: min(1220px, calc(100vw - 36px));
+      margin: 0 auto;
+      padding: 34px 0 72px;
+    }
+
+    header {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 32px 36px;
+      box-shadow: 0 14px 36px rgba(40, 50, 68, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 42px 0 14px;
+      font-size: 24px;
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 28px 0 12px;
+      font-size: 18px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    code {
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: var(--code);
+      color: #22314a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+
+    ul,
+    ol {
+      margin: 10px 0 0 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px 0;
+    }
+
+    section {
+      margin-top: 22px;
+      padding: 26px 30px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 8px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef2f7;
+      color: #243246;
+      font-weight: 700;
+    }
+
+    td.num {
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+    }
+
+    figure {
+      margin: 18px 0 4px;
+      padding: 14px;
+      overflow: auto;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+      background: #22252b;
+    }
+
+    figcaption {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .lead {
+      max-width: 920px;
+      color: #334156;
+      font-size: 16px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+      color: #243246;
+      font-size: 14px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #111827;
+      font-size: 15px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eaf1ff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: 1px;
+      white-space: nowrap;
+    }
+
+    .badge.good {
+      background: #e8f6ef;
+      color: var(--green);
+    }
+
+    .badge.warn {
+      background: #fff4df;
+      color: var(--amber);
+    }
+
+    .badge.bad {
+      background: #fff0ee;
+      color: var(--red);
+    }
+
+    .badge.info {
+      background: #f0ecff;
+      color: var(--violet);
+    }
+
+    .callout {
+      margin: 16px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--blue);
+      background: #f4f8ff;
+      border-radius: 6px;
+    }
+
+    .callout.warn {
+      border-left-color: var(--amber);
+      background: #fff8eb;
+    }
+
+    .callout.bad {
+      border-left-color: var(--red);
+      background: #fff6f5;
+    }
+
+    .principle {
+      margin: 14px 0;
+      padding: 14px 16px;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .principle strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--navy);
+    }
+
+    .principle p {
+      margin: 0 0 8px;
+      color: #334156;
+      font-size: 14px;
+    }
+
+    .principle p:last-child {
+      margin-bottom: 0;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .metric-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .metric {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 3px;
+      font-size: 22px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tagline {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .path-list {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fbfcfe;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: #334156;
+      font-size: 13px;
+    }
+
+    .path-list div {
+      margin: 3px 0;
+    }
+
+    .verdict {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .summary-grid,
+      .toc,
+      .metric-list,
+      .two-col,
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+
+      header,
+      section {
+        padding: 22px 18px;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="meta">TestImageUI / ui-sprite-regenerator / 2026-07-07</p>
+      <h1>SLG 主界面 Sprite 还原方案综合报告</h1>
+      <p class="lead">
+        本报告整理当前项目中已经尝试过的 UI sprite 还原路线，重点说明每个方案的目标、做法、产物、指标、优缺点和当前结论。
+        指标采用与 source crop 的 mean abs RGB delta，数值越低越接近源图；它不是最终美术评分，但足够用于判断路线是否值得继续投入。
+      </p>
+      <div class="tagline">
+        <span class="badge bad">不建议继续堆 prompt 做高保真</span>
+        <span class="badge good">视觉态提取最接近效果图</span>
+        <span class="badge info">SAM/rembg 适合接入 layer-first</span>
+        <span class="badge warn">LaMa 只适合小范围补洞</span>
+        <span class="badge warn">shadow 归属需要人工确认</span>
+      </div>
+      <nav class="toc" aria-label="报告目录">
+        <a href="#summary">结论摘要</a>
+        <a href="#matrix">方案矩阵</a>
+        <a href="#metrics">核心数据</a>
+        <a href="#experiments">逐项实验</a>
+        <a href="#boundaries">能力边界</a>
+        <a href="#recommendation">当前建议</a>
+      </nav>
+    </header>
+
+    <section id="summary">
+      <h2>结论摘要</h2>
+      <div class="summary-grid">
+        <div class="card">
+          <strong>当前方案的价值</strong>
+          <p>能把扁平 AI UI 图转成 Sprite Plan、manifest、Layer IR、Layout IR、独立 PNG、回贴对比，工程链路可复盘。</p>
+        </div>
+        <div class="card">
+          <strong>最大问题</strong>
+          <p>纯 AI 重新生成会发生视觉漂移，按钮、资源条、文字、阴影和材质都不能稳定复刻源图。</p>
+        </div>
+        <div class="card">
+          <strong>最接近源图</strong>
+          <p>source-preserving visual state sprite 最接近效果图，但会烘焙文字、icon 和状态，复用性较低。</p>
+        </div>
+        <div class="card">
+          <strong>最适合继续工程化</strong>
+          <p>SAM/rembg 用于可见前景 mask 和 alpha refine，LaMa 只处理少数底板遮挡洞，shadow 交给人工确认。</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <p>
+          对当前项目来说，结论不是“ui-sprite-regenerator 不可用”，而是要区分两个目标：
+          <strong>先像效果图</strong>应该走视觉态提取；<strong>长期可编辑复用</strong>应该走工程拆层。
+          两条路线不要强行合并，否则会同时损失视觉还原和工程可控性。
+        </p>
+      </div>
+    </section>
+
+    <section id="matrix">
+      <h2>方案矩阵</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>方案</th>
+            <th>本项目产物</th>
+            <th>优点</th>
+            <th>缺点</th>
+            <th>当前结论</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>全屏独立 sprite 重生成</td>
+            <td><code>slg_main_single_sprites</code></td>
+            <td>结构完整，Text Node、布局、层级、回贴链路齐全。</td>
+            <td>整体材质、icon、字体、描边和光影明显漂移。</td>
+            <td><span class="badge warn">可做 mock</span> 不适合作为高保真终点。</td>
+          </tr>
+          <tr>
+            <td>crop proxy 上限验证</td>
+            <td><code>slg_main_fidelity_experiment</code></td>
+            <td>低成本证明哪些局部如果保留源图像素会明显变好。</td>
+            <td>proxy 是源图 crop，不是合格 sprite，不能作为最终资产。</td>
+            <td><span class="badge good">适合作诊断</span> 只能作为上限参照。</td>
+          </tr>
+          <tr>
+            <td>整按钮真实生成</td>
+            <td><code>slg_main_build_nav_button_realgen</code></td>
+            <td>减少多层组装错位，产出透明组合 sprite。</td>
+            <td>模型把按钮重画成更厚、更标准的大按钮，delta 反而更差。</td>
+            <td><span class="badge bad">不推荐推广</span> 单次 realgen 不接近上限。</td>
+          </tr>
+          <tr>
+            <td>按钮拆层真实生成</td>
+            <td><code>slg_main_build_nav_button_decomposed</code></td>
+            <td>工程边界合理，文字保留为 Text Node。</td>
+            <td>素材本身继续漂移，组合后没有更像源图。</td>
+            <td><span class="badge warn">结构正确</span> 不能单独解决高保真。</td>
+          </tr>
+          <tr>
+            <td>按钮底板 cleanup / inpaint</td>
+            <td><code>slg_main_build_button_bg_cleanup</code></td>
+            <td>能得到干净透明底板。</td>
+            <td>模型按 UI 先验补全，重画成标准模板。</td>
+            <td><span class="badge bad">不作为主线</span> 可做小实验。</td>
+          </tr>
+          <tr>
+            <td>顶部资源条组合 realgen</td>
+            <td><code>slg_main_top_resource_strip_realgen</code></td>
+            <td>不同组件类型上略有改善。</td>
+            <td>spacing、icon identity、条宽和颜色被重新设计。</td>
+            <td><span class="badge warn">收益有限</span> 不改变总体判断。</td>
+          </tr>
+          <tr>
+            <td>整组件视觉态提取</td>
+            <td><code>slg_main_build_nav_button_visual_extract</code></td>
+            <td>使用源图像素和非矩形 mask，视觉最接近效果图。</td>
+            <td>文字、icon、状态被烘焙，复用性和本地化差。</td>
+            <td><span class="badge good">高保真优先推荐</span> 标记为 visual state。</td>
+          </tr>
+          <tr>
+            <td>手工 layered source extract</td>
+            <td><code>slg_main_build_nav_button_layered_source_extract</code></td>
+            <td>保留图层关系，明显优于纯生成。</td>
+            <td>手工 mask 粗糙，遮挡底板只能近似补洞。</td>
+            <td><span class="badge good">方向成立</span> 需要工具增强 mask。</td>
+          </tr>
+          <tr>
+            <td>SAM/rembg 分割与 alpha refine</td>
+            <td><code>slg_main_build_nav_button_sam_rembg_extract</code></td>
+            <td>前景 mask、边缘和视觉态 alpha 显著改善。</td>
+            <td>不能恢复被遮挡的隐藏图层。</td>
+            <td><span class="badge good">值得接入</span> 用作 layer-first 辅助。</td>
+          </tr>
+          <tr>
+            <td>LaMa 小范围补洞</td>
+            <td><code>slg_main_build_nav_button_lama_inpaint_extract</code></td>
+            <td>对 button_bg 遮挡洞有小幅改善。</td>
+            <td>仍是猜测隐藏像素，依赖 mask，环境需隔离。</td>
+            <td><span class="badge warn">可作为候选</span> 不做默认整组件重画。</td>
+          </tr>
+          <tr>
+            <td>hammer shadow 独立层</td>
+            <td><code>slg_main_build_nav_button_shadow_layer_extract</code></td>
+            <td>验证了 shadow 归属这个关键未知项。</td>
+            <td>自动拆 shadow 后指标略差，底板出现新伪影。</td>
+            <td><span class="badge bad">负向结论</span> shadow 标记人工确认。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="metrics">
+      <h2>核心数据</h2>
+      <p class="small">下表中的 delta 均为与 source crop 的 mean abs RGB delta，越低越接近源图。0.00 的 crop proxy 是源图像素贴回，不代表真实 sprite 生成能力。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>对象</th>
+            <th>方案</th>
+            <th>delta</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>BUILD 按钮</td><td>当前独立 sprite 重建</td><td class="num">45.20</td><td>基线，视觉差距明显。</td></tr>
+          <tr><td>BUILD 按钮</td><td>crop proxy 上限</td><td class="num">0.00</td><td>源图 crop，不能作为最终 sprite。</td></tr>
+          <tr><td>BUILD 按钮</td><td>整按钮真实生成</td><td class="num">53.61</td><td>比基线更差，模型重设计。</td></tr>
+          <tr><td>BUILD 按钮</td><td>button_bg + hammer + badge + Text Node</td><td class="num">45.64</td><td>工程结构更好，但视觉没有提升。</td></tr>
+          <tr><td>BUILD 按钮</td><td>cleanup/inpaint 按钮底板</td><td class="num">47.56</td><td>干净但风格模板化。</td></tr>
+          <tr><td>BUILD 按钮</td><td>visual state extract</td><td class="num">4.63</td><td>贴回当前重建底图后仍接近源图。</td></tr>
+          <tr><td>BUILD 按钮</td><td>manual layered + Text Node</td><td class="num">28.69</td><td>拆层后优于纯生成。</td></tr>
+          <tr><td>BUILD 按钮</td><td>manual layered + fixed text</td><td class="num">22.66</td><td>排除字体漂移后进一步降低。</td></tr>
+          <tr><td>BUILD 按钮</td><td>SAM/rembg layered + Text Node</td><td class="num">21.89</td><td>mask/refine 明显改善。</td></tr>
+          <tr><td>BUILD 按钮</td><td>SAM/rembg layered + fixed text</td><td class="num">15.84</td><td>前景层质量提升得到验证。</td></tr>
+          <tr><td>BUILD 按钮</td><td>LaMa layered + Text Node</td><td class="num">20.67</td><td>相对 SAM/rembg 小幅改善。</td></tr>
+          <tr><td>BUILD 按钮</td><td>LaMa layered + fixed text</td><td class="num">14.59</td><td>当前工程拆层最佳指标，但仍不如视觉态。</td></tr>
+          <tr><td>BUILD 按钮</td><td>shadow small + fixed text</td><td class="num">14.71</td><td>自动拆 shadow 略差于 previous LaMa。</td></tr>
+          <tr><td>BUILD 按钮</td><td>shadow medium + fixed text</td><td class="num">15.33</td><td>mask 扩大后更差。</td></tr>
+          <tr><td>顶部资源条</td><td>当前独立 sprite 重建</td><td class="num">57.61</td><td>宽 HUD 区域基线差距大。</td></tr>
+          <tr><td>顶部资源条</td><td>realgen frame + Text Nodes</td><td class="num">53.92</td><td>小幅改善，但 icon 与 spacing 漂移。</td></tr>
+          <tr><td>顶部资源条</td><td>UI mask delta: 当前 / realgen</td><td class="num">60.78 / 58.34</td><td>只看 UI 区域仍只小幅改善。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="experiments">
+      <h2>逐项实验说明</h2>
+
+      <h3>1. 全屏独立 sprite 重生成</h3>
+      <p><span class="badge warn">基线方案</span> 目标是验证 ui-sprite-regenerator 的标准流程：Sprite Plan、manifest、Layer IR、Layout IR、独立透明 PNG、fit 回贴和 comparison。</p>
+      <div class="two-col">
+        <div>
+          <p><strong>优点</strong></p>
+          <ul>
+            <li>40 个源 sprite、61 个布局实例、40 个 Text Node，工程结构完整。</li>
+            <li>能区分 <code>assets_png</code> 源素材和 <code>assets_fit_raw</code> 布局实例。</li>
+            <li>能输出 <code>bbox_overlay.png</code>、<code>sprite_overview.png</code>、<code>reconstruction.png</code> 和 <code>comparison.png</code>。</li>
+          </ul>
+        </div>
+        <div>
+          <p><strong>缺点</strong></p>
+          <ul>
+            <li>重新生成导致风格不一致，尤其是按钮、资源条、icon、字体和高光阴影。</li>
+            <li>它证明了链路可用，但没有证明视觉高保真可达。</li>
+          </ul>
+        </div>
+      </div>
+      <p class="verdict">当前结论：适合作为工程化拆分链路和 mock 资产生成基线，不应承诺“像原图”。</p>
+      <figure>
+        <img src="../slg_main_single_sprites/comparison.png" alt="全屏独立 sprite 重建对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_single_sprites/comparison.png">slg_main_single_sprites/comparison.png</a></figcaption>
+      </figure>
+
+      <h3>2. crop proxy 上限实验</h3>
+      <p><span class="badge good">诊断实验</span> 目标是回答一个低成本问题：如果直接把源图局部贴回，当前差距能降低多少。</p>
+      <div class="metric-list">
+        <div class="metric"><span>top_resource_strip 当前</span><strong>57.61</strong></div>
+        <div class="metric"><span>top_resource_strip proxy</span><strong>0.00</strong></div>
+        <div class="metric"><span>build_nav_button 当前</span><strong>45.20</strong></div>
+        <div class="metric"><span>build_nav_button proxy</span><strong>0.00</strong></div>
+      </div>
+      <p><strong>优点：</strong>快速证明“保留源图像素”对视觉相似度非常有效，也说明问题不是只有红框局部，而是整体材质和上下文一致性。</p>
+      <p><strong>缺点：</strong><code>proxy_crops_not_final_sprites</code> 是矩形 crop，不是最终 sprite，不能直接进入工程资产。</p>
+      <p class="verdict">当前结论：保留源图像素是高保真上限，但必须换成非矩形 mask / 分层提取，不能停在 crop。</p>
+      <figure>
+        <img src="../slg_main_fidelity_experiment/focused_component_comparison.png" alt="crop proxy 上限局部对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_fidelity_experiment/focused_component_comparison.png">slg_main_fidelity_experiment/focused_component_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>3. BUILD 整按钮真实生成</h3>
+      <p><span class="badge bad">负向结果</span> 目标是验证“组合控件 realgen”能不能接近 crop proxy 的上限。</p>
+      <table>
+        <thead><tr><th>版本</th><th>delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>当前独立 sprite 重建</td><td class="num">45.20</td><td>基线。</td></tr>
+          <tr><td>crop proxy</td><td class="num">0.00</td><td>上限参照，不是 sprite。</td></tr>
+          <tr><td>整按钮 realgen</td><td class="num">53.61</td><td>更厚重、更规整，文字和 hammer 占比漂移。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>产出了透明组合 sprite，避免了内部层级错位。</p>
+      <p><strong>缺点：</strong>AI 把组件重新设计成标准 UI 按钮，视觉比基线更远。</p>
+      <p class="verdict">当前结论：整组件真实生成不能作为高保真主线，至少 BUILD 按钮不成立。</p>
+      <figure>
+        <img src="../slg_main_build_nav_button_realgen/focused_realgen_comparison.png" alt="BUILD 整按钮真实生成对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_build_nav_button_realgen/focused_realgen_comparison.png">slg_main_build_nav_button_realgen/focused_realgen_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>4. BUILD 拆层真实生成</h3>
+      <p><span class="badge warn">结构正确但相似度不够</span> 目标是按 <code>button_bg + hammer_icon + badge_dot + Text Node</code> 做更工程化的拆分。</p>
+      <table>
+        <thead><tr><th>版本</th><th>delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>当前独立 sprite 重建</td><td class="num">45.20</td><td>基线。</td></tr>
+          <tr><td>整按钮 realgen</td><td class="num">53.61</td><td>组合重画更差。</td></tr>
+          <tr><td>拆层 realgen + Text Node</td><td class="num">45.64</td><td>几乎没有提升。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>文字可编辑，组件边界更符合工程复用。</p>
+      <p><strong>缺点：</strong>底板、锤子、红点仍然被模型重新诠释，素材自身漂移没有消失。</p>
+      <p class="verdict">当前结论：拆层边界是对的，但“拆得更工程化”不等于“更像源图”。</p>
+      <figure>
+        <img src="../slg_main_build_nav_button_decomposed/focused_decomposed_comparison.png" alt="BUILD 拆层真实生成对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_build_nav_button_decomposed/focused_decomposed_comparison.png">slg_main_build_nav_button_decomposed/focused_decomposed_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>5. BUILD 按钮底板 cleanup / inpaint</h3>
+      <p><span class="badge bad">模板化漂移</span> 目标是给模型源图局部参考，让它只清理按钮底板，复用已有 hammer、badge 和 Text Node。</p>
+      <div class="principle">
+        <strong>技术原理：cleanup / inpaint 是“遮挡区域补全”，不是图层恢复</strong>
+        <p>inpaint 的基本输入通常是原图局部、需要被移除或补全的 mask，以及可选提示词。模型会根据 mask 周围的像素连续性、材质规律和训练得到的 UI 先验，合成一块“看起来合理”的新内容。</p>
+        <p>这类方法适合去掉小面积遮挡、污点、文字或前景物，但它并不知道被锤子、红点、文字遮住的真实按钮底板长什么样。对游戏 UI 来说，模型很容易把局部按钮补成更规整、更高清的标准模板，所以会出现“资产变干净了，但不像源图”的结果。</p>
+      </div>
+      <table>
+        <thead><tr><th>版本</th><th>delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>拆层 realgen + Text Node</td><td class="num">45.64</td><td>上一轮基线。</td></tr>
+          <tr><td>cleanup bg + 复用 icon/Text</td><td class="num">47.56</td><td>底板干净，但更不像源图。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>能生成工程上干净的透明按钮底板。</p>
+      <p><strong>缺点：</strong>被遮挡区域没有真实图层，模型会按自己的 UI 先验补全，细节密度和比例漂移。</p>
+      <p class="verdict">当前结论：局部 crop + prompt 的 cleanup 不是高保真保证，不建议在同一按钮上继续堆 prompt。</p>
+      <figure>
+        <img src="../slg_main_build_button_bg_cleanup/focused_cleanup_comparison.png" alt="BUILD 按钮底板 cleanup 对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_build_button_bg_cleanup/focused_cleanup_comparison.png">slg_main_build_button_bg_cleanup/focused_cleanup_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>6. 顶部资源条组合 realgen</h3>
+      <p><span class="badge warn">不同组件类型验证</span> 目标是排除“问题只发生在 BUILD 按钮”这一种可能，换宽 HUD 资源条测试。</p>
+      <table>
+        <thead><tr><th>版本</th><th>全 crop delta</th><th>UI mask delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>当前独立 sprite 重建</td><td class="num">57.61</td><td class="num">60.78</td><td>基线差距大。</td></tr>
+          <tr><td>realgen frame + Text Nodes</td><td class="num">53.92</td><td class="num">58.34</td><td>略好，但 spacing 和 icon identity 漂移。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>在宽 HUD 上有一点收益，能保持动态文字为 Text Node。</p>
+      <p><strong>缺点：</strong>资源条被重新排版，宝石和金币等 icon 身份发生变化，条宽也变得更统一。</p>
+      <p class="verdict">当前结论：组合控件不是完全无效，但收益太小，不足以作为全屏主线。</p>
+      <figure>
+        <img src="../slg_main_top_resource_strip_realgen/focused_top_resource_strip_comparison.png" alt="顶部资源条组合 realgen 对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_top_resource_strip_realgen/focused_top_resource_strip_comparison.png">slg_main_top_resource_strip_realgen/focused_top_resource_strip_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>7. BUILD 整组件视觉态提取</h3>
+      <p><span class="badge good">最接近源图</span> 目标是不用 AI 重画，而是保留源图像素，用非矩形 alpha mask 提取视觉态 sprite。</p>
+      <div class="principle">
+        <strong>技术原理：source-preserving mask extract 保留原始像素，只决定透明边界</strong>
+        <p>这条路线不让模型重新画按钮，而是用语义 mask / alpha mask 把按钮从源图中抠出来。输出仍然是透明 PNG，但按钮内部像素来自源图本身，因此不会产生重新生成带来的材质、色彩、笔触和字体漂移。</p>
+        <p>它的代价也来自同一个原因：因为保留的是“当前视觉状态”，所以文字、锤子、红点和局部阴影会一起被烘焙进 sprite。它解决的是视觉接近度，不解决长期工程复用和多状态编辑。</p>
+      </div>
+      <div class="metric-list">
+        <div class="metric"><span>当前独立 sprite</span><strong>45.20</strong></div>
+        <div class="metric"><span>visual extract on current bg</span><strong>4.63</strong></div>
+        <div class="metric"><span>alpha mask 区域</span><strong>1.56</strong></div>
+        <div class="metric"><span>on source bg</span><strong>0.00</strong></div>
+      </div>
+      <p><strong>优点：</strong>最大程度避免生成模型重画，视觉效果接近源图，不是矩形 crop，输出透明 PNG。</p>
+      <p><strong>缺点：</strong>锤子、红点、文字和当前状态被烘焙在一起，不适合多语言、状态切换和细粒度复用。</p>
+      <p class="verdict">当前结论：如果目标是“ui-sprite-regenerator 生成的图要和效果图一样”，这是低复杂度下最值得走的路线，但必须标记为 <code>visual_state_sprite</code>。</p>
+      <figure>
+        <img src="../slg_main_build_nav_button_visual_extract/focused_visual_extract_comparison.png" alt="BUILD 视觉态提取对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_build_nav_button_visual_extract/focused_visual_extract_comparison.png">slg_main_build_nav_button_visual_extract/focused_visual_extract_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>8. BUILD layer-first source extract</h3>
+      <p><span class="badge good">分层方向成立</span> 目标是按图层关系拆出 <code>button_bg</code>、<code>hammer_icon</code>、<code>badge_dot</code>、Text Node，并保留 reference package。</p>
+      <div class="principle">
+        <strong>技术原理：layer-first 先定义工程图层，再为每层选择 mask、保留像素或补洞</strong>
+        <p>这条路线的重点不是先切 bbox，而是先定义图层语义：哪些像素属于底板，哪些属于 icon、badge、文字或 shadow。前景层能通过 mask 直接保留源图可见像素；底板层则需要用 exclude mask 移除子元素，再对被遮挡的小洞做局部补全。</p>
+        <p>它比纯 AI 生成更稳定，因为大部分可见像素来自源图；但它仍不是自动 PSD。只要某个底板区域在原图中从未可见，流程只能近似补洞，无法证明补出来的是原始设计稿中的真实像素。</p>
+      </div>
+      <table>
+        <thead><tr><th>版本</th><th>delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>visual state extract</td><td class="num">4.63</td><td>视觉上限更高，但不可编辑。</td></tr>
+          <tr><td>layered source extract + Text Node</td><td class="num">28.69</td><td>比纯生成明显好。</td></tr>
+          <tr><td>layered source extract + fixed text</td><td class="num">22.66</td><td>说明文字渲染也是显著误差来源。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>同时保留工程层结构和源图像素，且保存 crop、target mask、exclude mask，后续可继续增强。</p>
+      <p><strong>缺点：</strong>手工 mask 粗糙；button_bg 被文字、锤子、红点遮挡的隐藏像素无法从单张扁平图真实恢复。</p>
+      <p class="verdict">当前结论：这条路线值得保留，但要引入 SAM/rembg 改善 mask，底板补洞单独处理。</p>
+      <figure>
+        <img src="../slg_main_build_nav_button_layered_source_extract/focused_layered_source_extract_comparison.png" alt="BUILD layered source extract 对比" loading="lazy">
+        <figcaption>截图：<a href="../slg_main_build_nav_button_layered_source_extract/focused_layered_source_extract_comparison.png">slg_main_build_nav_button_layered_source_extract/focused_layered_source_extract_comparison.png</a></figcaption>
+      </figure>
+
+      <h3>9. SAM/rembg 分割与 alpha refine</h3>
+      <p><span class="badge good">推荐接入工程拆层</span> 目标是验证第三方工具是否能降低手工 mask 粗糙度。</p>
+      <div class="principle">
+        <strong>技术原理：SAM 负责“找可见物体边界”，rembg 负责“细化透明边缘”</strong>
+        <p>SAM / SAM2 是 promptable segmentation 工具：给它点、框或区域提示后，它会根据图像特征输出候选 mask。它擅长把源图中已经可见的锤子、红点、文字或按钮轮廓分出来，因此比手工画 mask 更稳定。</p>
+        <p>rembg 这类工具更接近 foreground matting / background removal：它不决定工程语义，而是根据图像内容估计前景 alpha，能改善边缘锯齿、软边和半透明过渡。当前项目里更适合作为 SAM mask 后的 alpha refine。</p>
+        <p>这两类工具的共同边界是：它们只看得到源图中的可见像素。被 icon 或文字遮住的底板不存在于输入图里，所以 SAM/rembg 不能恢复隐藏底板，也不能自动判断 shadow 应该属于按钮底板还是锤子层。</p>
+      </div>
+      <table>
+        <thead><tr><th>版本</th><th>delta</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>manual layered + Text Node</td><td class="num">28.69</td><td>上一轮手工 mask。</td></tr>
+          <tr><td>SAM/rembg layered + Text Node</td><td class="num">21.89</td><td>明显改善。</td></tr>
+          <tr><td>manual layered + fixed text</td><td class="num">22.66</td><td>上一轮排除 Text Node。</td></tr>
+          <tr><td>SAM/rembg layered + fixed text</td><td class="num">15.84</td><td>前景层 mask/refine 改善成立。</td></tr>
+          <tr><td>SAM/rembg visual-state diagnostic</td><td class="num">10.24</td><td>整组件视觉态诊断。</td></tr>
+          <tr><td>visual-state alpha mask delta</td><td class="num">0.97</td><td>只看 alpha 覆盖区域几乎贴近源图。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>SAM2 对 hammer、badge、label 等可见前景层帮助明显；rembg 适合作 alpha/edge refine。</p>
+      <p><strong>缺点：</strong>SAM/rembg 只处理可见像素，不知道工程语义，也不能恢复被遮挡的底板。</p>
+      <p class="verdict">当前结论：值得接入 layer-first workflow，但不能宣传成自动 PSD 化。</p>
+      <div class="two-col">
+        <figure>
+          <img src="../slg_main_build_nav_button_sam_rembg_extract/focused_sam_rembg_extract_comparison.png" alt="SAM rembg 提取对比" loading="lazy">
+          <figcaption>截图：<a href="../slg_main_build_nav_button_sam_rembg_extract/focused_sam_rembg_extract_comparison.png">focused_sam_rembg_extract_comparison.png</a></figcaption>
+        </figure>
+        <figure>
+          <img src="../slg_main_build_nav_button_sam_rembg_extract/debug/sam2_candidate_mask_overview.png" alt="SAM2 candidate mask overview" loading="lazy">
+          <figcaption>调试图：<a href="../slg_main_build_nav_button_sam_rembg_extract/debug/sam2_candidate_mask_overview.png">debug/sam2_candidate_mask_overview.png</a></figcaption>
+        </figure>
+      </div>
+
+      <h3>10. LaMa 小范围 inpaint 补洞</h3>
+      <p><span class="badge warn">小幅改善</span> 目标是在 SAM/rembg 已经处理好前景的基础上，只对 <code>button_bg</code> 的遮挡洞做 LaMa 补全。</p>
+      <div class="principle">
+        <strong>技术原理：LaMa 是面向较大遮挡区域的图像补全模型</strong>
+        <p>LaMa 属于 inpainting 模型。它接收原图和 mask，把 mask 内的区域当成缺失内容，再利用周围颜色、纹理、结构和模型先验生成补全结果。相对简单的区域采样或模糊填充，LaMa 往往能产生更自然的连续纹理。</p>
+        <p>对当前 UI 拆层来说，LaMa 的合理用法是“只补 button_bg 上被前景层挖掉的小洞”。它不应该接管整个按钮，也不应该重画完整组件。mask 越大，模型越容易重新设计金边、材质和高光；mask 越小，则可能残留锤子阴影或文字痕迹。</p>
+        <p>因此 LaMa 的定位是困难底板的局部补洞候选，而不是源图图层恢复器。它的结果需要和 visual-state 上限、SAM/rembg 基线一起对比，不能只看补出来是否干净。</p>
+      </div>
+      <table>
+        <thead><tr><th>版本</th><th>Text Node delta</th><th>fixed text delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>SAM/rembg</td><td class="num">21.89</td><td class="num">15.84</td><td>上一轮基线。</td></tr>
+          <tr><td>LaMa variant B</td><td class="num">20.67</td><td class="num">14.59</td><td>小幅改善。</td></tr>
+          <tr><td>visual-state diagnostic</td><td class="num">10.24</td><td class="num">10.24</td><td>仍明显更好。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>能让底板遮挡洞比区域采样更自然，适合困难底板局部处理。</p>
+      <p><strong>缺点：</strong>仍是根据周围像素猜 hidden layer；mask 稍微扩大就可能重画金边和材质。安装时会拉低 Pillow/Numpy，后续应独立环境运行。</p>
+      <p class="verdict">当前结论：LaMa 可保留为候选工具，但只用于小范围补洞，不作为默认整组件重画方案。</p>
+      <div class="two-col">
+        <figure>
+          <img src="../slg_main_build_nav_button_lama_inpaint_extract/focused_lama_inpaint_comparison.png" alt="LaMa inpaint 对比" loading="lazy">
+          <figcaption>截图：<a href="../slg_main_build_nav_button_lama_inpaint_extract/focused_lama_inpaint_comparison.png">focused_lama_inpaint_comparison.png</a></figcaption>
+        </figure>
+        <figure>
+          <img src="../slg_main_build_nav_button_lama_inpaint_extract/focused_lama_variant_comparison.png" alt="LaMa variant 对比" loading="lazy">
+          <figcaption>截图：<a href="../slg_main_build_nav_button_lama_inpaint_extract/focused_lama_variant_comparison.png">focused_lama_variant_comparison.png</a></figcaption>
+        </figure>
+      </div>
+
+      <h3>11. hammer shadow layer 归属实验</h3>
+      <p><span class="badge bad">负向边界</span> 目标是验证 <code>hammer_shadow</code> 是否应该从 <code>button_bg</code> 中拆出，成为 hammer stack 的独立层。</p>
+      <div class="principle">
+        <strong>技术原理：shadow 不是清晰物体，自动分割比 icon 更不稳定</strong>
+        <p>投影通常是光照和接触关系形成的半透明暗部，它没有像 icon 那样明确的物体边界。用阈值、暗部差分或 segmentation 去抓 shadow 时，很容易把按钮底板自身的暗纹、材质凹陷或边缘阴影一起抓进去。</p>
+        <p>一旦把 shadow 也从底板 mask 掉，LaMa 需要补的洞会变大，反而可能在底板上生成新的伪影。把 shadow 作为单独半透明层回贴，也很难精确复现源图里的软边、接触阴影和局部材质变化。</p>
+        <p>所以这个实验的负向结果是合理的：shadow 归属应该进入人工确认或依赖 PSD/人工修图，而不是作为默认自动拆层规则。</p>
+      </div>
+      <table>
+        <thead><tr><th>版本</th><th>Text Node delta</th><th>fixed text delta</th><th>观察</th></tr></thead>
+        <tbody>
+          <tr><td>previous LaMa</td><td class="num">20.67</td><td class="num">14.59</td><td>上一轮最佳工程拆层。</td></tr>
+          <tr><td>shadow small</td><td class="num">20.80</td><td class="num">14.71</td><td>略差。</td></tr>
+          <tr><td>shadow medium</td><td class="num">21.42</td><td class="num">15.33</td><td>更差，底板伪影增加。</td></tr>
+          <tr><td>visual-state diagnostic</td><td class="num">10.24</td><td class="num">10.24</td><td>仍是视觉上限。</td></tr>
+        </tbody>
+      </table>
+      <p><strong>优点：</strong>明确验证了 shadow 归属，不再停留在猜测。</p>
+      <p><strong>缺点：</strong>自动 shadow mask 难以只抓投影；拆掉 shadow 后 LaMa 需要补更大的洞，反而引入底板伪影。</p>
+      <p class="verdict">当前结论：不要默认自动拆 shadow。工程拆层时把 shadow 归属标记为 <code>needs_manual_shadow_review</code>；没有 PSD 或人工修图时，宁愿保守。</p>
+      <div class="two-col">
+        <figure>
+          <img src="../slg_main_build_nav_button_shadow_layer_extract/focused_shadow_layer_fixed_comparison.png" alt="shadow layer fixed text 对比" loading="lazy">
+          <figcaption>截图：<a href="../slg_main_build_nav_button_shadow_layer_extract/focused_shadow_layer_fixed_comparison.png">focused_shadow_layer_fixed_comparison.png</a></figcaption>
+        </figure>
+        <figure>
+          <img src="../slg_main_build_nav_button_shadow_layer_extract/focused_shadow_ablation_comparison.png" alt="shadow ablation 对比" loading="lazy">
+          <figcaption>截图：<a href="../slg_main_build_nav_button_shadow_layer_extract/focused_shadow_ablation_comparison.png">focused_shadow_ablation_comparison.png</a></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="boundaries">
+      <h2>当前方案能做、不能做、未知</h2>
+      <div class="three-col">
+        <div>
+          <h3>能做到</h3>
+          <ul>
+            <li>锁定布局位置、尺寸、层级和 Text Node。</li>
+            <li>输出可审计的 Sprite Plan、manifest、Layer IR、Layout IR。</li>
+            <li>生成透明独立 PNG，并通过 <code>assets_fit_raw</code> 回贴验证。</li>
+            <li>把动态文字、数字、按钮文案保留为可编辑节点。</li>
+            <li>用 source-preserving mask 生成接近效果图的视觉态 sprite。</li>
+            <li>用 SAM/rembg 改善可见前景层 mask 和 alpha 边缘。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>确定做不好</h3>
+          <ul>
+            <li>不能靠 prompt 稳定复刻源图的精确笔触、材质和光影。</li>
+            <li>不能从单张扁平图恢复被遮挡的真实隐藏图层。</li>
+            <li>不能同时最大化“细粒度复用”和“几乎等同源图”。</li>
+            <li>SAM/rembg 不能替代图层语义判断。</li>
+            <li>LaMa 不能保证恢复真实底板，只能生成合理近似。</li>
+            <li>shadow 不能在当前自动规则下可靠拆出。</li>
+          </ul>
+        </div>
+        <div>
+          <h3>仍需确认</h3>
+          <ul>
+            <li>哪些组件应该使用视觉态，哪些组件值得工程拆层。</li>
+            <li>LaMa 在更多底板上的稳定收益是否足够。</li>
+            <li>是否需要九宫格、PSD、人工修图或设计源文件介入。</li>
+            <li>Text Node 的字体、描边、投影如何与源图更接近。</li>
+            <li>资源条这类宽 HUD 是否需要人工确定 slot 结构。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout warn">
+        <p>
+          最核心的物理限制是：AI 效果图只有一张扁平图片。它不是 PSD、Figma 或引擎 prefab。
+          所以遮挡背后的像素、真实图层归属、可编辑文本样式和九宫格拉伸规则，都不能完全靠自动生成推断出来。
+        </p>
+      </div>
+    </section>
+
+    <section id="recommendation">
+      <h2>当前项目建议</h2>
+      <h3>推荐路线：双轨输出</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>轨道</th>
+            <th>适用目标</th>
+            <th>具体做法</th>
+            <th>验收重点</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>视觉态 sprite</strong></td>
+            <td>先让 UI 看起来像效果图，位置可以后续手调。</td>
+            <td>对关键控件使用 source-preserving 非矩形 mask 提取，允许烘焙状态和固定文字。</td>
+            <td>像源图、边缘干净、明确标记不可长期复用。</td>
+          </tr>
+          <tr>
+            <td><strong>工程拆层 sprite</strong></td>
+            <td>需要动态文字、本地化、状态变化和长期复用。</td>
+            <td>SAM/rembg 做前景 mask/refine，Text Node 保持可编辑，少数底板洞用 LaMa 或人工修图。</td>
+            <td>图层关系正确、IR 完整、遮挡和 shadow 均记录 limitation。</td>
+          </tr>
+          <tr>
+            <td><strong>人工/PSD 化资产</strong></td>
+            <td>要求高保真且可编辑。</td>
+            <td>由人工修图或源设计文件补齐隐藏底板、阴影、九宫格、字体样式。</td>
+            <td>能回贴接近源图，同时保留可复用层。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>不建议继续投入的方向</h3>
+      <ul>
+        <li>不要继续在 BUILD 按钮上单纯堆 prompt。整按钮、拆层 realgen、cleanup/inpaint 都没有接近上限。</li>
+        <li>不要把 crop proxy 当最终 sprite。它只能证明上限，不能进入工程资产。</li>
+        <li>不要默认自动拆 shadow。当前实验证明会略微变差，应改成人工确认项。</li>
+        <li>不要把 SAM/rembg/LaMa 宣传成自动 PSD 恢复。它们分别解决 mask、alpha、补洞的一部分问题。</li>
+      </ul>
+
+      <h3>下一步低复杂度建议</h3>
+      <ol>
+        <li>为关键控件先生成 <code>visual_state_sprite</code>，满足“看起来像效果图”的短期目标。</li>
+        <li>只对需要可编辑的控件补 <code>engineering_layers</code>，不要全屏强拆。</li>
+        <li>把 SAM/rembg 固化成 layer-first 的 mask/refine 步骤。</li>
+        <li>LaMa 只作为底板遮挡洞的候选工具，并记录每个洞的 limitation。</li>
+        <li>shadow、九宫格、字体样式进入人工确认清单，避免自动规则越做越复杂但收益很低。</li>
+      </ol>
+
+      <div class="path-list">
+        <div><strong>报告引用的主要证据目录</strong></div>
+        <div><code>examples/output/slg_main_single_sprites/</code></div>
+        <div><code>examples/output/slg_main_fidelity_experiment/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_realgen/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_decomposed/</code></div>
+        <div><code>examples/output/slg_main_build_button_bg_cleanup/</code></div>
+        <div><code>examples/output/slg_main_top_resource_strip_realgen/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_visual_extract/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_layered_source_extract/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_sam_rembg_extract/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_lama_inpaint_extract/</code></div>
+        <div><code>examples/output/slg_main_build_nav_button_shadow_layer_extract/</code></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

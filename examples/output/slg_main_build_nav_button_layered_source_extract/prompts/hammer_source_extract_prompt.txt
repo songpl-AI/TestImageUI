@@ -1,0 +1,4 @@
+Use case: source-mask extraction
+Asset type: game UI hammer icon sprite
+Input images: source hammer crop and target mask from reference_package
+Primary request: preserve visible source hammer pixels and clean only the transparent edge; do not redraw or restyle the hammer.

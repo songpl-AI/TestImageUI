@@ -1,0 +1,5 @@
+Use case: precise-object-edit / source-preserving UI inpaint
+Asset type: game UI button background sprite
+Input images: source visible crop and exclude mask from reference_package
+Primary request: keep all visible source pixels outside the exclude mask unchanged; remove hammer icon, notification badge, and BUILD text; inpaint only the masked holes using the same dark blue enamel, gold bevel, lower blue plate, lighting, thickness, and material density. Do not redesign the button. Do not alter silhouette. Output a clean independent button background with transparent outside area.
+Constraints: no text, no letters, no numbers, no hammer, no badge, no map background.

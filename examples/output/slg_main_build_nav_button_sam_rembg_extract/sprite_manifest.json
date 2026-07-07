@@ -1,0 +1,322 @@
+{
+  "status": "sam_rembg_extract_experiment_complete",
+  "generated_at": "2026-07-07T08:01:25.978008+00:00",
+  "source_image": "examples/input/slg_main.png",
+  "source_size": [
+    1280,
+    720
+  ],
+  "reference_crop": "examples/output/slg_main_fidelity_experiment/reference_crops/build_nav_button_source_reference_crop.png",
+  "component_bbox": [
+    320,
+    560,
+    130,
+    152
+  ],
+  "environment": {
+    "python": "3.12 temporary venv /tmp/testimageui-ai-check-venv",
+    "sam_model": "facebook/sam2.1-hiera-tiny",
+    "sam_device": "mps",
+    "alpha_refine": "rembg u2netp + SAM gate for child layers; SAM-only outer alpha for button background",
+    "bg_occlusion_fill": "region-sampled blue plate fill + light blur, not LaMa"
+  },
+  "sprites": [
+    {
+      "id": "build_button_bg_sam_clean",
+      "output": "assets_png/build_button_bg_sam_clean.png",
+      "type": "button_bg",
+      "transparent": true,
+      "strategy": "sam2_button_mask_opencv_local_fill_rembg_child_edge_evidence",
+      "bbox": [
+        329,
+        570,
+        112,
+        120
+      ],
+      "remove_text": true,
+      "remove_occluding_children": true
+    },
+    {
+      "id": "build_hammer_icon_sam_rembg_extract",
+      "output": "assets_png/build_hammer_icon_sam_rembg_extract.png",
+      "type": "icon",
+      "transparent": true,
+      "strategy": "sam2_mask_source_extract_rembg_alpha_refine",
+      "bbox": [
+        344,
+        574,
+        82,
+        82
+      ]
+    },
+    {
+      "id": "build_badge_dot_sam_rembg_extract",
+      "output": "assets_png/build_badge_dot_sam_rembg_extract.png",
+      "type": "notification_badge",
+      "transparent": true,
+      "strategy": "sam2_mask_source_extract_rembg_alpha_refine",
+      "bbox": [
+        414,
+        580,
+        29,
+        31
+      ]
+    },
+    {
+      "id": "build_label_fixed_art_sam_extract",
+      "output": "assets_png/build_label_fixed_art_sam_extract.png",
+      "type": "fixed_art_text_optional",
+      "transparent": true,
+      "strategy": "sam2_mask_source_extract",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "note": "Optional comparison only; Text Node remains default engineering layer."
+    },
+    {
+      "id": "build_nav_button_visual_state_sam_rembg",
+      "output": "assets_png/build_nav_button_visual_state_sam_rembg.png",
+      "type": "visual_state_sprite_diagnostic",
+      "transparent": true,
+      "strategy": "sam2_whole_mask_rembg_alpha_refine",
+      "bbox": [
+        320,
+        560,
+        130,
+        152
+      ],
+      "note": "Diagnostic visual-state upper bound; not an engineering split sprite."
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "build_label",
+      "text": "BUILD",
+      "bbox": [
+        350,
+        664,
+        70,
+        27
+      ],
+      "default": true
+    }
+  ],
+  "outputs": {
+    "sprite_overview": "sprite_overview.png",
+    "bbox_overlay": "bbox_overlay.png",
+    "focused_comparison": "focused_sam_rembg_extract_comparison.png",
+    "full_comparison": "full_sam_rembg_extract_comparison.png",
+    "reconstruction_text_node": "reconstruction_with_sam_rembg_layered_build_nav_button.png",
+    "reconstruction_fixed_text": "reconstruction_with_sam_rembg_layered_fixed_text_build_nav_button.png",
+    "reconstruction_visual_state": "reconstruction_with_sam_rembg_visual_state_build_nav_button.png",
+    "reference_package": "reference_package/",
+    "debug": "debug/"
+  },
+  "sam2_candidates": {
+    "whole_visual_state": [
+      {
+        "candidate": 0,
+        "score": 0.9566587805747986,
+        "area_px": 13443,
+        "bbox_xyxy": [
+          5,
+          7,
+          122,
+          134
+        ]
+      },
+      {
+        "candidate": 1,
+        "score": 0.6819760799407959,
+        "area_px": 3302,
+        "bbox_xyxy": [
+          5,
+          10,
+          122,
+          132
+        ]
+      },
+      {
+        "candidate": 2,
+        "score": 0.899651050567627,
+        "area_px": 12906,
+        "bbox_xyxy": [
+          5,
+          9,
+          122,
+          133
+        ]
+      }
+    ],
+    "button_bg": [
+      {
+        "candidate": 0,
+        "score": 0.9423106908798218,
+        "area_px": 12639,
+        "bbox_xyxy": [
+          10,
+          7,
+          122,
+          131
+        ]
+      },
+      {
+        "candidate": 1,
+        "score": 0.7502581477165222,
+        "area_px": 5036,
+        "bbox_xyxy": [
+          13,
+          17,
+          115,
+          126
+        ]
+      },
+      {
+        "candidate": 2,
+        "score": 0.871863603591919,
+        "area_px": 8388,
+        "bbox_xyxy": [
+          12,
+          16,
+          115,
+          126
+        ]
+      }
+    ],
+    "hammer_icon": [
+      {
+        "candidate": 0,
+        "score": 0.7370977997779846,
+        "area_px": 9264,
+        "bbox_xyxy": [
+          18,
+          8,
+          120,
+          126
+        ]
+      },
+      {
+        "candidate": 1,
+        "score": 0.8820600509643555,
+        "area_px": 1930,
+        "bbox_xyxy": [
+          30,
+          23,
+          98,
+          93
+        ]
+      },
+      {
+        "candidate": 2,
+        "score": 0.9408378601074219,
+        "area_px": 2007,
+        "bbox_xyxy": [
+          29,
+          23,
+          98,
+          93
+        ]
+      }
+    ],
+    "badge_dot": [
+      {
+        "candidate": 0,
+        "score": 0.8816457390785217,
+        "area_px": 2271,
+        "bbox_xyxy": [
+          50,
+          12,
+          120,
+          104
+        ]
+      },
+      {
+        "candidate": 1,
+        "score": 0.9529600143432617,
+        "area_px": 391,
+        "bbox_xyxy": [
+          97,
+          24,
+          120,
+          46
+        ]
+      },
+      {
+        "candidate": 2,
+        "score": 0.9612168669700623,
+        "area_px": 403,
+        "bbox_xyxy": [
+          97,
+          24,
+          120,
+          47
+        ]
+      }
+    ],
+    "label_fixed_art": [
+      {
+        "candidate": 0,
+        "score": 0.6666613817214966,
+        "area_px": 2247,
+        "bbox_xyxy": [
+          13,
+          64,
+          114,
+          126
+        ]
+      },
+      {
+        "candidate": 1,
+        "score": 0.8461456298828125,
+        "area_px": 572,
+        "bbox_xyxy": [
+          33,
+          104,
+          98,
+          121
+        ]
+      },
+      {
+        "candidate": 2,
+        "score": 0.8569229245185852,
+        "area_px": 857,
+        "bbox_xyxy": [
+          32,
+          104,
+          98,
+          122
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "metrics": {
+      "current_vs_source_mean_abs_rgb_delta": 45.2,
+      "crop_proxy_vs_source_mean_abs_rgb_delta": 0.0,
+      "previous_layered_source_extract_text_node_vs_source_mean_abs_rgb_delta": 28.69,
+      "previous_layered_source_extract_fixed_text_vs_source_mean_abs_rgb_delta": 22.66,
+      "sam_rembg_layered_text_node_vs_source_mean_abs_rgb_delta": 21.89,
+      "sam_rembg_layered_fixed_text_vs_source_mean_abs_rgb_delta": 15.84,
+      "sam_rembg_visual_state_vs_source_mean_abs_rgb_delta": 10.24,
+      "sam_rembg_layered_text_node_vs_source_layer_mask_delta": 14.85,
+      "sam_rembg_layered_fixed_text_vs_source_layer_mask_delta": 5.65,
+      "sam_rembg_visual_state_vs_source_alpha_mask_delta": 0.97,
+      "hammer_sam_rembg_alpha_iou_vs_previous_manual_mask": 0.5688,
+      "badge_sam_rembg_alpha_iou_vs_previous_manual_mask": 0.7859,
+      "label_sam_alpha_iou_vs_previous_manual_mask": 0.8199
+    },
+    "read": [
+      "This experiment uses SAM2/rembg for masks and alpha refinement; it is not a pure rectangle crop.",
+      "The default engineering reconstruction uses button_bg + hammer_icon + badge_dot + Text Node.",
+      "The fixed-text variant isolates text rendering drift from mask/extraction quality.",
+      "The visual-state sprite is diagnostic only because it bakes icon, badge, and text into one state.",
+      "Button background occluded pixels are filled with small-radius OpenCV local inpaint, not LaMa or generative cleanup.",
+      "After visual QA, button_bg outer alpha was restricted to the SAM button mask to avoid rembg leaking child pixels into the bg sprite.",
+      "A region-sampled fill is used after QA because generic local inpaint pulled gold border colors into the hidden blue panel.",
+      "Final bg cleanup allows child removal to the button edge to avoid badge/edge fragments, while using sampled blue fills to avoid gold bleed."
+    ]
+  }
+}

@@ -471,6 +471,238 @@ examples/output/slg_main_top_resource_strip_realgen/
 
 因此对 `top_resource_strip` 的判断是：组合控件 sprite 对宽 HUD 区域可能有一点收益，但不能稳定锁住源图中的 spacing、icon identity、条宽和材质细节。它适合做“更像游戏 UI 的 mock 资产”，不适合直接承诺源图级高保真还原。
 
+### Build Nav Button Visual Extract Experiment
+
+在 `codex/source-preserving-sprite-extract` 分支上又测试了一个不同路线：
+
+```text
+examples/output/slg_main_build_nav_button_visual_extract/
+```
+
+这次不再让 AI 重新生成按钮，而是做 `source_preserving_mask_extract`：
+
+- 从 source crop 保留 BUILD 按钮的原图像素。
+- 用非矩形 alpha mask 去掉按钮外部地图背景。
+- 输出 `assets_png/build_nav_button_visual_state.png`，透明 PNG，不是矩形 crop。
+- 保留锤子、红点和 `BUILD` 文案，属于 `visual_state_sprite`。
+- 位置仍由 Layer IR / Layout IR 记录，后续允许手动调。
+
+指标，均为与 source crop 的平均 RGB delta：
+
+- 当前独立 sprite 重建：45.20
+- crop proxy 上限：0.00
+- 拆分真实生成 + Text Node：45.64
+- cleanup/inpaint 按钮底板 + 复用 icon/Text：47.56
+- visual extract 贴回 source 背景：0.00
+- visual extract 贴回当前重建底图：4.63
+- visual extract 贴回当前重建底图，只看 alpha mask 区域：1.56
+
+这次结果说明：如果目标从“干净可复用工程拆分资产”改成“生成图至少要像效果图”，源图像素保留 + 非矩形透明提取是明显更有效的路线。它的代价是复用性和可编辑性下降，因为文字、icon 和状态被烘焙进了同一张视觉态 sprite。
+
+### Build Nav Button Layered Source Extract Experiment
+
+随后按“先识别图层关系，再拆分还原”的目标做了一次真正分层实验：
+
+```text
+examples/output/slg_main_build_nav_button_layered_source_extract/
+```
+
+拆分关系：
+
+```text
+build_nav_button_group
+  build_button_bg_source_clean
+  build_hammer_icon_source_extract
+  build_badge_dot_source_extract
+  build_label Text Node
+  build_label_fixed_art_source_extract  # optional fidelity check
+```
+
+这次不是整按钮视觉态，也不是矩形 crop，而是：
+
+- `build_button_bg_source_clean.png`：保留源图可见底板像素，只对锤子、红点、BUILD 文字遮挡区域做局部补洞。
+- `build_hammer_icon_source_extract.png`：从源图非矩形 mask 提取锤子。
+- `build_badge_dot_source_extract.png`：从源图非矩形 mask 提取红点。
+- `build_label`：默认仍是 Text Node。
+- `build_label_fixed_art_source_extract.png`：额外输出的固定文字层，只用于判断文字渲染漂移影响。
+- `reference_package/`：保存源局部截图、target mask、exclude mask 和后续 crop + prompt + mask 增强生成所需材料。
+
+指标，均为与 source crop 的平均 RGB delta：
+
+- 当前独立 sprite 重建：45.20
+- 拆分真实生成 + Text Node：45.64
+- cleanup/inpaint 按钮底板 + 复用 icon/Text：47.56
+- 整组件 visual state extract：4.63
+- layered source extract + Text Node：28.69
+- layered source extract + fixed text：22.66
+
+这说明 layer-first source extract 明显优于纯 AI 重新生成，但仍不如整组件视觉态。主要残差来自两个地方：
+
+- 底板被锤子和文字遮挡的区域无法从扁平图真实恢复，只能局部补洞。
+- Text Node 字体与源图固定文字存在差异；改用 fixed text 后 delta 从 28.69 降到 22.66，但会牺牲可编辑性。
+
+因此这条路线适合继续发展为 `visual_state_sprite + engineering_layers + reference_package` 的双轨方案：既保留可还原的图层关系，又给每个困难 layer 留出 crop + mask + prompt 的增强入口。
+
+### Build Nav Button SAM/rembg Extract Experiment
+
+为了验证第三方工具是否能改善“手工 mask 粗糙”的问题，又做了一次最小闭环实验：
+
+```text
+examples/output/slg_main_build_nav_button_sam_rembg_extract/
+```
+
+本轮使用本机 Python 3.12 临时环境，跑通：
+
+- `facebook/sam2.1-hiera-tiny`：用于 promptable segmentation，设备为 Apple Silicon MPS。
+- `rembg u2netp`：用于 hammer、badge 和整按钮视觉态的 alpha/edge refine。
+- OpenCV / 区域采样填充：只用于底板被锤子、红点和文字遮挡后的非生成式近似补洞。
+- 未使用 LaMa，也没有做生成式 inpaint。
+
+拆分关系仍然保持工程层结构：
+
+```text
+build_nav_button_group
+  build_button_bg_sam_clean
+  build_hammer_icon_sam_rembg_extract
+  build_badge_dot_sam_rembg_extract
+  build_label Text Node
+  build_label_fixed_art_sam_extract      # optional fidelity check
+  build_nav_button_visual_state_sam_rembg # diagnostic only
+```
+
+关键输出：
+
+- `sprite_plan.md`
+- `sprite_manifest.json`
+- `layer_ir.json`
+- `layout_ir.json`
+- `bbox_overlay.png`
+- `sprite_overview.png`
+- `focused_sam_rembg_extract_comparison.png`
+- `debug/sam2_candidate_mask_overview.png`
+- `reference_package/`
+
+指标，均为与 source crop 的平均 RGB delta：
+
+- 当前独立 sprite 重建：45.20
+- previous layered source extract + Text Node：28.69
+- previous layered source extract + fixed text：22.66
+- SAM/rembg layered + Text Node：21.89
+- SAM/rembg layered + fixed text：15.84
+- SAM/rembg visual-state diagnostic：10.24
+- SAM/rembg visual-state diagnostic，只看 alpha mask 区域：0.97
+
+这次结果说明：
+
+- SAM2 对 `hammer_icon`、`badge_dot`、`label` 这类可见前景层有明显帮助，比手工 mask 稳定。
+- rembg 适合作为 alpha/edge refine，不适合单独决定图层语义。
+- fixed text 对照从 22.66 降到 15.84，说明前景层 mask/refine 确实改善了图层拆分质量。
+- 默认 Text Node 从 28.69 降到 21.89，但仍受字体、描边、字重匹配影响。
+- 视觉态诊断的 alpha-mask delta 只有 0.97，说明“源图像素 + 非矩形 mask”仍是视觉还原上限最高的低成本路线。
+- 底板的隐藏像素仍然无法由 SAM/rembg 恢复。`build_button_bg_sam_clean.png` 可以成为独立底板近似资产，但遮挡区域只能采样/补洞，不能等同于真实 PSD 背后图层。
+
+因此这轮实验的结论不是“第三方工具能直接自动 PSD 化”，而是：**SAM/rembg 值得接入 layer-first workflow，用来降低 mask 粗糙度；但底板补洞仍需要 LaMa/人工修图/设计源文件等另一类能力单独解决。**
+
+### Build Nav Button LaMa Inpaint Experiment
+
+在 SAM/rembg 已经改善前景 mask 后，又做了一次更窄的 LaMa 实验：
+
+```text
+examples/output/slg_main_build_nav_button_lama_inpaint_extract/
+```
+
+本轮只替换 `button_bg` 的遮挡补洞，不重新生成整按钮，也不重新生成锤子、红点或文字：
+
+- `build_button_bg_lama_clean.png`：用 SAM button mask + child exclude mask + LaMa 补洞得到的底板。
+- `build_hammer_icon_sam_rembg_extract.png`：复用上一轮 SAM/rembg 锤子层。
+- `build_badge_dot_sam_rembg_extract.png`：复用上一轮 SAM/rembg 红点层。
+- `build_label`：默认仍为 Text Node。
+- `build_label_fixed_art_sam_extract.png`：只作为 fixed text 指标对照。
+
+工具环境：
+
+- `simple-lama-inpainting 0.1.2`
+- `big-lama.pt`
+- Apple Silicon MPS
+- 临时 Python 环境中安装时会拉低 Pillow/Numpy 版本，后续若保留应单独建 LaMa 环境，不要和 rembg/SAM 共用一个默认环境。
+
+指标，均为与 source crop 的平均 RGB delta：
+
+- 当前独立 sprite 重建：45.20
+- manual layered + Text Node：28.69
+- SAM/rembg layered + Text Node：21.89
+- LaMa layered + Text Node：20.67
+- manual layered + fixed text：22.66
+- SAM/rembg layered + fixed text：15.84
+- LaMa layered + fixed text：14.59
+- visual-state diagnostic：10.24
+
+LaMa 相比 SAM/rembg 的提升是存在的，但幅度不大：
+
+- Text Node：21.89 -> 20.67
+- fixed text：15.84 -> 14.59
+
+观察结论：
+
+- LaMa 能让底板遮挡洞比区域采样更自然一点。
+- 但它仍然是根据上下文“猜”隐藏像素，不是恢复真实底板图层。
+- 如果 mask 没有覆盖锤子的投影/阴影，`button_bg` 里仍会残留暗影痕迹；这不是 LaMa 自动能判断的图层归属问题。
+- 扩大 mask 会删除更多阴影，但也更容易重画金边、面板纹理和材质，产生新的漂移。
+
+因此 LaMa 更适合作为**困难底板的小范围补洞候选**，不应该成为默认的整组件重画方案。后续如果继续提升，需要先把 `shadow` 明确成跟随锤子的子层或单独 shadow layer，再决定是否由 LaMa 补掉底板上的投影残留。
+
+### Build Nav Button Hammer Shadow Layer Attribution Experiment
+
+随后按 `hammer_icon + hammer_shadow + button_bg` 做了一次 layer 归属实验：
+
+```text
+examples/output/slg_main_build_nav_button_shadow_layer_extract/
+```
+
+本轮目标不是继续换模型，而是验证一件更具体的事：
+
+```text
+button_bg_shadow_clean
+hammer_shadow
+hammer_icon
+badge_dot
+BUILD Text Node / fixed text optional
+```
+
+实验做法：
+
+- 用上一轮最终 `hammer_icon` alpha 保护锤子本体。
+- 在锤子附近寻找源图相对 clean bg 更暗的区域，生成 `hammer_shadow_mask_small` / `hammer_shadow_mask_medium` 两个候选。
+- `button_bg_shadow_clean` 使用 LaMa 对“实体 + shadow”区域补洞，尝试得到不带锤子投影的底板。
+- `hammer_shadow` 作为独立半透明暗色层，放在 `button_bg` 与 `hammer_icon` 之间。
+- 锤子、红点、fixed text 仍复用上一轮 SAM/rembg 资产。
+
+指标，均为与 source crop 的平均 RGB delta：
+
+- previous LaMa + Text Node：20.67
+- shadow small + Text Node：20.80
+- shadow medium + Text Node：21.42
+- previous LaMa + fixed text：14.59
+- shadow small + fixed text：14.71
+- shadow medium + fixed text：15.33
+- visual-state diagnostic：10.24
+
+这次是一个负向/边界实验：**自动拆 shadow 没有提升，反而略差**。
+
+原因：
+
+- 自动 shadow mask 很难只抓投影；small 太弱，medium 会抓到不该重画的暗部。
+- 一旦把 shadow 也从底板里 mask 掉，LaMa 会在底板上产生新的伪影。
+- 单独的 `hammer_shadow` 半透明层很难用简单暗色 overlay 精确复现源图的接触阴影、软边和局部材质变化。
+- 指标和肉眼都说明：在当前自动方案下，shadow 单独成层不比“让少量 shadow 残留在底板/图标关系中”更好。
+
+因此当前更稳的工程结论是：
+
+- 不要自动把所有 shadow 都拆成独立 sprite。
+- 对小按钮这类紧密组合控件，如果没有 PSD/人工修图，shadow 更适合作为人工确认项。
+- 高保真优先时继续使用 `visual_state_sprite`。
+- 工程拆分优先时，保持 `button_bg + hammer_icon`，但把 shadow 归属标为 `needs_manual_shadow_review`，不要让程序自动决定。
+
 ## 当前方案边界
 
 这里的“当前方案”指：
@@ -494,19 +726,21 @@ AI UI 效果图
 - 输出 `bbox_overlay.png`、`sprite_overview.png`、`reconstruction.png`、`comparison.png` 供人工审核。
 - 让结果达到“工程结构可复盘、可迭代、可定位问题”的状态。
 - 生成风格相近的游戏 UI 素材族，适合做 mock、原型或二次美术参考。
+- 接入 SAM/rembg 这类第三方工具后，可以更稳定地获得非矩形前景 mask、alpha 边缘和视觉态 sprite。
 
 ### 确定做不好
 
 - 不能保证重新生成的独立 sprite 与原图像素级一致。
 - 不能稳定复刻原图那次全局生成中的精确笔触、统一光照、材质颗粒、阴影和描边。
 - 不能从单张扁平图中恢复被文字、icon、其它 UI 遮挡住的真实底板内容。
+- SAM/rembg 只能分割和 refine 可见像素，不能恢复被遮挡的隐藏图层。
 - 不能靠简单 bbox fit 解决所有比例问题，尤其是资源条、按钮、面板金边这类需要九宫格或精确设计稿的元素。
 - 不能同时最大化“最细粒度复用”和“整屏几乎等同源图”。拆得越细，组合后的视觉漂移通常越明显。
 - 不能保证 AI 生成的固定艺术字、字体描边、投影和原图一致；高保真标题更适合单独作为 fixed art text 或使用真实字体资产。
 
 ### 未知问题
 
-- 用真实 AI 重新生成“组合控件 sprite”能否稳定接近 crop proxy 的上限。
+- LaMa 或其它 inpaint 工具是否能在小范围底板遮挡补洞上稳定优于区域采样和 OpenCV。
 - 哪些组件应该保持组合控件，哪些组件拆细后仍然收益更高。
 - 组合控件 sprite 与动态 Text Node 覆盖之间的最佳边界。
 - 是否需要引入九宫格元数据，还是只对少量高价值底板手工标记即可。
@@ -520,6 +754,16 @@ AI UI 效果图
 
 `top_resource_strip_frame` 的实验说明：换成不同类型的宽 HUD 资源条后，组合控件真实生成有小幅改善，但仍会把多槽位布局重新排版，并且会改变 icon identity 与颜色。也就是说，问题不只存在于底部按钮类控件。
 
+`build_nav_button_visual_state` 的实验说明：如果允许使用源图像素并输出视觉态 sprite，就能显著接近原效果图。这个策略不是 AI 重新生成，也不是矩形 crop，而是非矩形 mask 提取。它适合视觉还原优先的场景，但不适合需要动态文字、多语言和高度复用的正式工程资产。
+
+`build_nav_button_layered_source_extract` 的实验说明：在保持图层关系的前提下，source extract 可以显著降低视觉漂移，但只要底板存在大面积遮挡，干净底板仍然需要补洞；补洞质量会成为主要瓶颈。局部截图 + mask + prompt 的增强生成应该只作用在这些困难 layer 上，而不是重新生成整张组件。
+
+`build_nav_button_sam_rembg_extract` 的实验说明：第三方 segmentation/refine 能显著改善前景层 mask，把 layered + Text Node 从 28.69 降到 21.89，把 layered + fixed text 从 22.66 降到 15.84；但它仍不能恢复底板被遮挡的真实像素。下一步若继续，应只对 `button_bg` 的遮挡洞测试 LaMa/人工修图，不要再把整组件交给生成模型重画。
+
+`build_nav_button_lama_inpaint_extract` 的实验说明：LaMa 对 `button_bg` 遮挡洞有小幅改善，把 SAM/rembg layered + Text Node 从 21.89 降到 20.67，把 fixed text 从 15.84 降到 14.59；但视觉上仍没有接近 visual-state diagnostic 的 10.24。它还暴露了一个更具体的问题：锤子的投影/阴影如果没有被识别为子层，底板 sprite 仍会残留暗影。因此下一步不应该继续盲目换 inpaint 模型，而应该先把 shadow 归属纳入 Layer IR。
+
+`build_nav_button_shadow_layer_extract` 的实验说明：把 `hammer_shadow` 自动拆成独立层并没有提升，previous LaMa + fixed text 为 14.59，shadow small + fixed text 为 14.71，shadow medium + fixed text 为 15.33。也就是说，当前自动 shadow mask + LaMa 补洞会引入新的底板伪影，不能作为默认方案。shadow 归属必须成为人工确认项，或依赖 PSD/人工修图。
+
 ### 低复杂度迭代建议
 
 优先不要全屏返工。`build_nav_button` 已经连续验证了三条低成本真实生成路径：
@@ -531,6 +775,14 @@ AI UI 效果图
 三者都没有接近 crop proxy 上限，所以不建议继续在同一个按钮上堆更多 prompt 细节。`top_resource_strip` 作为不同组件类型也只带来小幅收益，没有改变整体判断。
 
 当前更合理的结论是：不要把全屏自动生成式高保真还原作为主要路线。后续若继续，应转向更确定的替代方案，例如人工修图/PSD 化、从原图做受控分割 + 手工补遮挡、建立 style/material sheet 后重新设计整套资产，或只把当前流程定位为 mock/原型资产生成。
+
+如果目标调整为“先看起来像效果图，位置和复用性可以后续手动处理”，则应优先尝试 `visual_state_extract`：
+
+- 对关键按钮、资源条、徽章、任务面板等先提取视觉态 sprite。
+- 动态文字和可复用拆分资产作为第二套工程化输出，不强行和视觉态输出合并。
+- 在计划中明确区分 `visual_state_sprite` 和 `engineering_sprite`，避免误把视觉态资产当成长期可复用组件。
+
+如果目标是继续工程化拆层，则优先把 SAM/rembg 固化为 mask/refine 辅助步骤，再只针对少数被遮挡底板做 LaMa/人工修图小实验。不要在前景 mask 已经可用时继续堆 prompt 生成整按钮。
 
 ## 核心数据结构
 

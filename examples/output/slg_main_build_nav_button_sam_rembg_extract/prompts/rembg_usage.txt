@@ -1,0 +1,1 @@
+rembg u2netp is used only as alpha/edge refinement. It does not decide layer semantics. SAM2 masks and Layer IR decide the sprite split.

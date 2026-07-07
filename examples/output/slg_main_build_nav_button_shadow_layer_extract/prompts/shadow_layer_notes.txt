@@ -1,0 +1,1 @@
+Shadow mask is heuristic: source darkening near the hammer, protected by final hammer icon alpha. It should be manually confirmed before production use.
