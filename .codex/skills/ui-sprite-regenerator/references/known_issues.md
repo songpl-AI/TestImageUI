@@ -169,3 +169,47 @@
 - 修正动作：若要继续追求高保真，优先考虑从确定性素材/人工修图/PSD 化/受控分割补图获取 icon 与 frame，而不是继续用 prompt 微调宽组合控件。
 - 验证方式：输出 source/current/crop proxy/realgen frame + Text Nodes 对比，并同时记录 full-crop delta 和 UI-mask delta。
 - 来源：SLG `top_resource_strip` 实验中，realgen frame + Text Nodes 的 full-crop delta 从 57.61 降到 53.92，UI-mask delta 从 60.78 降到 58.34，但 spacing 与 icon identity 明显漂移，宝石从紫色偏为银蓝色。
+
+### KI-20260707-visual-state-extract-tradeoff
+
+- 状态：watch
+- 触发条件：用户更关心“生成图要像效果图”，并允许位置后续手调，不强求每个 sprite 都高度可复用、可编辑。
+- 问题表现：AI 重新生成路线视觉漂移大；但 source-preserving mask extract 可以非常接近源图，同时会把文字、状态、icon 和局部材质烘焙在同一张视觉态 sprite 中。
+- 根因：保留源图像素能避开重新生成带来的画风漂移，但单张扁平图没有真实图层，视觉态提取无法自动恢复可编辑结构。
+- 预防规则：在 Sprite Plan 中明确区分 `visual_state_sprite` 和 `engineering_sprite`。前者用于视觉还原优先，允许烘焙文字/状态；后者用于长期工程复用，仍需 Text Node 和干净子资产。
+- 修正动作：需要“先像效果图”时，优先尝试非矩形 semantic mask 提取，而不是继续 prompt 微调真实生成。需要正式可复用资产时，再单独补一套工程拆分。
+- 验证方式：输出 sprite overview、mask overlay、source/current/proxy/visual_extract 对比，并分别记录 full-crop delta 与 alpha-mask delta。
+- 来源：SLG `build_nav_button_visual_state` 实验中，current independent delta 为 45.20，visual extract 贴回当前重建底图 delta 为 4.63，alpha-mask 区域 delta 为 1.56。
+
+### KI-20260707-layered-source-extract-occlusion-limit
+
+- 状态：watch
+- 触发条件：按图层关系拆分源图组件，并尝试对每层做 source-preserving extraction，例如按钮底板、icon、badge、Text Node。
+- 问题表现：icon/badge 这类可见前景层能较好提取；但底板被 icon、文字或 badge 遮挡时，干净底板只能局部补洞，补洞质量决定最终相似度。
+- 根因：单张扁平效果图没有真实隐藏图层。保留源图像素可以避免 AI 重画漂移，但无法凭空恢复被遮挡的底板像素。
+- 预防规则：不要把 `source_extract` 理解成自动恢复完整 PSD 图层；对遮挡层必须显式记录 `exclude_mask`、`known_limitation` 和可选 `reference_package`。补洞只应该作用在小范围遮挡区域，不要重画整个资产。
+- 修正动作：为困难 layer 输出局部截图、target mask、exclude mask 和 prompt，后续可用 crop + mask + prompt 做增强；同时保留 `visual_state_sprite` 作为视觉上限回退。
+- 验证方式：同时输出 visual_state、layered + Text Node、layered + fixed text 对比；记录 full-crop delta 和 layer-mask delta，并查看 sprite_overview 中每层是否独立透明。
+- 来源：SLG `build_nav_button_layered_source_extract` 实验中，current independent delta 为 45.20，layered + Text Node delta 为 28.69，layered + fixed text delta 为 22.66，visual_state delta 为 4.63。
+
+### KI-20260707-sam-rembg-mask-not-hidden-layer
+
+- 状态：watch
+- 触发条件：引入 SAM2 / SAM / rembg / matting 工具来改善 source-preserving sprite extraction。
+- 问题表现：前景 icon、badge、fixed text 的 mask 和 alpha 明显更稳定，但底板被前景层遮挡的区域仍然只能近似补洞；如果把 rembg 的整组件 alpha 直接混入底板，可能把 badge、icon 边缘或邻近像素漏进 button_bg。
+- 根因：SAM/rembg 处理的是可见像素的分割和边缘，不包含被遮挡的隐藏图层信息；rembg 也不知道工程层语义，不能决定哪个像素属于底板、子元素或视觉态。
+- 预防规则：SAM/rembg 只能作为 `target_mask` / `alpha_refine` 辅助，Layer IR 仍必须显式区分 `visual_state_sprite`、`button_bg`、`icon`、`badge`、`Text Node`。底板 outer alpha 应优先来自 SAM 的底板/按钮 mask，不要直接使用整组件 rembg alpha。遮挡补洞必须单独标记为 `known_limitation`。
+- 修正动作：保存 SAM candidate overview、chosen masks、rembg alpha 和 reference_package；对前景层用 SAM mask + rembg refine，对底板用 SAM button mask 减 child masks，再只对遮挡洞做局部 fill / LaMa / 人工修图小实验。
+- 验证方式：同时检查 `sprite_overview.png` 的独立资产洁净度、`focused_*comparison.png` 的回贴效果、full-crop delta、layer-mask delta，以及 visual-state alpha-mask delta。
+- 来源：SLG `build_nav_button_sam_rembg_extract` 实验中，previous layered + Text Node delta 为 28.69，SAM/rembg layered + Text Node delta 为 21.89；previous layered + fixed text delta 为 22.66，SAM/rembg layered + fixed text delta 为 15.84；visual-state diagnostic alpha-mask delta 为 0.97，但 button_bg 遮挡区域仍需要近似补洞。
+
+### KI-20260707-lama-inpaint-needs-shadow-layer
+
+- 状态：watch
+- 触发条件：用 LaMa / inpaint 工具补全被 icon、文字、badge 遮挡的底板 layer。
+- 问题表现：LaMa 对底板遮挡洞有小幅改善，但如果 mask 只覆盖前景实体，不覆盖投影/阴影，底板 sprite 仍会残留暗影痕迹；如果扩大 mask，又可能重画金边、材质和面板纹理，造成新的漂移。
+- 根因：inpaint 模型只能根据周围像素生成合理近似，不能知道阴影应该属于 icon、独立 shadow layer 还是 button_bg。单张扁平图没有真实隐藏图层，也没有光影归属标注。
+- 预防规则：在 Layer IR 中把 `shadow` / `drop_shadow` 归属显式记录为 `needs_manual_shadow_review`，不要默认自动拆成独立 layer。对 icon 阴影，可以候选为跟随 icon 或独立 shadow layer，但必须用对照图和指标验证；只有确认阴影不属于底板时，才把它纳入底板 inpaint mask。不要把 LaMa 当作自动 PSD 恢复。
+- 修正动作：输出至少两类 mask 对照：实体 mask 和实体+shadow mask；比较 sprite_overview 的底板洁净度、回贴 delta 和视觉漂移。若 shadow 拆层没有提升，不要继续盲目更换 inpaint 模型，应把 shadow 归属交给人工确认或依赖 PSD/人工修图。
+- 验证方式：同时检查 `build_button_bg*.png` 是否残留 icon 阴影、`focused_lama*_comparison.png` 的局部效果、Text Node/fixed text 两套 delta，以及 visual-state diagnostic 仍然作为视觉上限。
+- 来源：SLG `build_nav_button_lama_inpaint_extract` 实验中，SAM/rembg layered + Text Node delta 为 21.89，LaMa layered + Text Node delta 为 20.67；SAM/rembg fixed text delta 为 15.84，LaMa fixed text delta 为 14.59；提升存在但不大，且 button_bg 仍可见锤子阴影/遮挡痕迹。随后 `build_nav_button_shadow_layer_extract` 实验中，previous LaMa + fixed text 为 14.59，shadow small + fixed text 为 14.71，shadow medium + fixed text 为 15.33，说明自动 shadow 拆层会略微变差。
