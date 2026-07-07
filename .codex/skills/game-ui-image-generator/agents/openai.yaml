@@ -1,0 +1,4 @@
+interface:
+  display_name: "游戏 UI 效果图生成"
+  short_description: "生成适合后续拆解和工程化的游戏 UI 效果图。"
+  default_prompt: "生成一张适合后续 Sprite Plan 和独立 sprite 拆解的游戏 UI 效果图，并遵守游戏 UI 生图最佳实践。"
