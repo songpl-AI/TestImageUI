@@ -1,0 +1,178 @@
+{
+  "version": "0.1",
+  "contract_id": "spec_driven_currency_bar_contract",
+  "primary_asset_id": "currency_bar_bg",
+  "board_image": "../output/spec_driven_realgen_validation/production_board.png",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "split_x": 800,
+  "diagnostic_crops": [
+    {
+      "id": "full_effect_currency_bar_crop_source",
+      "label": "full_effect currency bar crop",
+      "bbox": [268, 34, 390, 92]
+    }
+  ],
+  "asset_cells": [
+    {
+      "id": "currency_bar_bg",
+      "role": "currency_bar_background",
+      "bbox": [1184, 376, 326, 192],
+      "parent_layer": "top_currency_bar",
+      "children_excluded": ["coin_icon", "currency_amount_text", "plus_button"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "notes": "Currency bar base must exclude the coin icon, plus button, and amount text."
+    },
+    {
+      "id": "coin_icon",
+      "role": "currency_icon",
+      "bbox": [826, 774, 350, 226],
+      "parent_layer": "top_currency_bar",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "close_button",
+      "role": "close_button_reference",
+      "bbox": [1184, 774, 326, 226],
+      "parent_layer": "ui_chrome",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "currency_amount_text",
+      "role": "dynamic_text_currency_amount",
+      "text": "3200",
+      "bbox": [350, 52, 180, 50]
+    }
+  ],
+  "validation_checks": [
+    {
+      "id": "currency_bar_has_green_material_signal",
+      "asset_id": "currency_bar_bg",
+      "metric": "green_ratio",
+      "op": ">=",
+      "value": 0.35
+    },
+    {
+      "id": "currency_bar_has_gold_frame_signal",
+      "asset_id": "currency_bar_bg",
+      "metric": "gold_ratio",
+      "op": ">=",
+      "value": 0.08
+    },
+    {
+      "id": "currency_bar_has_low_dark_text_signal",
+      "asset_id": "currency_bar_bg",
+      "metric": "dark_text_like_ratio",
+      "op": "<=",
+      "value": 0.05
+    },
+    {
+      "id": "currency_bar_has_clean_corners",
+      "asset_id": "currency_bar_bg",
+      "metric": "corner_alpha_max",
+      "op": "==",
+      "value": 0
+    },
+    {
+      "id": "currency_bar_has_no_label_artifact",
+      "asset_id": "currency_bar_bg",
+      "metric": "label_artifact_score",
+      "op": "==",
+      "value": 0
+    },
+    {
+      "id": "coin_icon_has_gold_signal",
+      "asset_id": "coin_icon",
+      "metric": "gold_ratio",
+      "op": ">=",
+      "value": 0.35
+    },
+    {
+      "id": "coin_icon_has_clean_corners",
+      "asset_id": "coin_icon",
+      "metric": "corner_alpha_max",
+      "op": "==",
+      "value": 0
+    },
+    {
+      "id": "close_button_has_red_signal",
+      "asset_id": "close_button",
+      "metric": "red_ratio_hsv",
+      "op": ">=",
+      "value": 0.35
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "currency_bar_bg_excludes_amount_text",
+      "status": "pass",
+      "description": "The asset-sheet bar cell is text-free; the amount remains a Text Node."
+    },
+    {
+      "id": "currency_bar_bg_excludes_coin_and_plus",
+      "status": "pass",
+      "description": "The bar background candidate excludes the coin icon and plus button."
+    },
+    {
+      "id": "currency_bar_bg_scale_mode_requires_nine_slice",
+      "status": "pass",
+      "description": "The contract records currency_bar_bg as a nine_slice candidate; exact slice metadata is outside this bbox/ownership validation."
+    }
+  ],
+  "rough_reconstruction": {
+    "canvas": [390, 92],
+    "layers": [
+      {
+        "id": "currency_bar_bg_layer",
+        "asset_id": "currency_bar_bg",
+        "rect": [0, 10, 280, 72],
+        "scale_mode": "stretch_for_probe"
+      },
+      {
+        "id": "coin_icon_layer",
+        "asset_id": "coin_icon",
+        "rect": [14, 14, 58, 58],
+        "scale_mode": "contain_for_probe"
+      }
+    ],
+    "text_nodes": [
+      {
+        "id": "currency_amount_text",
+        "text": "3200",
+        "rect": [92, 20, 120, 44],
+        "font_size": 36,
+        "fill": "#ffffff",
+        "stroke_fill": "#2a4c26",
+        "stroke_width": 1
+      }
+    ],
+    "comparison": {
+      "source_crop": {
+        "id": "full_effect_currency_bar_crop_source",
+        "label": "full_effect currency bar crop"
+      },
+      "reconstruction_label": "rough currency bar reconstruction"
+    }
+  },
+  "asset_sheet_detection": {
+    "enabled": true,
+    "mode": "grid_cell_foreground_safe_bbox",
+    "padding": 22,
+    "threshold": 55,
+    "min_component_area": 120,
+    "drop_border_artifacts": true
+  },
+  "interpretation": "This validates whether a production-board asset sheet can provide a text-free, icon-free currency bar background candidate with stable grid-cell bbox detection. It does not prove final nine-slice metadata or final sprite production readiness.",
+  "verdict": "currency bar split contract: pass when all configured checks pass"
+}

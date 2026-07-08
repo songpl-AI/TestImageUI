@@ -194,6 +194,12 @@ python3 -m src.main \
   --output examples/output/spec_driven_product_card_contract_validation
 ```
 
+当前已有的 Layer Contract 示例包括：
+
+- `examples/input/spec_driven_product_card_contract.json`：验证 product card 父子层归属，包含 `price_tag_bg`。
+- `examples/input/spec_driven_panel_split_contract.json`：验证 `main_panel_bg` 拆成 `panel_base`、title plate、flowers、leaves、inner texture。
+- `examples/input/spec_driven_currency_bar_contract.json`：验证 `currency_bar_bg` 是 text-free / icon-free 横向可拉伸背景，金额保留为 Text Node。
+
 `layer_contract.json` 使用 `schemas/layer_contract.schema.json` 描述，核心字段包括：
 
 - `board_image`：production board 路径。
@@ -218,7 +224,7 @@ python3 -m src.main \
 
 `label_artifact_score` 是一个针对 production board asset sheet 的启发式污染检查：如果透明候选 PNG 左上角出现小型高饱和圆形/徽章状前景组件，通常代表模型把 cell 编号、索引标记或设计稿注释画进了素材。它不能替代 OCR 或人工审图，但可以把 `asset_sheet_index_label_artifacts` 这类已知失败从“漏检”变成合同失败。
 
-当前有一个 grid-cell bbox 回归测试，使用 `tests/fixtures/panel_split_no_label/` 与 `tests/fixtures/product_card_grid_detection/` 下的最小 fixture，用于防止 `grid_cell_foreground_safe_bbox` 退化回 asset-specific hint、固定 bbox 漂移，或把 `price_tag_bg` 这类紧凑横向控件扩成整格背景：
+当前有一个 grid-cell bbox 回归测试，使用 `tests/fixtures/panel_split_no_label/`、`tests/fixtures/product_card_grid_detection/` 与 `tests/fixtures/currency_bar_grid_detection/` 下的最小 fixture，用于防止 `grid_cell_foreground_safe_bbox` 退化回 asset-specific hint、固定 bbox 漂移，或把 `price_tag_bg` / `currency_bar_bg` 这类紧凑横向控件扩成整格背景：
 
 ```bash
 python3 -m unittest tests.test_panel_split_grid_detection_regression

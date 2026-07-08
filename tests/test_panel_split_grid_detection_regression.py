@@ -11,6 +11,7 @@ from src.spec.layer_contract import export_layer_contract_validation
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PANEL_FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "panel_split_no_label"
 PRODUCT_CARD_FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "product_card_grid_detection"
+CURRENCY_BAR_FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "currency_bar_grid_detection"
 RUNS = ("run_01", "run_02", "run_03")
 
 
@@ -131,6 +132,49 @@ class ProductCardGridDetectionRegressionTest(unittest.TestCase):
             price_metrics = metrics["asset_cells"]["price_tag_bg"]
             self.assertLess(price_metrics["asset_png_size"][1], original_height * 0.65)
             self.assertGreaterEqual(price_metrics["color_audit_on_opaque_pixels"]["gold_ratio"], 0.35)
+
+
+class CurrencyBarGridDetectionRegressionTest(unittest.TestCase):
+    def test_currency_bar_contract_keeps_bg_tight_and_text_free(self) -> None:
+        board_path = CURRENCY_BAR_FIXTURE_ROOT / "production_board.png"
+        contract_path = CURRENCY_BAR_FIXTURE_ROOT / "layer_contract_grid_detect.json"
+        missing = [path for path in (board_path, contract_path) if not path.exists()]
+        if missing:
+            joined = "\n".join(str(path.relative_to(REPO_ROOT)) for path in missing)
+            raise unittest.SkipTest(f"currency bar grid detection fixtures are missing:\n{joined}")
+
+        with tempfile.TemporaryDirectory(prefix="currency_bar_grid_regression_") as tmp:
+            output_root = Path(tmp)
+            result = export_layer_contract_validation(contract_path, output_root / "validation_grid_detect")
+            metrics = json.loads(result.probe_metrics_path.read_text(encoding="utf-8"))
+
+            self.assertEqual(result.validation_errors, [])
+            self.assertEqual(result.failed_checks, [])
+            self.assertEqual(_failed_checks(metrics), [])
+
+            detection = metrics["asset_sheet_detection"]
+            self.assertEqual(detection["mode"], "grid_cell_foreground_safe_bbox")
+            currency_detection = detection["cells"]["currency_bar_bg"]
+            original_width = currency_detection["original_bbox"][2]
+            original_height = currency_detection["original_bbox"][3]
+            detected_width = currency_detection["detected_bbox"][2]
+            detected_height = currency_detection["detected_bbox"][3]
+
+            self.assertLess(detected_width, original_width)
+            self.assertLess(detected_height, original_height * 0.85)
+            self.assertFalse(currency_detection["edge_padding_guards"]["vertical_extent_preserved"])
+            self.assertFalse(currency_detection["edge_padding_guards"]["horizontal_extent_preserved"])
+
+            currency_metrics = metrics["asset_cells"]["currency_bar_bg"]
+            self.assertEqual(currency_metrics["alpha_validation"]["corner_alpha_max"], 0)
+            self.assertGreaterEqual(currency_metrics["color_audit_on_opaque_pixels"]["green_ratio"], 0.35)
+            self.assertGreaterEqual(currency_metrics["color_audit_on_opaque_pixels"]["gold_ratio"], 0.08)
+            self.assertLessEqual(currency_metrics["color_audit_on_opaque_pixels"]["dark_text_like_ratio"], 0.05)
+            self.assertEqual(currency_metrics["artifact_audit"]["label_artifact_score"], 0)
+
+            coin_metrics = metrics["asset_cells"]["coin_icon"]
+            self.assertEqual(coin_metrics["alpha_validation"]["corner_alpha_max"], 0)
+            self.assertGreaterEqual(coin_metrics["color_audit_on_opaque_pixels"]["gold_ratio"], 0.35)
 
 
 if __name__ == "__main__":
