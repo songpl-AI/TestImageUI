@@ -19,6 +19,24 @@ PANEL_SPLIT_ASSET_IDS = {
     "panel_inner_texture",
 }
 
+PANEL_FOCUS_ASSET_IDS = [
+    "panel_base",
+    "panel_top_title_plate",
+    "panel_corner_flowers",
+    "panel_bottom_leaves",
+    "panel_inner_texture",
+    "full_panel_composite_reference",
+]
+
+PANEL_FOCUS_CELL_BBOXES = {
+    "panel_base": [759, 28, 358, 365],
+    "panel_top_title_plate": [1133, 28, 371, 365],
+    "panel_corner_flowers": [759, 409, 358, 219],
+    "panel_bottom_leaves": [1133, 409, 371, 219],
+    "panel_inner_texture": [759, 644, 358, 340],
+    "full_panel_composite_reference": [1133, 644, 371, 340],
+}
+
 
 @dataclass(frozen=True)
 class SpecPlanResult:
@@ -29,6 +47,8 @@ class SpecPlanResult:
     sprite_manifest_path: Path
     full_effect_prompt_path: Path
     production_board_prompt_path: Path
+    production_board_panel_focus_prompt_path: Path
+    panel_focus_layer_contract_path: Path
     sprite_plan_path: Path
     validation_report_path: Path
     asset_prompt_count: int
@@ -51,6 +71,8 @@ def export_spec_plan(brief_path: Path, output_dir: Path) -> SpecPlanResult:
     sprite_manifest_path = output_dir / "sprite_manifest.json"
     full_effect_prompt_path = output_dir / "full_effect_prompt.txt"
     production_board_prompt_path = output_dir / "production_board_prompt.txt"
+    production_board_panel_focus_prompt_path = output_dir / "production_board_panel_focus_prompt.txt"
+    panel_focus_layer_contract_path = output_dir / "panel_focus_layer_contract.json"
     sprite_plan_path = output_dir / "sprite_plan.md"
     validation_report_path = output_dir / "spec_validation_report.md"
     asset_prompts_dir = output_dir / "asset_prompts"
@@ -73,6 +95,11 @@ def export_spec_plan(brief_path: Path, output_dir: Path) -> SpecPlanResult:
 
     full_effect_prompt_path.write_text(_build_full_effect_prompt(plan) + "\n", encoding="utf-8")
     production_board_prompt_path.write_text(_build_production_board_prompt(plan, sprite_manifest) + "\n", encoding="utf-8")
+    production_board_panel_focus_prompt_path.write_text(
+        _build_panel_focus_production_board_prompt(plan, sprite_manifest) + "\n",
+        encoding="utf-8",
+    )
+    _write_json(panel_focus_layer_contract_path, _build_panel_focus_layer_contract(plan, sprite_manifest))
     sprite_plan_path.write_text(_build_sprite_plan_markdown(plan, sprite_manifest) + "\n", encoding="utf-8")
     validation_report_path.write_text(
         _build_validation_report(plan, validation_errors, validation_warnings, sprite_manifest) + "\n",
@@ -87,6 +114,8 @@ def export_spec_plan(brief_path: Path, output_dir: Path) -> SpecPlanResult:
         sprite_manifest_path=sprite_manifest_path,
         full_effect_prompt_path=full_effect_prompt_path,
         production_board_prompt_path=production_board_prompt_path,
+        production_board_panel_focus_prompt_path=production_board_panel_focus_prompt_path,
+        panel_focus_layer_contract_path=panel_focus_layer_contract_path,
         sprite_plan_path=sprite_plan_path,
         validation_report_path=validation_report_path,
         asset_prompt_count=asset_prompt_count,
@@ -642,6 +671,182 @@ def _build_production_board_prompt(plan: dict[str, Any], sprite_manifest: dict[s
             *asset_lines,
         ]
     )
+
+
+def _build_panel_focus_production_board_prompt(plan: dict[str, Any], sprite_manifest: dict[str, Any]) -> str:
+    text_by_id = {layer["id"]: layer.get("text") for layer in plan["layers"] if layer.get("text")}
+    title = str(text_by_id.get("title_logo") or "SPRING SHOP")
+    subtitle = str(text_by_id.get("hot_deal_text") or "HOT DEAL")
+    buy = str(text_by_id.get("buy_button_text") or "BUY")
+    currency = str(text_by_id.get("currency_amount_text") or "3200")
+    style = plan["style"]
+    asset_map = {asset["id"]: asset for asset in sprite_manifest["assets"]}
+    panel_lines = [
+        _panel_focus_asset_prompt_line(asset_id, asset_map)
+        for asset_id in PANEL_FOCUS_ASSET_IDS
+    ]
+    return "\n".join(
+        [
+            "Use case: ui-mockup",
+            "Asset type: production board for a game UI split pipeline",
+            (
+                "Primary request: Create one wide production board image that validates the current "
+                f"spec planner's split-panel route for `{plan['screen_name']}`."
+            ),
+            "",
+            "Canvas/composition: wide landscape production board, 1536x1024. Left 55% is a complete vertical mobile shop UI full_effect, portrait mobile ratio inside the board. Right 45% is a clean asset_sheet with 6 large isolated cells in a neat 2-column by 3-row grid. Keep all asset cells large, centered, separated by visible whitespace, and easy to audit.",
+            "",
+            f"Theme: {style['theme']} for a {style['game_genre']}.",
+            f"Style: {style['visual_style']}; material: {style['material']}.",
+            f"Palette: {', '.join(style['palette'])}.",
+            "",
+            (
+                "Full UI components on the left: centered rounded cream shop panel with gold trim, "
+                f"separate green top title plate, title text {json.dumps(title, ensure_ascii=False)}, "
+                f"red {json.dumps(subtitle, ensure_ascii=False)} ribbon, three product cards, reward icons, "
+                "red discount badges, small price tags, top currency counter "
+                f"{json.dumps(currency, ensure_ascii=False)}, close button, one green primary buy button with text "
+                f"{json.dumps(buy, ensure_ascii=False)}."
+            ),
+            "",
+            "Current planner panel asset contract:",
+            *panel_lines,
+            "",
+            "Asset sheet on the right: each cell must contain exactly one layer from the panel asset contract above, using the same visual variant as the left full UI. The asset_sheet is not a generic style sheet. Each cell is a layer-equivalent asset for the full_effect. Remove child layers, sibling decorations, text, numbers, product icons, cards, buttons, and background. Use a flat light neutral backing behind cells only so shapes can be seen; do not bake that backing into the asset itself.",
+            "",
+            "Asset sheet cell map by grid position:",
+            "- Top-left cell: panel_base only.",
+            "- Top-right cell: panel_top_title_plate only.",
+            "- Middle-left cell: panel_corner_flowers only.",
+            "- Middle-right cell: panel_bottom_leaves only.",
+            "- Bottom-left cell: panel_inner_texture only.",
+            "- Bottom-right cell: full_panel_composite_reference only.",
+            "",
+            "Strict asset sheet label rule: the right asset_sheet must have no visible cell labels, no numbers, no index markers, no captions, no badges, no circular markers, no annotation marks, no callouts, no arrows, no headers, and no text of any kind. Do not draw numbering on the board. Cell order is implicit by grid position only.",
+            "",
+            "Engineering constraints: UI elements must be visually separable for later standalone sprite generation. The panel_base cell must be clean base art, with sibling layers excluded. Dynamic text belongs only in the left full UI mockup and should remain simple and readable. Asset cells must not include dynamic text, numbers, prices, child icons, neighboring UI, or full-effect background.",
+            "",
+            "Avoid: device frame, watermark, brand logos, garbled text, excessive tiny labels, strong perspective, merged UI parts, asset sheet cells that are different variants from the full UI, asset cells that contain title text or child elements, a panel_base cell that includes flowers, leaves, or top title plaque, and any visible label or numbering on the asset sheet.",
+        ]
+    )
+
+
+def _panel_focus_asset_prompt_line(asset_id: str, asset_map: dict[str, dict[str, Any]]) -> str:
+    if asset_id == "full_panel_composite_reference":
+        return (
+            "- full_panel_composite_reference: one small visual reference showing the assembled empty "
+            "panel with base + title plate + decorations, no product cards, no buttons, no text."
+        )
+    asset = asset_map[asset_id]
+    if asset_id == "panel_base":
+        return (
+            "- panel_base: only the large cream rounded panel body with gold trim and subtle parchment texture. "
+            "It must NOT include top title plate, flowers, leaves, ribbon, cards, buttons, icons, text, numbers, "
+            "or any child elements."
+        )
+    if asset_id == "panel_top_title_plate":
+        return "- panel_top_title_plate: only the separate green-and-gold title plaque shape behind the title. It must NOT include title words."
+    if asset_id == "panel_corner_flowers":
+        return "- panel_corner_flowers: only the flower clusters that sit near the top panel corners. No panel body, no title plate, no text."
+    if asset_id == "panel_bottom_leaves":
+        return "- panel_bottom_leaves: only the leaf clusters and small floral decorations at the lower corners. No panel body, no title plate, no text."
+    if asset_id == "panel_inner_texture":
+        return "- panel_inner_texture: only a small seamless cream parchment material sample or tile matching the inside of panel_base. No border, no decorations, no text."
+    return f"- {asset_id}: {asset['prompt_subject']}"
+
+
+def _build_panel_focus_layer_contract(plan: dict[str, Any], sprite_manifest: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "version": str(plan["version"]),
+        "contract_id": f"{plan['screen_name']}_panel_focus_contract",
+        "primary_asset_id": "panel_base",
+        "board_image": "production_board.png",
+        "canvas": {"width": 1536, "height": 1024},
+        "split_x": 738,
+        "asset_sheet_detection": {
+            "enabled": True,
+            "mode": "grid_cell_foreground_safe_bbox",
+            "padding": 22,
+            "threshold": 55,
+            "min_component_area": 120,
+            "drop_border_artifacts": True,
+        },
+        "asset_cells": _panel_focus_asset_cells(sprite_manifest),
+        "validation_checks": _panel_focus_validation_checks(),
+        "interpretation": (
+            "This panel-focus contract validates production-board layer ownership, strict no-label asset cells, "
+            "and grid-cell bbox detection for the split main panel route. Extracted cell images are validation "
+            "candidates and reference crops, not final engine-ready sprites."
+        ),
+    }
+
+
+def _panel_focus_asset_cells(sprite_manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    asset_map = {asset["id"]: asset for asset in sprite_manifest["assets"]}
+    cells: list[dict[str, Any]] = []
+    for asset_id in PANEL_FOCUS_ASSET_IDS:
+        if asset_id == "full_panel_composite_reference":
+            cells.append(
+                {
+                    "id": asset_id,
+                    "role": "composite_reference_only",
+                    "bbox": PANEL_FOCUS_CELL_BBOXES[asset_id],
+                    "parent_layer": "main_panel",
+                    "transparent": True,
+                    "forbid_text": False,
+                    "scale_mode": "reference_only",
+                    "validation_only": True,
+                    "notes": "Reference-only assembled empty panel; do not treat this cell as an engine sprite.",
+                }
+            )
+            continue
+
+        asset = asset_map[asset_id]
+        cell = {
+            "id": asset_id,
+            "role": asset["role"],
+            "bbox": PANEL_FOCUS_CELL_BBOXES[asset_id],
+            "parent_layer": "main_panel",
+            "transparent": bool(asset["transparent"]),
+            "forbid_text": bool(asset["forbid_text"]),
+            "scale_mode": asset["scale_mode"],
+            "nine_slice_candidate": bool(asset["nine_slice_candidate"]),
+            "validation_only": True,
+        }
+        if asset_id == "panel_base":
+            cell["children_excluded"] = [
+                "panel_top_title_plate",
+                "panel_corner_flowers",
+                "panel_bottom_leaves",
+                "title_text",
+                "cards",
+                "buttons",
+            ]
+        elif asset_id == "panel_top_title_plate":
+            cell["children_excluded"] = ["title_text"]
+        elif asset_id in {"panel_corner_flowers", "panel_bottom_leaves"}:
+            cell["preserve_disconnected_components"] = True
+        cells.append(cell)
+    return cells
+
+
+def _panel_focus_validation_checks() -> list[dict[str, Any]]:
+    return [
+        {"id": "panel_base_has_low_green_decor_signal", "asset_id": "panel_base", "metric": "green_ratio", "op": "<=", "value": 0.02},
+        {"id": "panel_base_has_low_red_ribbon_signal", "asset_id": "panel_base", "metric": "red_ratio_hsv", "op": "<=", "value": 0.01},
+        {"id": "panel_base_has_gold_border_signal", "asset_id": "panel_base", "metric": "gold_ratio", "op": ">=", "value": 0.08},
+        {"id": "title_plate_has_green_material_signal", "asset_id": "panel_top_title_plate", "metric": "green_ratio", "op": ">=", "value": 0.35},
+        {"id": "bottom_leaves_cell_has_green_signal", "asset_id": "panel_bottom_leaves", "metric": "green_ratio", "op": ">=", "value": 0.45},
+        {"id": "panel_base_has_clean_corners", "asset_id": "panel_base", "metric": "corner_alpha_max", "op": "==", "value": 0},
+        {"id": "inner_texture_has_low_green_decor_signal", "asset_id": "panel_inner_texture", "metric": "green_ratio", "op": "<=", "value": 0.02},
+        {"id": "inner_texture_has_clean_corners", "asset_id": "panel_inner_texture", "metric": "corner_alpha_max", "op": "==", "value": 0},
+        {"id": "panel_base_has_no_label_artifact", "asset_id": "panel_base", "metric": "label_artifact_score", "op": "==", "value": 0},
+        {"id": "title_plate_has_no_label_artifact", "asset_id": "panel_top_title_plate", "metric": "label_artifact_score", "op": "==", "value": 0},
+        {"id": "corner_flowers_has_no_label_artifact", "asset_id": "panel_corner_flowers", "metric": "label_artifact_score", "op": "==", "value": 0},
+        {"id": "bottom_leaves_has_no_label_artifact", "asset_id": "panel_bottom_leaves", "metric": "label_artifact_score", "op": "==", "value": 0},
+        {"id": "inner_texture_has_no_label_artifact", "asset_id": "panel_inner_texture", "metric": "label_artifact_score", "op": "==", "value": 0},
+        {"id": "composite_reference_has_no_label_artifact", "asset_id": "full_panel_composite_reference", "metric": "label_artifact_score", "op": "==", "value": 0},
+    ]
 
 
 def _build_asset_prompt(plan: dict[str, Any], asset: dict[str, Any]) -> str:

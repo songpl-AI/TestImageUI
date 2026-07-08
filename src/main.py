@@ -42,6 +42,8 @@ def main() -> int:
         print(f"Wrote {result.sprite_manifest_path}")
         print(f"Wrote {result.full_effect_prompt_path}")
         print(f"Wrote {result.production_board_prompt_path}")
+        print(f"Wrote {result.production_board_panel_focus_prompt_path}")
+        print(f"Wrote {result.panel_focus_layer_contract_path}")
         print(f"Wrote {result.sprite_plan_path}")
         print(f"Wrote {result.validation_report_path}")
         print(f"Asset prompts: {result.asset_prompt_count}")

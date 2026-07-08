@@ -157,6 +157,14 @@
         "nine_slice_candidate": {
           "type": "boolean"
         },
+        "preserve_disconnected_components": {
+          "type": "boolean",
+          "description": "Keep multiple valid disconnected foreground components for decoration-group cells such as flowers or leaves."
+        },
+        "validation_only": {
+          "type": "boolean",
+          "description": "Marks a production-board candidate or reference crop that must not be treated as a final engine sprite."
+        },
         "bbox_detection_hint": {
           "type": "string",
           "enum": ["trim_saturated_left_edge_then_foreground"]

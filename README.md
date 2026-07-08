@@ -124,6 +124,25 @@ python3 -m src.main --help
 
 常用模式：
 
+### 生成 Spec-driven UI 计划
+
+```bash
+python3 -m src.main \
+  --mode plan-spec \
+  --brief examples/input/spec_driven_shop_request.json \
+  --output examples/output/spec_driven_shop_plan
+```
+
+输出包括：
+
+- `ui_spec.json` / `layer_ir.json` / `layout_ir.json`：布局、层级和 Text Node 的机器输入。
+- `sprite_manifest.json` / `asset_prompts/`：独立源 sprite 的生成清单和单资产 prompt。
+- `full_effect_prompt.txt`：只生成完整 UI 效果图时使用。
+- `production_board_prompt.txt`：完整 UI + 全量 asset sheet 的通用 production board prompt。
+- `production_board_panel_focus_prompt.txt`：已验证更稳定的面板专项 production board prompt，只要求右侧 2x3 生成 `panel_base`、`panel_top_title_plate`、`panel_corner_flowers`、`panel_bottom_leaves`、`panel_inner_texture`、`full_panel_composite_reference`，并严格禁止 asset sheet 标签/编号。
+- `panel_focus_layer_contract.json`：与面板专项 prompt 配套的验证 contract，默认启用 `grid_cell_foreground_safe_bbox`。生成图保存为同目录 `production_board.png` 后，可用 `validate-contract` 直接验证。
+- `sprite_plan.md` / `spec_validation_report.md`：人工审核清单和离线合同检查结果。
+
 ### 校验 Layer IR
 
 ```bash
@@ -201,6 +220,8 @@ python3 -m src.main \
 - `examples/input/spec_driven_currency_bar_contract.json`：验证 `currency_bar_bg` 是 text-free / icon-free 横向可拉伸背景，金额保留为 Text Node。
 
 当前 spec planner 默认不再输出 engine-ready 的 `main_panel_bg`；主面板会拆成 `panel_base`、`panel_top_title_plate`、`panel_corner_flowers`、`panel_bottom_leaves` 和 `panel_inner_texture`。如果需要保留整面板图，只能作为 `main_panel_bg_composite` / reference-only 样张，不能进入工程 sprite 清单。
+
+`plan-spec` 会额外输出 `production_board_panel_focus_prompt.txt` 和 `panel_focus_layer_contract.json`，把已经验证过的 “panel-focused prompt + strict no-label + 2x3 panel asset subset + grid-cell auto-detect” 路线固化下来。这个 contract 验证的是 production board 上的 layer ownership 和 bbox 检测，不代表从 cell 提取的候选 PNG 已经是最终工程 sprite。
 
 `layer_contract.json` 使用 `schemas/layer_contract.schema.json` 描述，核心字段包括：
 
