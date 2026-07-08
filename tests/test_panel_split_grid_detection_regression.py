@@ -5,6 +5,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from PIL import Image, ImageDraw
+
 from src.spec.layer_contract import export_layer_contract_validation
 
 
@@ -175,6 +177,66 @@ class CurrencyBarGridDetectionRegressionTest(unittest.TestCase):
             coin_metrics = metrics["asset_cells"]["coin_icon"]
             self.assertEqual(coin_metrics["alpha_validation"]["corner_alpha_max"], 0)
             self.assertGreaterEqual(coin_metrics["color_audit_on_opaque_pixels"]["gold_ratio"], 0.35)
+
+
+class DecorationGroupBboxDetectionRegressionTest(unittest.TestCase):
+    def test_disconnected_decoration_components_are_preserved(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="decoration_group_bbox_regression_") as tmp:
+            output_root = Path(tmp)
+            board_path = output_root / "board.png"
+            contract_path = output_root / "contract.json"
+
+            board = Image.new("RGB", (312, 219), (245, 242, 239))
+            draw = ImageDraw.Draw(board)
+            draw.rectangle((0, 70, 1, 218), fill=(88, 150, 30))
+
+            for cx in (86, 276):
+                draw.ellipse((cx - 38, 48, cx + 38, 108), fill=(238, 239, 210), outline=(72, 137, 34), width=4)
+                draw.ellipse((cx - 22, 34, cx + 20, 88), fill=(95, 167, 40))
+                draw.ellipse((cx - 30, 75, cx + 28, 132), fill=(103, 177, 47))
+                draw.ellipse((cx - 14, 66, cx + 14, 94), fill=(234, 178, 38))
+
+            board.save(board_path)
+            contract = {
+                "version": "0.1",
+                "contract_id": "decoration_group_bbox_regression",
+                "primary_asset_id": "panel_corner_flowers",
+                "board_image": "board.png",
+                "canvas": {"width": 312, "height": 219},
+                "asset_cells": [
+                    {
+                        "id": "panel_corner_flowers",
+                        "role": "panel_corner_flowers",
+                        "bbox": [0, 0, 312, 219],
+                        "transparent": True,
+                        "forbid_text": True,
+                        "scale_mode": "contain",
+                    }
+                ],
+                "validation_checks": [],
+                "asset_sheet_detection": {
+                    "enabled": True,
+                    "mode": "foreground_safe_bbox",
+                    "padding": 8,
+                    "threshold": 55,
+                    "min_component_area": 120,
+                    "drop_border_artifacts": True,
+                },
+            }
+            contract_path.write_text(json.dumps(contract, indent=2) + "\n", encoding="utf-8")
+
+            result = export_layer_contract_validation(contract_path, output_root / "validation")
+            metrics = json.loads(result.probe_metrics_path.read_text(encoding="utf-8"))
+            detection = metrics["asset_sheet_detection"]["cells"]["panel_corner_flowers"]
+            detected_bbox = detection["detected_bbox"]
+            detected_right = detected_bbox[0] + detected_bbox[2]
+
+            self.assertEqual(result.validation_errors, [])
+            self.assertEqual(result.failed_checks, [])
+            self.assertTrue(detection["preserve_disconnected_components"])
+            self.assertGreaterEqual(detection["kept_component_count"], 2)
+            self.assertLessEqual(detected_bbox[0], 45)
+            self.assertGreaterEqual(detected_right, 304)
 
 
 if __name__ == "__main__":

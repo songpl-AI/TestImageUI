@@ -312,3 +312,14 @@
 - 修正动作：用 hole-fill 后的 mask 重新输出 RGBA，并重新检查四角 alpha、内部不透棋盘格、`sprite_overview.png` 和 focused comparison。
 - 验证方式：面板内部应为不透明材质；四角 alpha 应为 0；`transparent_ratio` 不应来自面板内部大面积漏空。
 - 来源：`spec_driven_panel_split_validation` 中，第一版 `panel_base` 提取把浅色面板内部做成半透明；改用 border flood fill + hole fill 后四角 alpha 为 `[0,0,0,0]` 且内部不再透出棋盘格。
+
+### KI-20260708-disconnected-decoration-components
+
+- 状态：resolved
+- 触发条件：asset sheet cell 表示一个装饰组，而组内有多个合法但彼此分离的主体，例如左右两朵 `panel_corner_flowers` 或两簇叶子。
+- 问题表现：foreground-safe bbox 把贴近 cell 边缘的第二个装饰主体当作 edge artifact 丢弃，机器检查可能仍通过，但 `sprite_overview.png` 中单图缺了一半装饰。
+- 根因：原检测逻辑默认边缘附近的小型高饱和组件更像污染物；对 decoration group 没有区分“合法多组件”与“边缘残片/标签”。
+- 预防规则：对 `flowers`、`leaves`、`decoration` 等语义 asset，应保留面积和尺寸足够的分离组件；仍继续丢弃细长边缘 strip，并用 `label_artifact_score` 捕捉编号/标签污染。
+- 修正动作：为 decoration group 启用 `preserve_disconnected_components` 规则，保留非薄条、面积/尺寸足够的多个主体组件；新增合成回归覆盖右侧贴边花朵。
+- 验证方式：`panel_corner_flowers` 的 bbox 应覆盖左右两组花，`kept_component_count >= 2`，`sprite_overview.png` 不应只剩单朵花。
+- 来源：`shop_planner_split_realgen_20260708` 真实生图验证中，首次 auto-detect 虽 0 failed，但视觉上 `panel_corner_flowers` 只保留左花；修复后两朵均保留且 contract 仍通过。

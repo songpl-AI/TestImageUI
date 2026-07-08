@@ -313,6 +313,7 @@ def _apply_asset_sheet_detection(board: Image.Image, contract: dict[str, Any]) -
         )
         crop = board.crop(_crop_box(search_bbox))
         hint = str(cell.get("bbox_detection_hint") or "")
+        preserve_disconnected_components = _should_preserve_disconnected_components(cell)
         local_bbox, cell_report = _detect_cell_bbox(
             crop,
             hint=hint,
@@ -323,9 +324,11 @@ def _apply_asset_sheet_detection(board: Image.Image, contract: dict[str, Any]) -
             border_width_ratio=border_width_ratio,
             border_height_ratio=border_height_ratio,
             border_area_ratio=border_area_ratio,
+            preserve_disconnected_components=preserve_disconnected_components,
         )
         cell_report["original_bbox"] = original_bbox
         cell_report["search_bbox"] = search_bbox
+        cell_report["preserve_disconnected_components"] = preserve_disconnected_components
         if grid_cell_report:
             cell_report["grid_cell_search"] = grid_cell_report
 
@@ -464,6 +467,15 @@ def _aggregate_grid_trim(values: list[int], group_size: int) -> int:
     return int(round(float(np.median(np.asarray(positive)))))
 
 
+def _should_preserve_disconnected_components(cell: dict[str, Any]) -> bool:
+    explicit = cell.get("preserve_disconnected_components")
+    if explicit is not None:
+        return bool(explicit)
+
+    semantic = f"{cell.get('id', '')} {cell.get('role', '')}".lower()
+    return any(token in semantic for token in ("flowers", "leaves", "decoration", "decorations"))
+
+
 def _detect_cell_bbox(
     crop: Image.Image,
     *,
@@ -475,6 +487,7 @@ def _detect_cell_bbox(
     border_width_ratio: float,
     border_height_ratio: float,
     border_area_ratio: float,
+    preserve_disconnected_components: bool,
 ) -> tuple[list[int] | None, dict[str, Any]]:
     if hint == "trim_saturated_left_edge_then_foreground":
         return _detect_saturated_left_edge_then_foreground_safe_bbox(
@@ -486,6 +499,7 @@ def _detect_cell_bbox(
             border_width_ratio=border_width_ratio,
             border_height_ratio=border_height_ratio,
             border_area_ratio=border_area_ratio,
+            preserve_disconnected_components=preserve_disconnected_components,
         )
     if hint:
         raise ValueError(f"unsupported bbox_detection_hint: {hint}")
@@ -498,6 +512,7 @@ def _detect_cell_bbox(
         border_width_ratio=border_width_ratio,
         border_height_ratio=border_height_ratio,
         border_area_ratio=border_area_ratio,
+        preserve_disconnected_components=preserve_disconnected_components,
     )
 
 
@@ -511,6 +526,7 @@ def _detect_saturated_left_edge_then_foreground_safe_bbox(
     border_width_ratio: float,
     border_height_ratio: float,
     border_area_ratio: float,
+    preserve_disconnected_components: bool,
 ) -> tuple[list[int] | None, dict[str, Any]]:
     left_strip_width, strip_report = _detect_saturated_left_edge_strip(crop)
     if left_strip_width <= 0:
@@ -523,6 +539,7 @@ def _detect_saturated_left_edge_then_foreground_safe_bbox(
             border_width_ratio=border_width_ratio,
             border_height_ratio=border_height_ratio,
             border_area_ratio=border_area_ratio,
+            preserve_disconnected_components=preserve_disconnected_components,
         )
         report["hint"] = "trim_saturated_left_edge_then_foreground"
         report["hint_status"] = "no_left_strip_detected"
@@ -539,6 +556,7 @@ def _detect_saturated_left_edge_then_foreground_safe_bbox(
         border_width_ratio=border_width_ratio,
         border_height_ratio=border_height_ratio,
         border_area_ratio=border_area_ratio,
+        preserve_disconnected_components=preserve_disconnected_components,
     )
     report = {
         "source_cell_size": [crop.width, crop.height],
@@ -644,6 +662,7 @@ def _detect_foreground_safe_bbox(
     border_width_ratio: float,
     border_height_ratio: float,
     border_area_ratio: float,
+    preserve_disconnected_components: bool = False,
 ) -> tuple[list[int] | None, dict[str, Any]]:
     rgb = crop.convert("RGB")
     arr = np.asarray(rgb).astype(np.float32)
@@ -677,7 +696,13 @@ def _detect_foreground_safe_bbox(
             or y0 > height * 0.82
         )
         small_edge_artifact = int(component["area"]) < total_area * border_area_ratio
-        if drop_border_artifacts and (thin_edge_artifact or (edge_band_artifact and small_edge_artifact)):
+        preservable_component = preserve_disconnected_components and _is_preservable_disconnected_component(
+            component,
+            width=width,
+            height=height,
+            total_area=total_area,
+        )
+        if drop_border_artifacts and (thin_edge_artifact or (edge_band_artifact and small_edge_artifact and not preservable_component)):
             dropped.append(component)
         else:
             kept.append(component)
@@ -691,6 +716,7 @@ def _detect_foreground_safe_bbox(
         "component_count": len(components),
         "kept_component_count": len(kept),
         "dropped_component_count": len(dropped),
+        "preserve_disconnected_components": preserve_disconnected_components,
         "kept_components": [_component_report(component) for component in kept],
         "dropped_components": [_component_report(component) for component in dropped],
     }
@@ -759,6 +785,23 @@ def _detect_foreground_safe_bbox(
     }
     report["detected_local_bbox"] = local_bbox
     return local_bbox, report
+
+
+def _is_preservable_disconnected_component(
+    component: dict[str, Any],
+    *,
+    width: int,
+    height: int,
+    total_area: int,
+) -> bool:
+    x0, y0, x1, y1 = (int(value) for value in component["bbox"])
+    component_width = x1 - x0
+    component_height = y1 - y0
+    area = int(component["area"])
+    min_width = max(18, int(width * 0.10))
+    min_height = max(18, int(height * 0.10))
+    min_area = max(240, int(total_area * 0.008))
+    return component_width >= min_width and component_height >= min_height and area >= min_area
 
 
 def _edge_padding_guards(
