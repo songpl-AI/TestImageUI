@@ -200,6 +200,8 @@ python3 -m src.main \
 - `examples/input/spec_driven_panel_split_contract.json`：验证 `main_panel_bg` 拆成 `panel_base`、title plate、flowers、leaves、inner texture。
 - `examples/input/spec_driven_currency_bar_contract.json`：验证 `currency_bar_bg` 是 text-free / icon-free 横向可拉伸背景，金额保留为 Text Node。
 
+当前 spec planner 默认不再输出 engine-ready 的 `main_panel_bg`；主面板会拆成 `panel_base`、`panel_top_title_plate`、`panel_corner_flowers`、`panel_bottom_leaves` 和 `panel_inner_texture`。如果需要保留整面板图，只能作为 `main_panel_bg_composite` / reference-only 样张，不能进入工程 sprite 清单。
+
 `layer_contract.json` 使用 `schemas/layer_contract.schema.json` 描述，核心字段包括：
 
 - `board_image`：production board 路径。

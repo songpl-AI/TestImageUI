@@ -11,6 +11,15 @@ from src.exporters.layout_ir import build_layout_ir, save_layout_ir
 from src.ir.layer_ir import layer_ir_to_json, validate_layer_ir
 
 
+PANEL_SPLIT_ASSET_IDS = {
+    "panel_base",
+    "panel_top_title_plate",
+    "panel_corner_flowers",
+    "panel_bottom_leaves",
+    "panel_inner_texture",
+}
+
+
 @dataclass(frozen=True)
 class SpecPlanResult:
     output_dir: Path
@@ -162,6 +171,25 @@ def _shop_bundle_layers(width: int, height: int, text: dict[str, Any]) -> list[d
     panel_y = round(height * 0.145)
     panel_w = round(width * 0.834)
     panel_h = round(height * 0.72)
+    panel_top_plate_bbox = [round(width * 0.25), round(height * 0.085), round(width * 0.5), round(height * 0.12)]
+    panel_inner_bbox = [
+        panel_x + round(panel_w * 0.08),
+        panel_y + round(panel_h * 0.2),
+        round(panel_w * 0.84),
+        round(panel_h * 0.53),
+    ]
+    panel_corner_flowers_bbox = [
+        panel_x + round(panel_w * 0.04),
+        panel_y - round(panel_h * 0.055),
+        round(panel_w * 0.92),
+        round(panel_h * 0.18),
+    ]
+    panel_bottom_leaves_bbox = [
+        panel_x + round(panel_w * 0.08),
+        panel_y + round(panel_h * 0.755),
+        round(panel_w * 0.84),
+        round(panel_h * 0.16),
+    ]
     card_w = round(panel_w * 0.255)
     card_h = round(panel_h * 0.47)
     card_gap = round(panel_w * 0.04)
@@ -181,22 +209,61 @@ def _shop_bundle_layers(width: int, height: int, text: dict[str, Any]) -> list[d
             scale_mode="cover",
         ),
         _image_layer(
-            "main_panel_bg",
-            "panel_background",
+            "panel_base",
+            "panel_base_clean_candidate",
             [panel_x, panel_y, panel_w, panel_h],
             10,
-            asset_id="main_panel_bg",
-            prompt_subject="large rounded shop panel background with gold trim, no text, no icons",
+            asset_id="panel_base",
+            prompt_subject=(
+                "clean large rounded shop panel base with cream center and gold trim; "
+                "no title plate, no flowers, no leaves, no ribbon, no cards, no buttons, no text, no icons"
+            ),
             scale_mode="nine_slice",
             nine_slice=True,
         ),
         _image_layer(
-            "title_board",
-            "title_board",
-            [round(width * 0.25), round(height * 0.085), round(width * 0.5), round(height * 0.12)],
+            "panel_inner_texture",
+            "panel_inner_texture_tile",
+            panel_inner_bbox,
+            11,
+            asset_id="panel_inner_texture",
+            prompt_subject=(
+                "plain reusable inner panel material tile, soft cream fabric or parchment texture only; "
+                "no border, no trim, no title plate, no flowers, no leaves, no text"
+            ),
+            scale_mode="stretch",
+        ),
+        _image_layer(
+            "panel_corner_flowers",
+            "panel_corner_flowers",
+            panel_corner_flowers_bbox,
+            18,
+            asset_id="panel_corner_flowers",
+            prompt_subject=(
+                "separate transparent flower and leaf corner decorations for the top corners of the shop panel; "
+                "no panel base, no title text, no cards, no buttons"
+            ),
+            scale_mode="contain",
+        ),
+        _image_layer(
+            "panel_bottom_leaves",
+            "panel_bottom_leaves",
+            panel_bottom_leaves_bbox,
+            18,
+            asset_id="panel_bottom_leaves",
+            prompt_subject=(
+                "separate transparent leaf and flower decoration cluster for the bottom of the shop panel; "
+                "no panel base, no buttons, no text"
+            ),
+            scale_mode="contain",
+        ),
+        _image_layer(
+            "panel_top_title_plate",
+            "panel_top_title_plate",
+            panel_top_plate_bbox,
             20,
-            asset_id="title_board",
-            prompt_subject="ornate green and gold title plate without text",
+            asset_id="panel_top_title_plate",
+            prompt_subject="ornate green and gold top title plate for the shop panel, without text",
             scale_mode="contain",
         ),
         _image_layer(
@@ -501,10 +568,20 @@ def _validate_plan_contract(plan: dict[str, Any]) -> list[str]:
                 warnings.append(f"{layer['id']}: missing explicit scale_mode")
         if "background" in role and layer.get("remove_text") is False:
             warnings.append(f"{layer['id']}: background layer should forbid baked dynamic text")
+        if layer.get("asset_id") == "main_panel_bg" and layer.get("asset_strategy") != "reference_only":
+            warnings.append(
+                f"{layer['id']}: main_panel_bg must not be emitted as an engine-ready sprite; "
+                "split it into panel_base, panel_top_title_plate, panel_corner_flowers, panel_bottom_leaves, and panel_inner_texture"
+            )
 
     for layer in text_layers:
         if not layer.get("text"):
             warnings.append(f"{layer['id']}: text layer is missing text")
+
+    asset_ids = {str(layer.get("asset_id")) for layer in image_layers if layer.get("asset_id")}
+    missing_panel_assets = sorted(PANEL_SPLIT_ASSET_IDS - asset_ids)
+    if missing_panel_assets:
+        warnings.append(f"main panel split assets missing: {', '.join(missing_panel_assets)}")
 
     warnings.append("offline validation only: no real full_effect or sprite PNG was generated")
     warnings.append("variant mismatch remains possible between full_effect and independent asset prompts")
@@ -554,6 +631,8 @@ def _build_production_board_prompt(plan: dict[str, Any], sprite_manifest: dict[s
             f"Left side: full_effect at {canvas['width']}x{canvas['height']} using the UI Spec layout.",
             "Right side: asset_sheet with one clean isolated cell per asset id.",
             "Asset-sheet contract: every asset cell must be the exact same visual variant as the matching full_effect layer, preserving silhouette, material, color, border, corner radius, lighting, and decoration ownership.",
+            "Panel ownership contract: do not generate `main_panel_bg` as a combined engine sprite; split it into `panel_base`, `panel_top_title_plate`, `panel_corner_flowers`, `panel_bottom_leaves`, and `panel_inner_texture` cells.",
+            "`panel_base` must exclude title plates, corner flowers, bottom leaves, inner texture overlays, cards, buttons, icons, numbers, and text.",
             "Only remove child layers such as dynamic text, item counts, prices, icons, or numbers when the manifest says forbid_text=true.",
             "Do not rely on rendered text labels inside the asset sheet; the manifest maps asset ids to cells externally.",
             "Use transparent-looking checker or flat neutral cell backgrounds only if needed for visibility; do not bake cell backgrounds into sprites.",
@@ -614,13 +693,14 @@ def _build_sprite_plan_markdown(plan: dict[str, Any], sprite_manifest: dict[str,
             "| id | 类型 | 推荐选项 | 需要确认的原因 |",
             "|---|---|---|---|",
             "| title_logo | fixed_art_text / text_node | 当前按 fixed_art_text | 标题是否需要本地化会影响是否图片化 |",
-            "| main_panel_bg | whole_panel / split_parts | 当前按 whole_panel + child layers | 面板角装饰未来可能需要单独复用 |",
+            "| main_panel_bg_composite | visual_reference_only | 如需保留仅作 reference_only | whole `main_panel_bg` 已验证会烘焙标题牌和花叶，不能作为工程 sprite |",
             "| discount_badge_bg | baked ribbon / split decoration | 当前按 reusable badge bg | 折扣样式是否所有商品共用需要确认 |",
             "| production_board | full_effect + asset_sheet | 推荐用于真实生图小实验 | 可降低但不能消除整图和单图 variant mismatch |",
             "",
             "## 尺寸与位置规则",
             "",
             "- `ui_spec.json` / `layer_ir.json` 是尺寸、位置、层级的来源。",
+            "- 主面板默认拆为 `panel_base` + `panel_top_title_plate` + `panel_corner_flowers` + `panel_bottom_leaves` + `panel_inner_texture`。",
             "- `assets_png` 是可复用源素材，不能把自然尺寸当工程尺寸。",
             "- `assets_fit_raw` 是每个 layer 的 bbox 实例，重建时引用它。",
             "- 真实生成后必须输出 reconstruction / comparison 再判断是否推广。",
@@ -661,6 +741,7 @@ def _build_validation_report(
         "- Dynamic text is represented as Text Node layers.",
         "- Sprite source assets and fitted layout instances are separated.",
         "- Stretchable backgrounds carry `scale_mode` metadata.",
+        "- Main panel backgrounds are split into base, title plate, decorations, and inner texture instead of a single `main_panel_bg` sprite.",
         "- Prompts explicitly forbid rectangular crop semantics.",
         "",
         "## Errors",
@@ -693,4 +774,3 @@ def _build_validation_report(
         ]
     )
     return "\n".join(lines)
-
