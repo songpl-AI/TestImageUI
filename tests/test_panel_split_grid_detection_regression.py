@@ -9,14 +9,15 @@ from src.spec.layer_contract import export_layer_contract_validation
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "panel_split_no_label"
+PANEL_FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "panel_split_no_label"
+PRODUCT_CARD_FIXTURE_ROOT = REPO_ROOT / "tests" / "fixtures" / "product_card_grid_detection"
 RUNS = ("run_01", "run_02", "run_03")
 
 
 def _check_fixtures() -> None:
     missing: list[Path] = []
     for run in RUNS:
-        run_dir = FIXTURE_ROOT / run
+        run_dir = PANEL_FIXTURE_ROOT / run
         for name in ("production_board.png", "layer_contract_fixed_bbox.json", "layer_contract_auto_detect.json"):
             path = run_dir / name
             if not path.exists():
@@ -46,7 +47,7 @@ class PanelSplitGridDetectionRegressionTest(unittest.TestCase):
 
             for run in RUNS:
                 with self.subTest(run=run):
-                    run_dir = FIXTURE_ROOT / run
+                    run_dir = PANEL_FIXTURE_ROOT / run
                     fixed_result = export_layer_contract_validation(
                         run_dir / "layer_contract_fixed_bbox.json",
                         output_root / run / "fixed_bbox",
@@ -84,6 +85,52 @@ class PanelSplitGridDetectionRegressionTest(unittest.TestCase):
                     self.assertEqual(panel_base["alpha_validation"]["corner_alpha_max"], 0)
                     self.assertLessEqual(inner_texture["color_audit_on_opaque_pixels"]["green_ratio"], 0.02)
                     self.assertEqual(inner_texture["alpha_validation"]["corner_alpha_max"], 0)
+
+
+class ProductCardGridDetectionRegressionTest(unittest.TestCase):
+    def test_compact_price_tag_does_not_expand_to_full_cell_height(self) -> None:
+        run_dir = PRODUCT_CARD_FIXTURE_ROOT / "run_02"
+        board_path = run_dir / "production_board.png"
+        contract_path = run_dir / "layer_contract_auto_detect.json"
+        missing = [path for path in (board_path, contract_path) if not path.exists()]
+        if missing:
+            joined = "\n".join(str(path.relative_to(REPO_ROOT)) for path in missing)
+            raise unittest.SkipTest(f"product card grid detection fixtures are missing:\n{joined}")
+
+        with tempfile.TemporaryDirectory(prefix="product_card_grid_regression_") as tmp:
+            output_root = Path(tmp)
+            grid_contract = json.loads(contract_path.read_text(encoding="utf-8"))
+            grid_contract["board_image"] = str(board_path)
+            grid_contract.setdefault("asset_sheet_detection", {})["enabled"] = True
+            grid_contract["asset_sheet_detection"]["mode"] = "grid_cell_foreground_safe_bbox"
+            grid_contract_path = output_root / "layer_contract_grid_detect.json"
+            grid_contract_path.write_text(json.dumps(grid_contract, indent=2) + "\n", encoding="utf-8")
+
+            result = export_layer_contract_validation(grid_contract_path, output_root / "validation_grid_detect")
+            metrics = json.loads(result.probe_metrics_path.read_text(encoding="utf-8"))
+
+            self.assertEqual(result.validation_errors, [])
+            self.assertEqual(result.failed_checks, [])
+            self.assertEqual(_failed_checks(metrics), [])
+
+            detection = metrics["asset_sheet_detection"]
+            self.assertEqual(detection["mode"], "grid_cell_foreground_safe_bbox")
+            price_detection = detection["cells"]["price_tag_bg"]
+            original_height = price_detection["original_bbox"][3]
+            detected_y = price_detection["detected_bbox"][1]
+            detected_height = price_detection["detected_bbox"][3]
+            original_y = price_detection["original_bbox"][1]
+
+            self.assertGreater(detected_y, original_y + 50)
+            self.assertLess(detected_height, original_height * 0.65)
+
+            guards = price_detection["edge_padding_guards"]
+            self.assertTrue(guards["vertical_strip_dropped"])
+            self.assertFalse(guards["vertical_extent_preserved"])
+
+            price_metrics = metrics["asset_cells"]["price_tag_bg"]
+            self.assertLess(price_metrics["asset_png_size"][1], original_height * 0.65)
+            self.assertGreaterEqual(price_metrics["color_audit_on_opaque_pixels"]["gold_ratio"], 0.35)
 
 
 if __name__ == "__main__":

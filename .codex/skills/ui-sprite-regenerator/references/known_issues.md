@@ -291,6 +291,17 @@
 - 验证方式：`asset_sheet_detection.json` 应记录 grid trim 与 detected bbox；`focused_split_comparison.png` 中 texture PNG 只应包含 parchment/cream tile，不应带绿色竖条；`probe_metrics.json` 中 texture 的 `green_ratio` 和 `corner_alpha_max` 应通过。
 - 来源：`spec_driven_panel_split_no_label_stability` run_01 和 run_03 中，strict no-label prompt 没有生成编号，但旧粗 bbox 加 foreground-safe bbox 仍把左侧植物/背景 strip 裁进 `panel_inner_texture`；改用 `grid_cell_foreground_safe_bbox` 后 strict/no-label auto validation 达到 3/3。
 
+### KI-20260708-edge-guard-compact-control-overexpand
+
+- 状态：resolved
+- 触发条件：foreground-safe bbox 丢掉一个贴边竖向污染 strip 后，为了保护低对比 texture/panel 的正交范围而保留整格高度。
+- 问题表现：`price_tag_bg`、`quantity_pill_bg`、货币条、按钮底等紧凑横向控件会被扩回整张 asset cell，高度包含灰色 backing，透明 sprite 变成一块带背景的矩形。
+- 根因：边缘污染 strip 的形状不能证明目标主体也应该占满正交方向；低对比 texture 可能需要保全高度，但横向控件通常只占 cell 中间一小段。
+- 预防规则：只有保留下来的主体 bbox 自身已经跨过足够大的正交范围时，才允许 `vertical_extent_preserved` 或 `horizontal_extent_preserved`；紧凑控件必须保持 tight bbox。
+- 修正动作：将正交范围保全条件收窄为 kept component 至少覆盖正交方向约 72%；新增 product card `price_tag_bg` 回归 fixture，确保 grid-cell 检测不会扩成整格。
+- 验证方式：运行 `python3 -m unittest tests.test_panel_split_grid_detection_regression`；product card run_02 中 `price_tag_bg` 的 detected height 应显著小于原 cell height。
+- 来源：`spec_driven_product_card_stability` run_02 中，扩样本验证发现 grid/foreground 当前代码一度把 `price_tag_bg` 检测成 `[798, 644, 310, 340]`，修复后恢复为 `[798, 743, 310, 149]`。
+
 ### KI-20260707-closed-panel-alpha-hole-fill
 
 - 状态：active

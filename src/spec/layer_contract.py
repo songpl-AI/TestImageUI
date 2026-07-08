@@ -726,10 +726,14 @@ def _detect_foreground_safe_bbox(
         height=height,
         border_height_ratio=border_height_ratio,
     )
-    if vertical_strip_dropped and not horizontal_strip_dropped:
+    kept_width = x1 - x0
+    kept_height = y1 - y0
+    vertical_extent_preserved = vertical_strip_dropped and not horizontal_strip_dropped and kept_height >= height * 0.72
+    horizontal_extent_preserved = horizontal_strip_dropped and not vertical_strip_dropped and kept_width >= width * 0.72
+    if vertical_extent_preserved:
         padded_y0 = 0
         padded_y1 = height
-    if horizontal_strip_dropped and not vertical_strip_dropped:
+    if horizontal_extent_preserved:
         padded_x0 = 0
         padded_x1 = width
     if padded_x1 <= padded_x0 or padded_y1 <= padded_y0:
@@ -750,6 +754,8 @@ def _detect_foreground_safe_bbox(
         "bottom": bottom_guard if bottom_guard != height else None,
         "vertical_strip_dropped": vertical_strip_dropped,
         "horizontal_strip_dropped": horizontal_strip_dropped,
+        "vertical_extent_preserved": vertical_extent_preserved,
+        "horizontal_extent_preserved": horizontal_extent_preserved,
     }
     report["detected_local_bbox"] = local_bbox
     return local_bbox, report

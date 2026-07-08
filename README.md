@@ -218,7 +218,7 @@ python3 -m src.main \
 
 `label_artifact_score` 是一个针对 production board asset sheet 的启发式污染检查：如果透明候选 PNG 左上角出现小型高饱和圆形/徽章状前景组件，通常代表模型把 cell 编号、索引标记或设计稿注释画进了素材。它不能替代 OCR 或人工审图，但可以把 `asset_sheet_index_label_artifacts` 这类已知失败从“漏检”变成合同失败。
 
-当前有一个 strict/no-label panel split 回归测试，使用 `tests/fixtures/panel_split_no_label/` 下的最小 fixture，用于防止 `grid_cell_foreground_safe_bbox` 退化回 asset-specific hint 或固定 bbox 漂移：
+当前有一个 grid-cell bbox 回归测试，使用 `tests/fixtures/panel_split_no_label/` 与 `tests/fixtures/product_card_grid_detection/` 下的最小 fixture，用于防止 `grid_cell_foreground_safe_bbox` 退化回 asset-specific hint、固定 bbox 漂移，或把 `price_tag_bg` 这类紧凑横向控件扩成整格背景：
 
 ```bash
 python3 -m unittest tests.test_panel_split_grid_detection_regression
