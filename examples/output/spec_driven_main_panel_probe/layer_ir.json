@@ -1,0 +1,52 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 600,
+    "height": 922
+  },
+  "source_image": "diagnostics/full_effect_main_panel_scaled_to_bbox.png",
+  "layers": [
+    {
+      "id": "main_panel_bg_composite",
+      "role": "panel_background_composite",
+      "bbox": [
+        0,
+        0,
+        600,
+        922
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_fit_raw/main_panel_bg_composite_stretch.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_asset_png": "assets_png/main_panel_bg_composite.png",
+        "verdict": "fail_as_clean_panel_base",
+        "reason": "contains title plaque and floral decorations"
+      }
+    },
+    {
+      "id": "panel_base_candidate",
+      "role": "panel_background_base_candidate",
+      "bbox": [
+        0,
+        0,
+        600,
+        922
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_fit_raw/panel_base_candidate_stretch.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_asset_png": "assets_png/panel_base_candidate.png",
+        "verdict": "diagnostic_only",
+        "reason": "cropped away title plaque but still not clean production layer"
+      }
+    }
+  ]
+}

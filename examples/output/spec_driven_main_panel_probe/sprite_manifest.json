@@ -1,0 +1,37 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_main_panel_probe",
+  "assets": [
+    {
+      "id": "main_panel_bg_composite",
+      "role": "panel_background_composite",
+      "strategy": "source_preserving_asset_cell_extract",
+      "output": "assets_png/main_panel_bg_composite.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "contain",
+        "stretch"
+      ],
+      "recommended_scale_mode": "none_for_production",
+      "verdict": "fail_as_clean_main_panel_bg"
+    },
+    {
+      "id": "panel_base_candidate",
+      "role": "panel_background_base_candidate",
+      "strategy": "diagnostic_crop_from_asset_cell",
+      "output": "assets_png/panel_base_candidate.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "stretch"
+      ],
+      "recommended_scale_mode": "diagnostic_only",
+      "verdict": "partial_but_not_production_ready"
+    }
+  ],
+  "known_issues": [
+    "production-board-layer-ownership-drift",
+    "asset-cell-tight-padding"
+  ]
+}

@@ -1,0 +1,48 @@
+Use case: ui-mockup
+Asset type: source effect image for a game UI split pipeline
+Primary request: Generate a vertical mobile game shop bundle screen for a pastoral match-3 game. It should have a spring garden mood, a centered shop panel, three product cards, a currency counter, a close button, a red hot-deal ribbon, and one primary buy button. The result must be suitable for later standalone sprite generation and layout reconstruction.
+Canvas: 720x1280, no device frame.
+Theme: pastoral spring shop with garden leaves, soft sunlight, fruit and flower accents.
+Game genre: casual match-3 mobile game.
+Style: polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, consistent painterly highlights; material: painted enamel, soft fabric panel centers, polished gold trim, subtle candy-like highlights.
+Palette: mint green, cream, warm gold, berry red, soft sky blue.
+Composition contract: follow the UI Spec JSON as the source of truth for approximate layout, hierarchy, and required elements.
+Engineering constraints: UI elements must be visually separable for later standalone sprite generation; panels, cards, buttons, icons, bars, and badges need clean boundaries.
+Text policy: render only the listed short texts; keep them readable and easy to replace as Text Nodes.
+Text (verbatim): "3200", "HOT DEAL", "20%", "x50", "$3", "40%", "x3", "$6", "60%", "x1", "$9", "BUY".
+Avoid: device frame, watermark, brand logos, garbled text, excessive tiny labels, fused UI/background edges, strong perspective, cropped key elements.
+
+Layer contract:
+- background_scene: background_scene, bbox=[0, 0, 720, 1280], z=0, scale=cover
+- main_panel_bg: panel_background, bbox=[60, 186, 600, 922], z=10, scale=nine_slice
+- title_board: title_board, bbox=[180, 109, 360, 154], z=20, scale=contain
+- title_logo: fixed_art_text, bbox=[198, 147, 324, 77], z=21, scale=contain
+- currency_bar_bg: currency_bar_background, bbox=[446, 70, 202, 70], z=25, scale=nine_slice
+- coin_icon: currency_icon, bbox=[457, 78, 32, 32], z=26, scale=contain
+- currency_amount_text: dynamic_text_currency_amount, bbox=[497, 78, 108, 51], z=27, scale=text
+- close_button: close_button, bbox=[605, 166, 58, 58], z=30, scale=contain
+- hot_deal_ribbon_bg: subtitle_ribbon_background, bbox=[204, 347, 312, 65], z=35, scale=stretch
+- hot_deal_text: dynamic_text_subtitle, bbox=[252, 361, 216, 37], z=36, scale=text
+- product_card_1_bg: product_card_background, bbox=[108, 444, 153, 433], z=50, scale=nine_slice
+- product_card_1_item_icon: reward_item_icon, bbox=[139, 505, 92, 92], z=51, scale=contain
+- product_card_1_discount_badge_bg: discount_badge_background, bbox=[184, 429, 73, 56], z=52, scale=stretch
+- product_card_1_discount_text: dynamic_text_discount, bbox=[191, 438, 58, 35], z=53, scale=text
+- product_card_1_count_text: dynamic_text_item_count, bbox=[151, 673, 67, 35], z=54, scale=text
+- product_card_1_price_tag_bg: price_tag_background, bbox=[132, 756, 104, 65], z=55, scale=nine_slice
+- product_card_1_price_text: dynamic_text_price, bbox=[149, 767, 70, 39], z=56, scale=text
+- product_card_2_bg: product_card_background, bbox=[285, 444, 153, 433], z=60, scale=nine_slice
+- product_card_2_item_icon: reward_item_icon, bbox=[316, 505, 92, 92], z=61, scale=contain
+- product_card_2_discount_badge_bg: discount_badge_background, bbox=[361, 429, 73, 56], z=62, scale=stretch
+- product_card_2_discount_text: dynamic_text_discount, bbox=[368, 438, 58, 35], z=63, scale=text
+- product_card_2_count_text: dynamic_text_item_count, bbox=[328, 673, 67, 35], z=64, scale=text
+- product_card_2_price_tag_bg: price_tag_background, bbox=[309, 756, 104, 65], z=65, scale=nine_slice
+- product_card_2_price_text: dynamic_text_price, bbox=[326, 767, 70, 39], z=66, scale=text
+- product_card_3_bg: product_card_background, bbox=[462, 444, 153, 433], z=70, scale=nine_slice
+- product_card_3_item_icon: reward_item_icon, bbox=[493, 505, 92, 92], z=71, scale=contain
+- product_card_3_discount_badge_bg: discount_badge_background, bbox=[538, 429, 73, 56], z=72, scale=stretch
+- product_card_3_discount_text: dynamic_text_discount, bbox=[545, 438, 58, 35], z=73, scale=text
+- product_card_3_count_text: dynamic_text_item_count, bbox=[505, 673, 67, 35], z=74, scale=text
+- product_card_3_price_tag_bg: price_tag_background, bbox=[486, 756, 104, 65], z=75, scale=nine_slice
+- product_card_3_price_text: dynamic_text_price, bbox=[503, 767, 70, 39], z=76, scale=text
+- buy_button_bg: button_background, bbox=[223, 933, 274, 109], z=90, scale=nine_slice
+- buy_button_text: dynamic_text_button_label, bbox=[281, 951, 158, 58], z=91, scale=text

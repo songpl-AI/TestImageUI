@@ -1,0 +1,143 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_layer_contract",
+  "contract_id": "spec_driven_product_card_split_contract",
+  "assets": [
+    {
+      "id": "product_card_base",
+      "role": "product_card_base_clean_candidate",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/product_card_base.png",
+      "source_cell": "asset_cells/product_card_base.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [
+          "reward_icon_basket",
+          "quantity_text",
+          "discount_badge_bg",
+          "discount_text",
+          "price_tag_bg",
+          "price_text"
+        ],
+        "notes": "Parent card background must exclude all children."
+      }
+    },
+    {
+      "id": "reward_icon_basket",
+      "role": "reward_icon",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/reward_icon_basket.png",
+      "source_cell": "asset_cells/reward_icon_basket.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [
+          "product_card_base",
+          "quantity_text",
+          "discount_badge_bg",
+          "price_tag_bg"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "quantity_pill_bg",
+      "role": "quantity_pill_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/quantity_pill_bg.png",
+      "source_cell": "asset_cells/quantity_pill_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch",
+      "nine_slice_candidate": true,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [
+          "quantity_text"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "discount_badge_bg",
+      "role": "discount_badge_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/discount_badge_bg.png",
+      "source_cell": "asset_cells/discount_badge_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [
+          "discount_text"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/price_tag_bg.png",
+      "source_cell": "asset_cells/price_tag_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [
+          "price_text"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "full_product_card_composite_reference",
+      "role": "composite_reference_only",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/full_product_card_composite_reference.png",
+      "source_cell": "asset_cells/full_product_card_composite_reference.png",
+      "transparent": true,
+      "forbid_text": false,
+      "scale_mode": "reference_only",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "featured_product_card",
+        "children_excluded": [],
+        "notes": "Reference-only assembled empty product card."
+      }
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "quantity_text",
+      "role": "dynamic_text_quantity",
+      "text": "x25"
+    },
+    {
+      "id": "discount_text",
+      "role": "dynamic_text_discount",
+      "text": "-30%"
+    },
+    {
+      "id": "price_text",
+      "role": "dynamic_text_price",
+      "text": "$1.99"
+    }
+  ],
+  "known_issues": [
+    "production-board-layer-ownership-drift",
+    "asset-cell-tight-padding",
+    "closed-panel-alpha-hole-fill"
+  ]
+}

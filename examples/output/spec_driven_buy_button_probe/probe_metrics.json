@@ -1,0 +1,53 @@
+{
+  "target_bbox": [
+    274,
+    109
+  ],
+  "source_cell_size": [
+    315,
+    125
+  ],
+  "full_crop_size": [
+    259,
+    88
+  ],
+  "sprite_natural_size": [
+    315,
+    124
+  ],
+  "foreground_bbox_in_source_cell": [
+    0,
+    1,
+    315,
+    125
+  ],
+  "background_estimate_rgb": [
+    251,
+    248,
+    241
+  ],
+  "background_threshold": 48,
+  "text_bbox_relative_to_button": [
+    58,
+    18,
+    158,
+    58
+  ],
+  "mean_abs_delta_vs_full_scaled": {
+    "contain_text": 56.76,
+    "stretch_text": 56.12
+  },
+  "alpha_validation": {
+    "mode": "RGBA",
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "opaque_pixels": 30489,
+    "semi_transparent_pixels": 0,
+    "transparent_pixels": 8571,
+    "transparent_ratio": 0.2194
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_product_card_split_validation",
+  "assets": [
+    {
+      "id": "product_card_base",
+      "role": "product_card_base_clean_candidate",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/product_card_base.png",
+      "source_cell": "asset_cells/product_card_base.png",
+      "transparent": true,
+      "forbid_text": true,
+      "verdict": "candidate_from_parent_child_split_contract"
+    },
+    {
+      "id": "reward_icon_basket",
+      "role": "reward_icon",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/reward_icon_basket.png",
+      "source_cell": "asset_cells/reward_icon_basket.png",
+      "transparent": true,
+      "forbid_text": true,
+      "verdict": "candidate_from_parent_child_split_contract"
+    },
+    {
+      "id": "quantity_pill_bg",
+      "role": "quantity_pill_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/quantity_pill_bg.png",
+      "source_cell": "asset_cells/quantity_pill_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "verdict": "candidate_from_parent_child_split_contract"
+    },
+    {
+      "id": "discount_badge_bg",
+      "role": "discount_badge_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/discount_badge_bg.png",
+      "source_cell": "asset_cells/discount_badge_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "verdict": "candidate_from_parent_child_split_contract"
+    },
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/price_tag_bg.png",
+      "source_cell": "asset_cells/price_tag_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "verdict": "candidate_from_parent_child_split_contract"
+    },
+    {
+      "id": "full_product_card_composite_reference",
+      "role": "composite_reference_only",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/full_product_card_composite_reference.png",
+      "source_cell": "asset_cells/full_product_card_composite_reference.png",
+      "transparent": true,
+      "forbid_text": false,
+      "verdict": "candidate_from_parent_child_split_contract"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "quantity_text",
+      "text": "x25",
+      "strategy": "text_node"
+    },
+    {
+      "id": "discount_text",
+      "text": "-30%",
+      "strategy": "text_node"
+    },
+    {
+      "id": "price_text",
+      "text": "$1.99",
+      "strategy": "text_node"
+    }
+  ],
+  "known_issues": [
+    "production-board-layer-ownership-drift",
+    "asset-cell-tight-padding",
+    "closed-panel-alpha-hole-fill"
+  ]
+}

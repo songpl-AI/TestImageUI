@@ -1,0 +1,53 @@
+{
+  "target_bbox": [
+    104,
+    65
+  ],
+  "source_cell_size": [
+    256,
+    83
+  ],
+  "full_crop_size": [
+    152,
+    62
+  ],
+  "sprite_natural_size": [
+    233,
+    67
+  ],
+  "foreground_bbox_in_source_cell": [
+    0,
+    0,
+    233,
+    67
+  ],
+  "background_estimate_rgb": [
+    251,
+    247,
+    240
+  ],
+  "text_bbox_relative_to_price_tag": [
+    17,
+    11,
+    70,
+    39
+  ],
+  "text_value_from_spec": "$3",
+  "alpha_validation": {
+    "mode": "RGBA",
+    "corner_alpha": [
+      46,
+      0,
+      0,
+      0
+    ],
+    "transparent_pixels": 1312,
+    "opaque_pixels": 13690,
+    "semi_transparent_pixels": 609,
+    "transparent_ratio": 0.084
+  },
+  "mean_abs_delta_vs_full_scaled": {
+    "contain_text": 65.62,
+    "stretch_text": 44.89
+  }
+}

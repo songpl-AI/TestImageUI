@@ -1,0 +1,260 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "spec_driven_product_card_split_contract",
+    "canvas": {
+      "width": 1536,
+      "height": 1024
+    },
+    "source_image": "production_board.png",
+    "nodes": [
+      {
+        "id": "product_card_base",
+        "type": "SpriteCandidate",
+        "role": "product_card_base_clean_candidate",
+        "rect": [
+          759,
+          28,
+          358,
+          365
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/product_card_base.png",
+        "source_cell": "asset_cells/product_card_base.png",
+        "scale_mode": "nine_slice",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "reward_icon_basket",
+        "type": "SpriteCandidate",
+        "role": "reward_icon",
+        "rect": [
+          1133,
+          28,
+          371,
+          365
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/reward_icon_basket.png",
+        "source_cell": "asset_cells/reward_icon_basket.png",
+        "scale_mode": "contain",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "quantity_pill_bg",
+        "type": "SpriteCandidate",
+        "role": "quantity_pill_background",
+        "rect": [
+          759,
+          409,
+          358,
+          219
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/quantity_pill_bg.png",
+        "source_cell": "asset_cells/quantity_pill_bg.png",
+        "scale_mode": "stretch",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "discount_badge_bg",
+        "type": "SpriteCandidate",
+        "role": "discount_badge_background",
+        "rect": [
+          1133,
+          409,
+          371,
+          219
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/discount_badge_bg.png",
+        "source_cell": "asset_cells/discount_badge_bg.png",
+        "scale_mode": "contain",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "price_tag_bg",
+        "type": "SpriteCandidate",
+        "role": "price_tag_background",
+        "rect": [
+          759,
+          644,
+          358,
+          340
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/price_tag_bg.png",
+        "source_cell": "asset_cells/price_tag_bg.png",
+        "scale_mode": "nine_slice",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "full_product_card_composite_reference",
+        "type": "SpriteCandidate",
+        "role": "composite_reference_only",
+        "rect": [
+          1133,
+          644,
+          371,
+          340
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/full_product_card_composite_reference.png",
+        "source_cell": "asset_cells/full_product_card_composite_reference.png",
+        "scale_mode": "reference_only",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "quantity_text",
+        "type": "Text",
+        "role": "dynamic_text_quantity",
+        "text": "x25",
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "discount_text",
+        "type": "Text",
+        "role": "dynamic_text_discount",
+        "text": "-30%",
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "price_text",
+        "type": "Text",
+        "role": "dynamic_text_price",
+        "text": "$1.99",
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "needs_engine_bbox_confirmation": true
+      }
+    ],
+    "rough_reconstruction": {
+      "canvas": [
+        360,
+        540
+      ],
+      "layers": [
+        {
+          "id": "product_card_base_layer",
+          "asset_id": "product_card_base",
+          "rect": [
+            38,
+            26,
+            285,
+            405
+          ],
+          "scale_mode": "stretch_for_probe"
+        },
+        {
+          "id": "reward_icon_basket_layer",
+          "asset_id": "reward_icon_basket",
+          "rect": [
+            75,
+            65,
+            210,
+            190
+          ],
+          "scale_mode": "contain_for_probe"
+        },
+        {
+          "id": "quantity_pill_bg_layer",
+          "asset_id": "quantity_pill_bg",
+          "rect": [
+            102,
+            250,
+            155,
+            58
+          ],
+          "scale_mode": "stretch_for_probe"
+        },
+        {
+          "id": "discount_badge_bg_layer",
+          "asset_id": "discount_badge_bg",
+          "rect": [
+            128,
+            306,
+            105,
+            105
+          ],
+          "scale_mode": "contain_for_probe"
+        },
+        {
+          "id": "price_tag_bg_layer",
+          "asset_id": "price_tag_bg",
+          "rect": [
+            72,
+            400,
+            215,
+            72
+          ],
+          "scale_mode": "stretch_for_probe"
+        }
+      ],
+      "text_nodes": [
+        {
+          "id": "quantity_text",
+          "text": "x25",
+          "rect": [
+            102,
+            250,
+            155,
+            58
+          ],
+          "font_size": 34,
+          "fill": "#4c3518"
+        },
+        {
+          "id": "discount_text",
+          "text": "-30%",
+          "rect": [
+            128,
+            306,
+            105,
+            105
+          ],
+          "font_size": 34,
+          "fill": "#ffffff",
+          "stroke_fill": "#8d261d",
+          "stroke_width": 1
+        },
+        {
+          "id": "price_text",
+          "text": "$1.99",
+          "rect": [
+            72,
+            400,
+            215,
+            72
+          ],
+          "font_size": 42,
+          "fill": "#5a3a11"
+        }
+      ],
+      "comparison": {
+        "source_crop": {
+          "id": "full_effect_product_card_crop_source",
+          "label": "full_effect product card crop"
+        },
+        "reconstruction_label": "rough split-layer reconstruction",
+        "composite_asset_id": "full_product_card_composite_reference",
+        "composite_label": "generated composite reference"
+      }
+    }
+  }
+}

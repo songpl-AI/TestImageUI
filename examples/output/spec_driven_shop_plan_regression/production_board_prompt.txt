@@ -1,0 +1,25 @@
+Create one production board image that contains both the full UI and its reusable asset sheet.
+Left side: full_effect at 720x1280 using the UI Spec layout.
+Right side: asset_sheet with one clean isolated cell per asset id.
+Asset-sheet contract: every asset cell must be the exact same visual variant as the matching full_effect layer, preserving silhouette, material, color, border, corner radius, lighting, and decoration ownership.
+Only remove child layers such as dynamic text, item counts, prices, icons, or numbers when the manifest says forbid_text=true.
+Do not rely on rendered text labels inside the asset sheet; the manifest maps asset ids to cells externally.
+Use transparent-looking checker or flat neutral cell backgrounds only if needed for visibility; do not bake cell backgrounds into sprites.
+Avoid: variant mismatch, relayout of repeated slots, merged assets, tiny unreadable labels, extra decorative assets not listed.
+
+Assets:
+- background_scene: same visual variant as full_effect layer(s) background_scene; base art only; scale_mode=cover; forbid_text=True
+- buy_button_bg: same visual variant as full_effect layer(s) buy_button_bg; base art only; scale_mode=nine_slice; forbid_text=True
+- close_button: same visual variant as full_effect layer(s) close_button; base art only; scale_mode=contain; forbid_text=True
+- coin_icon: same visual variant as full_effect layer(s) coin_icon; base art only; scale_mode=contain; forbid_text=True
+- currency_bar_bg: same visual variant as full_effect layer(s) currency_bar_bg; base art only; scale_mode=nine_slice; forbid_text=True
+- discount_badge_bg: same visual variant as full_effect layer(s) product_card_1_discount_badge_bg, product_card_2_discount_badge_bg, product_card_3_discount_badge_bg; base art only; scale_mode=stretch; forbid_text=True
+- hot_deal_ribbon_bg: same visual variant as full_effect layer(s) hot_deal_ribbon_bg; base art only; scale_mode=stretch; forbid_text=True
+- main_panel_bg: same visual variant as full_effect layer(s) main_panel_bg; base art only; scale_mode=nine_slice; forbid_text=True
+- price_tag_bg: same visual variant as full_effect layer(s) product_card_1_price_tag_bg, product_card_2_price_tag_bg, product_card_3_price_tag_bg; base art only; scale_mode=nine_slice; forbid_text=True
+- product_card_bg: same visual variant as full_effect layer(s) product_card_1_bg, product_card_2_bg, product_card_3_bg; base art only; scale_mode=nine_slice; forbid_text=True
+- reward_icon_1: same visual variant as full_effect layer(s) product_card_1_item_icon; base art only; scale_mode=contain; forbid_text=True
+- reward_icon_2: same visual variant as full_effect layer(s) product_card_2_item_icon; base art only; scale_mode=contain; forbid_text=True
+- reward_icon_3: same visual variant as full_effect layer(s) product_card_3_item_icon; base art only; scale_mode=contain; forbid_text=True
+- title_board: same visual variant as full_effect layer(s) title_board; base art only; scale_mode=contain; forbid_text=True
+- title_logo: same visual variant as full_effect layer(s) title_logo; base art only; scale_mode=contain; forbid_text=False

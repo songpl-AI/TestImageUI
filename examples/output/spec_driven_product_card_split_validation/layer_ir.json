@@ -1,0 +1,202 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": "production_board.png",
+  "layers": [
+    {
+      "id": "product_card_base",
+      "role": "product_card_base_clean_candidate",
+      "bbox": [
+        759,
+        28,
+        358,
+        365
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/product_card_base.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_cell": "asset_cells/product_card_base.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "product_card_base_clean_candidate"
+      }
+    },
+    {
+      "id": "reward_icon_basket",
+      "role": "reward_icon",
+      "bbox": [
+        1133,
+        28,
+        371,
+        365
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/reward_icon_basket.png",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/reward_icon_basket.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "reward_icon"
+      }
+    },
+    {
+      "id": "quantity_pill_bg",
+      "role": "quantity_pill_background",
+      "bbox": [
+        759,
+        409,
+        358,
+        219
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/quantity_pill_bg.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_cell": "asset_cells/quantity_pill_bg.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "quantity_pill_background"
+      }
+    },
+    {
+      "id": "discount_badge_bg",
+      "role": "discount_badge_background",
+      "bbox": [
+        1133,
+        409,
+        371,
+        219
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/discount_badge_bg.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/discount_badge_bg.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "discount_badge_background"
+      }
+    },
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "bbox": [
+        759,
+        644,
+        358,
+        340
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/price_tag_bg.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_cell": "asset_cells/price_tag_bg.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "price_tag_background"
+      }
+    },
+    {
+      "id": "full_product_card_composite_reference",
+      "role": "composite_reference_only",
+      "bbox": [
+        1133,
+        644,
+        371,
+        340
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/full_product_card_composite_reference.png",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/full_product_card_composite_reference.png",
+        "validation_scope": "asset_sheet_parent_child_layer_contract",
+        "needs_engine_bbox_confirmation": true,
+        "contract_role": "composite_reference_only"
+      }
+    },
+    {
+      "id": "quantity_text",
+      "role": "dynamic_text_quantity",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "asset_strategy": "text_node",
+      "transparent": false,
+      "text": "x25",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "validation_scope": "expected_text_node_only",
+        "needs_bbox_confirmation": true
+      }
+    },
+    {
+      "id": "discount_text",
+      "role": "dynamic_text_discount",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "asset_strategy": "text_node",
+      "transparent": false,
+      "text": "-30%",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "validation_scope": "expected_text_node_only",
+        "needs_bbox_confirmation": true
+      }
+    },
+    {
+      "id": "price_text",
+      "role": "dynamic_text_price",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "asset_strategy": "text_node",
+      "transparent": false,
+      "text": "$1.99",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "validation_scope": "expected_text_node_only",
+        "needs_bbox_confirmation": true
+      }
+    }
+  ]
+}

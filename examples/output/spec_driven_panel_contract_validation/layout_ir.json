@@ -1,0 +1,179 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "spec_driven_panel_split_contract",
+    "canvas": {
+      "width": 1536,
+      "height": 1024
+    },
+    "source_image": "production_board.png",
+    "nodes": [
+      {
+        "id": "panel_base",
+        "type": "SpriteCandidate",
+        "role": "panel_base_clean_candidate",
+        "rect": [
+          759,
+          28,
+          358,
+          365
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/panel_base.png",
+        "source_cell": "asset_cells/panel_base.png",
+        "scale_mode": "nine_slice",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "panel_top_title_plate",
+        "type": "SpriteCandidate",
+        "role": "panel_top_title_plate",
+        "rect": [
+          1133,
+          28,
+          371,
+          365
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/panel_top_title_plate.png",
+        "source_cell": "asset_cells/panel_top_title_plate.png",
+        "scale_mode": "contain",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "panel_corner_flowers",
+        "type": "SpriteCandidate",
+        "role": "panel_corner_flowers",
+        "rect": [
+          759,
+          409,
+          358,
+          219
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/panel_corner_flowers.png",
+        "source_cell": "asset_cells/panel_corner_flowers.png",
+        "scale_mode": "contain",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "panel_bottom_leaves",
+        "type": "SpriteCandidate",
+        "role": "panel_bottom_leaves",
+        "rect": [
+          1133,
+          409,
+          371,
+          219
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/panel_bottom_leaves.png",
+        "source_cell": "asset_cells/panel_bottom_leaves.png",
+        "scale_mode": "contain",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "panel_inner_texture",
+        "type": "SpriteCandidate",
+        "role": "panel_inner_texture_tile",
+        "rect": [
+          759,
+          644,
+          358,
+          340
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/panel_inner_texture.png",
+        "source_cell": "asset_cells/panel_inner_texture.png",
+        "scale_mode": "stretch",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "full_panel_composite_reference",
+        "type": "SpriteCandidate",
+        "role": "composite_reference_only",
+        "rect": [
+          1133,
+          644,
+          371,
+          340
+        ],
+        "anchor": "top_left",
+        "asset": "assets_png/full_panel_composite_reference.png",
+        "source_cell": "asset_cells/full_panel_composite_reference.png",
+        "scale_mode": "reference_only",
+        "needs_engine_bbox_confirmation": true
+      },
+      {
+        "id": "title_text",
+        "type": "Text",
+        "role": "dynamic_text_title",
+        "text": "SPRING SHOP",
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "needs_engine_bbox_confirmation": true
+      }
+    ],
+    "rough_reconstruction": {
+      "canvas": [
+        420,
+        520
+      ],
+      "layers": [
+        {
+          "id": "panel_base_layer",
+          "asset_id": "panel_base",
+          "rect": [
+            40,
+            115,
+            340,
+            355
+          ],
+          "scale_mode": "stretch_for_probe"
+        },
+        {
+          "id": "panel_top_title_plate_layer",
+          "asset_id": "panel_top_title_plate",
+          "rect": [
+            55,
+            45,
+            310,
+            95
+          ],
+          "scale_mode": "stretch_for_probe"
+        },
+        {
+          "id": "panel_corner_flowers_layer",
+          "asset_id": "panel_corner_flowers",
+          "rect": [
+            60,
+            40,
+            300,
+            92
+          ],
+          "scale_mode": "contain_for_probe"
+        },
+        {
+          "id": "panel_bottom_leaves_layer",
+          "asset_id": "panel_bottom_leaves",
+          "rect": [
+            42,
+            365,
+            340,
+            120
+          ],
+          "scale_mode": "contain_for_probe"
+        }
+      ],
+      "comparison": {
+        "reconstruction_label": "rough split-layer assembly",
+        "composite_asset_id": "full_panel_composite_reference",
+        "composite_label": "generated composite reference"
+      }
+    }
+  }
+}

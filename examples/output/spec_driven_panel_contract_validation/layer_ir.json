@@ -1,0 +1,168 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "source_image": "production_board.png",
+  "layers": [
+    {
+      "id": "panel_base",
+      "role": "panel_base_clean_candidate",
+      "bbox": [
+        759,
+        28,
+        358,
+        365
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/panel_base.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_cell": "asset_cells/panel_base.png",
+        "scale_mode": "nine_slice",
+        "parent_layer": "main_panel",
+        "children_excluded": [
+          "panel_top_title_plate",
+          "panel_corner_flowers",
+          "panel_bottom_leaves",
+          "title_text",
+          "cards",
+          "buttons"
+        ]
+      }
+    },
+    {
+      "id": "panel_top_title_plate",
+      "role": "panel_top_title_plate",
+      "bbox": [
+        1133,
+        28,
+        371,
+        365
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/panel_top_title_plate.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/panel_top_title_plate.png",
+        "scale_mode": "contain",
+        "parent_layer": "main_panel",
+        "children_excluded": [
+          "title_text"
+        ]
+      }
+    },
+    {
+      "id": "panel_corner_flowers",
+      "role": "panel_corner_flowers",
+      "bbox": [
+        759,
+        409,
+        358,
+        219
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/panel_corner_flowers.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/panel_corner_flowers.png",
+        "scale_mode": "contain",
+        "parent_layer": "main_panel",
+        "children_excluded": []
+      }
+    },
+    {
+      "id": "panel_bottom_leaves",
+      "role": "panel_bottom_leaves",
+      "bbox": [
+        1133,
+        409,
+        371,
+        219
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/panel_bottom_leaves.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/panel_bottom_leaves.png",
+        "scale_mode": "contain",
+        "parent_layer": "main_panel",
+        "children_excluded": []
+      }
+    },
+    {
+      "id": "panel_inner_texture",
+      "role": "panel_inner_texture_tile",
+      "bbox": [
+        759,
+        644,
+        358,
+        340
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/panel_inner_texture.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/panel_inner_texture.png",
+        "scale_mode": "stretch",
+        "parent_layer": "main_panel",
+        "children_excluded": []
+      }
+    },
+    {
+      "id": "full_panel_composite_reference",
+      "role": "composite_reference_only",
+      "bbox": [
+        1133,
+        644,
+        371,
+        340
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_png/full_panel_composite_reference.png",
+      "transparent": true,
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "source_cell": "asset_cells/full_panel_composite_reference.png",
+        "scale_mode": "reference_only",
+        "parent_layer": "main_panel",
+        "children_excluded": []
+      }
+    },
+    {
+      "id": "title_text",
+      "role": "dynamic_text_title",
+      "bbox": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "asset_strategy": "text_node",
+      "transparent": false,
+      "text": "SPRING SHOP",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {}
+    }
+  ]
+}

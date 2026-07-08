@@ -1,0 +1,124 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_layer_contract",
+  "contract_id": "spec_driven_panel_split_contract",
+  "assets": [
+    {
+      "id": "panel_base",
+      "role": "panel_base_clean_candidate",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/panel_base.png",
+      "source_cell": "asset_cells/panel_base.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [
+          "panel_top_title_plate",
+          "panel_corner_flowers",
+          "panel_bottom_leaves",
+          "title_text",
+          "cards",
+          "buttons"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "panel_top_title_plate",
+      "role": "panel_top_title_plate",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/panel_top_title_plate.png",
+      "source_cell": "asset_cells/panel_top_title_plate.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [
+          "title_text"
+        ],
+        "notes": null
+      }
+    },
+    {
+      "id": "panel_corner_flowers",
+      "role": "panel_corner_flowers",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/panel_corner_flowers.png",
+      "source_cell": "asset_cells/panel_corner_flowers.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [],
+        "notes": null
+      }
+    },
+    {
+      "id": "panel_bottom_leaves",
+      "role": "panel_bottom_leaves",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/panel_bottom_leaves.png",
+      "source_cell": "asset_cells/panel_bottom_leaves.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [],
+        "notes": null
+      }
+    },
+    {
+      "id": "panel_inner_texture",
+      "role": "panel_inner_texture_tile",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/panel_inner_texture.png",
+      "source_cell": "asset_cells/panel_inner_texture.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [],
+        "notes": null
+      }
+    },
+    {
+      "id": "full_panel_composite_reference",
+      "role": "composite_reference_only",
+      "strategy": "source_preserving_asset_cell_extract_for_validation",
+      "output": "assets_png/full_panel_composite_reference.png",
+      "source_cell": "asset_cells/full_panel_composite_reference.png",
+      "transparent": true,
+      "forbid_text": false,
+      "scale_mode": "reference_only",
+      "nine_slice_candidate": false,
+      "metadata": {
+        "parent_layer": "main_panel",
+        "children_excluded": [],
+        "notes": null
+      }
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "title_text",
+      "role": "dynamic_text_title",
+      "text": "SPRING SHOP"
+    }
+  ],
+  "known_issues": [
+    "production-board-layer-ownership-drift",
+    "asset-cell-tight-padding",
+    "closed-panel-alpha-hole-fill"
+  ]
+}

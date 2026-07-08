@@ -1,0 +1,329 @@
+{
+  "board_size": [
+    1536,
+    1024
+  ],
+  "split_x": 738,
+  "full_effect_product_card_crop_box": [
+    205,
+    322,
+    340,
+    523
+  ],
+  "asset_cells": {
+    "product_card_base": {
+      "role": "product_card_base_clean_candidate",
+      "source_bbox_in_board": [
+        759,
+        28,
+        358,
+        365
+      ],
+      "source_cell_size": [
+        358,
+        365
+      ],
+      "asset_png_size": [
+        280,
+        329
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        39,
+        23,
+        319,
+        352
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 10555,
+        "opaque_pixels_alpha_gt_96": 81565,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.1146
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0,
+        "red_ratio_hsv": 0.0,
+        "dark_text_like_ratio": 0.0,
+        "gold_ratio": 0.0783,
+        "cream_ratio": 0.9333
+      }
+    },
+    "reward_icon_basket": {
+      "role": "reward_icon",
+      "source_bbox_in_board": [
+        1133,
+        28,
+        371,
+        365
+      ],
+      "source_cell_size": [
+        371,
+        365
+      ],
+      "asset_png_size": [
+        236,
+        272
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        240.0
+      ],
+      "trim_bbox_in_source_cell": [
+        50,
+        36,
+        286,
+        308
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 20773,
+        "opaque_pixels_alpha_gt_96": 43419,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.3236
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.1293,
+        "red_ratio_hsv": 0.3194,
+        "dark_text_like_ratio": 0.0169,
+        "gold_ratio": 0.3702,
+        "cream_ratio": 0.0563
+      }
+    },
+    "quantity_pill_bg": {
+      "role": "quantity_pill_background",
+      "source_bbox_in_board": [
+        759,
+        409,
+        358,
+        219
+      ],
+      "source_cell_size": [
+        358,
+        219
+      ],
+      "asset_png_size": [
+        210,
+        98
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        240.0
+      ],
+      "trim_bbox_in_source_cell": [
+        63,
+        68,
+        273,
+        166
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 5078,
+        "opaque_pixels_alpha_gt_96": 15502,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.2467
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0,
+        "red_ratio_hsv": 0.0,
+        "dark_text_like_ratio": 0.0,
+        "gold_ratio": 0.1678,
+        "cream_ratio": 0.8258
+      }
+    },
+    "discount_badge_bg": {
+      "role": "discount_badge_background",
+      "source_bbox_in_board": [
+        1133,
+        409,
+        371,
+        219
+      ],
+      "source_cell_size": [
+        371,
+        219
+      ],
+      "asset_png_size": [
+        158,
+        166
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        240.0
+      ],
+      "trim_bbox_in_source_cell": [
+        89,
+        33,
+        247,
+        199
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 10031,
+        "opaque_pixels_alpha_gt_96": 16197,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.3825
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0,
+        "red_ratio_hsv": 0.8022,
+        "dark_text_like_ratio": 0.0006,
+        "gold_ratio": 0.0297,
+        "cream_ratio": 0.0572
+      }
+    },
+    "price_tag_bg": {
+      "role": "price_tag_background",
+      "source_bbox_in_board": [
+        759,
+        644,
+        358,
+        340
+      ],
+      "source_cell_size": [
+        358,
+        340
+      ],
+      "asset_png_size": [
+        296,
+        137
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        23,
+        81,
+        319,
+        218
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 8747,
+        "opaque_pixels_alpha_gt_96": 31805,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.2157
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0046,
+        "red_ratio_hsv": 0.0,
+        "dark_text_like_ratio": 0.0,
+        "gold_ratio": 0.9106,
+        "cream_ratio": 0.0521
+      }
+    },
+    "full_product_card_composite_reference": {
+      "role": "composite_reference_only",
+      "source_bbox_in_board": [
+        1133,
+        644,
+        371,
+        340
+      ],
+      "source_cell_size": [
+        371,
+        340
+      ],
+      "asset_png_size": [
+        193,
+        323
+      ],
+      "background_estimate_rgb": [
+        241.0,
+        241.0,
+        240.0
+      ],
+      "trim_bbox_in_source_cell": [
+        67,
+        4,
+        260,
+        327
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 8470,
+        "opaque_pixels_alpha_gt_96": 53869,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.1359
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.026,
+        "red_ratio_hsv": 0.1156,
+        "dark_text_like_ratio": 0.0029,
+        "gold_ratio": 0.2805,
+        "cream_ratio": 0.5884
+      }
+    }
+  },
+  "text_nodes_expected": {
+    "quantity_text": "x25",
+    "discount_text": "-30%",
+    "price_text": "$1.99"
+  },
+  "contract_checks": {
+    "product_card_base_has_low_red_child_signal": true,
+    "product_card_base_has_low_green_icon_signal": true,
+    "product_card_base_has_low_dark_text_signal": true,
+    "product_card_base_has_cream_surface_signal": true,
+    "reward_icon_has_red_apple_signal": true,
+    "reward_icon_has_green_leaf_signal": true,
+    "quantity_pill_bg_has_low_dark_text_signal": true,
+    "discount_badge_bg_has_red_material_signal": true,
+    "price_tag_bg_has_gold_material_signal": true,
+    "manual_visual_check": {
+      "product_card_base_excludes_reward_icon": "pass",
+      "product_card_base_excludes_quantity_text": "pass",
+      "product_card_base_excludes_discount_badge": "pass",
+      "product_card_base_excludes_price_tag": "pass",
+      "reward_icon_excludes_card_base": "pass",
+      "quantity_pill_bg_excludes_text": "pass",
+      "discount_badge_bg_excludes_text": "pass",
+      "price_tag_bg_excludes_text": "pass"
+    }
+  }
+}

@@ -183,6 +183,36 @@ python3 -m src.main \
 
 注意：同一个 output 目录不要并发执行 `prepare-regenerate` 和 `rebuild`，避免读到未写完的 PNG。
 
+### 验证 Spec-driven Layer Contract
+
+当已经有一张 `full_effect + asset_sheet` production board，并希望验证 asset sheet 是否遵守工程层归属时，可以使用：
+
+```bash
+python3 -m src.main \
+  --mode validate-contract \
+  --contract examples/input/spec_driven_product_card_contract.json \
+  --output examples/output/spec_driven_product_card_contract_validation
+```
+
+`layer_contract.json` 使用 `schemas/layer_contract.schema.json` 描述，核心字段包括：
+
+- `board_image`：production board 路径。
+- `asset_cells`：每个 asset sheet cell 的 `id`、`role`、`bbox`、`children_excluded`、`forbid_text`、`scale_mode`。
+- `text_nodes`：动态文字，例如价格、数量、折扣，不生成 PNG。
+- `validation_checks`：机器检查项，例如 `red_ratio_hsv <= 0.01`、`corner_alpha_max == 0`。
+- `manual_checks`：人工已确认的视觉归属检查。
+- `rough_reconstruction`：可选，用候选素材和 Text Node 组装一个粗重建。
+
+输出包括：
+
+- `asset_cells/`：asset sheet cell 审计 crop。
+- `assets_png/`：从 cell 提取的透明候选 sprite。
+- `assets_fit_raw/`：粗重建使用的 layout instance。
+- `bbox_overlay.png`、`sprite_overview.png`、`focused_split_comparison.png`。
+- `sprite_manifest.json`、`layer_ir.json`、`layout_ir.json`、`probe_metrics.json`、`probe_report.md`。
+
+这个模式验证的是 **layer ownership contract 和证据链路**，不是最终生产资产质量。通过后仍需要进一步确认精确 bbox、九宫格参数、字体/描边参数、软边 alpha，以及是否要改用 per-asset 透明生成或人工修图。
+
 ## Codex Skills
 
 ### Game UI Image Generator

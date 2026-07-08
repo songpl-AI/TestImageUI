@@ -1,0 +1,82 @@
+{
+  "target_bbox": [
+    600,
+    922
+  ],
+  "source_cell_size": [
+    334,
+    298
+  ],
+  "full_crop_size": [
+    706,
+    782
+  ],
+  "composite_sprite_size": [
+    319,
+    298
+  ],
+  "panel_base_candidate_size": [
+    318,
+    232
+  ],
+  "composite_foreground_bbox": [
+    8,
+    0,
+    327,
+    298
+  ],
+  "panel_base_crop_box_in_source_cell": [
+    0,
+    66,
+    334,
+    298
+  ],
+  "panel_base_candidate_foreground_bbox": [
+    8,
+    0,
+    326,
+    232
+  ],
+  "background_estimate_rgb": [
+    250,
+    247,
+    240
+  ],
+  "panel_base_background_estimate_rgb": [
+    249,
+    233,
+    204
+  ],
+  "known_layer_ownership_issue": "asset cell includes title plaque and floral/leaf decorations that are not clean main_panel_bg base art",
+  "mean_abs_delta_vs_full_scaled": {
+    "composite_contain": 80.09,
+    "composite_stretch": 56.22,
+    "panel_base_candidate_stretch": 70.93
+  },
+  "composite_alpha_validation": {
+    "mode": "RGBA",
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparent_pixels": 4944,
+    "opaque_pixels": 88534,
+    "semi_transparent_pixels": 1584,
+    "transparent_ratio": 0.052
+  },
+  "panel_base_candidate_alpha_validation": {
+    "mode": "RGBA",
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparent_pixels": 55225,
+    "opaque_pixels": 15156,
+    "semi_transparent_pixels": 3395,
+    "transparent_ratio": 0.7485
+  }
+}

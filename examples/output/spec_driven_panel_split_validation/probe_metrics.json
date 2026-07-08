@@ -1,0 +1,307 @@
+{
+  "board_size": [
+    1536,
+    1024
+  ],
+  "split_x": 738,
+  "asset_cells": {
+    "panel_base": {
+      "source_cell_size": [
+        358,
+        365
+      ],
+      "asset_png_size": [
+        312,
+        335
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        241.0,
+        242.0
+      ],
+      "trim_bbox_in_source_cell": [
+        24,
+        22,
+        336,
+        357
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 11467,
+        "opaque_pixels_alpha_gt_96": 93053,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.1097
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0004,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0,
+        "gold_ratio": 0.1637
+      },
+      "source_bbox_in_board": [
+        759,
+        28,
+        358,
+        365
+      ],
+      "role": "panel_base_clean_candidate"
+    },
+    "panel_top_title_plate": {
+      "source_cell_size": [
+        371,
+        365
+      ],
+      "asset_png_size": [
+        294,
+        152
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        40,
+        95,
+        334,
+        247
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 14487,
+        "opaque_pixels_alpha_gt_96": 30201,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.3242
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.6728,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0001,
+        "gold_ratio": 0.2417
+      },
+      "source_bbox_in_board": [
+        1133,
+        28,
+        371,
+        365
+      ],
+      "role": "panel_top_title_plate"
+    },
+    "panel_corner_flowers": {
+      "source_cell_size": [
+        358,
+        219
+      ],
+      "asset_png_size": [
+        335,
+        132
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        13,
+        35,
+        348,
+        167
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 29777,
+        "opaque_pixels_alpha_gt_96": 14443,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.6734
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.5362,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0051,
+        "gold_ratio": 0.1255
+      },
+      "source_bbox_in_board": [
+        759,
+        409,
+        358,
+        219
+      ],
+      "role": "panel_corner_flowers"
+    },
+    "panel_bottom_leaves": {
+      "source_cell_size": [
+        371,
+        219
+      ],
+      "asset_png_size": [
+        335,
+        176
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        9,
+        26,
+        344,
+        202
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 42256,
+        "opaque_pixels_alpha_gt_96": 16704,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.7167
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.7543,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0072,
+        "gold_ratio": 0.035
+      },
+      "source_bbox_in_board": [
+        1133,
+        409,
+        371,
+        219
+      ],
+      "role": "panel_bottom_leaves"
+    },
+    "panel_inner_texture": {
+      "source_cell_size": [
+        358,
+        340
+      ],
+      "asset_png_size": [
+        298,
+        304
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        242.0,
+        242.0
+      ],
+      "trim_bbox_in_source_cell": [
+        30,
+        19,
+        328,
+        323
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 9413,
+        "opaque_pixels_alpha_gt_96": 81179,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.1039
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.0,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0,
+        "gold_ratio": 0.0001
+      },
+      "source_bbox_in_board": [
+        759,
+        644,
+        358,
+        340
+      ],
+      "role": "panel_inner_texture_tile"
+    },
+    "full_panel_composite_reference": {
+      "source_cell_size": [
+        371,
+        340
+      ],
+      "asset_png_size": [
+        301,
+        326
+      ],
+      "background_estimate_rgb": [
+        242.0,
+        241.0,
+        241.0
+      ],
+      "trim_bbox_in_source_cell": [
+        31,
+        0,
+        332,
+        326
+      ],
+      "alpha_validation": {
+        "mode": "RGBA",
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transparent_pixels": 14546,
+        "opaque_pixels_alpha_gt_96": 83580,
+        "semi_transparent_pixels": 0,
+        "transparent_ratio": 0.1482
+      },
+      "color_audit_on_opaque_pixels": {
+        "green_ratio": 0.1581,
+        "red_ratio_hsv": 0.0,
+        "dark_saturated_ratio": 0.0012,
+        "gold_ratio": 0.1697
+      },
+      "source_bbox_in_board": [
+        1133,
+        644,
+        371,
+        340
+      ],
+      "role": "composite_reference_only"
+    }
+  },
+  "contract_checks": {
+    "panel_base_has_low_green_decor_signal": true,
+    "panel_base_has_low_red_ribbon_signal": true,
+    "panel_base_has_gold_border_signal": true,
+    "title_plate_has_green_material_signal": true,
+    "decor_flowers_cell_has_green_signal": true,
+    "bottom_leaves_cell_has_green_signal": true,
+    "inner_texture_has_low_green_signal": true,
+    "manual_visual_check": {
+      "panel_base_excludes_title_plate": "pass",
+      "panel_base_excludes_flowers_and_leaves": "pass",
+      "panel_top_title_plate_excludes_title_text": "pass",
+      "separate_decoration_cells_present": "pass",
+      "full_panel_composite_reference_contains_assembled_empty_panel": "pass"
+    }
+  }
+}

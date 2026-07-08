@@ -235,3 +235,36 @@
 - 修正动作：发现 variant mismatch 时，不要继续调 contain/stretch/nine_slice；先回到 prompt contract，要求重新生成正确 asset variant。只有拿到正确 base art 后，才验证 `scale_mode` 和九宫格。
 - 验证方式：对至少两个不同类型组件做局部回贴对比；如果 contain/stretch 指标接近且都很差，同时肉眼看到颜色/材质/形状不一致，应判定为 asset identity mismatch。
 - 来源：Pastoral Match-3 `currency_bar_probe` 中，`top_currency_bar_bg + heart_icon + plus_button + Text Node("5")` 的 contain delta 为 66.34，stretch delta 为 67.39；问题是浅色 asset-sheet bar 与深棕 full-effect bar 不同款，缩放策略无法修复。
+
+### KI-20260707-production-board-layer-ownership-drift
+
+- 状态：active
+- 触发条件：用单张 production board 同时生成 `full_effect` 与 `asset_sheet`，并要求 asset cell 是某个 layer 的干净 base art。
+- 问题表现：整体风格和同款性比逐个独立生成更好，但 asset cell 可能把其它层的装饰、标题牌、花叶、阴影或外框一起烘焙进来；full_effect 中的动态数字、价格、折扣也可能不按 spec 精确生成。
+- 根因：图像模型把 production board 当作视觉设计板，而不是严格执行的图层导出器；它会按美术完整性重组装饰归属，并弱化 JSON/bbox/text 的工程约束。
+- 预防规则：production board 只能作为 style/material/variant 同步验证，不可直接视为最终 Layer IR 或透明 sprite 来源。每个 asset id 必须继续声明 decoration ownership、forbid_text、scale_mode、Text Node 边界，并用局部对比确认是否干净。
+- 修正动作：从 board 中切出的 cell 只能作为审计材料或 reference crop；进入工程前必须再做透明提取/单图重生成/人工修图，并通过 `sprite_overview` 与 reconstruction 验证。
+- 验证方式：输出 full-effect crop vs asset-sheet cell 对比；检查 base asset 是否包含不该属于该层的 title board、花叶、child icon、数字、价格或阴影。
+- 来源：`spec_driven_realgen_validation` 中，`main_panel_bg` asset cell 与 full UI 同风格，但把 title plaque 和花叶装饰烘焙进了面板底图；full UI 的 `currency_amount` 也从 spec 的 `3200` 漂移成 `1,250`。
+
+### KI-20260707-asset-cell-tight-padding
+
+- 状态：active
+- 触发条件：从 production board / asset sheet 中裁出单个 cell，并将其转换为透明源 sprite。
+- 问题表现：PNG 已经是 RGBA，文字也去掉了，但主体或装饰贴到 cell 边界，导致某些角落 alpha 不是 0，或者自然 sprite 缺少可安全缩放/居中的 padding。
+- 根因：图像模型生成 asset sheet 时不会为每个 cell 预留工程化透明边距；装饰叶片、花朵、阴影或边框可能触碰 crop 边缘。
+- 预防规则：不要只用 “RGBA + 去文字” 判定 sprite 合格；还要检查四角 alpha、主体 bbox 与 crop 边缘距离、sprite_overview 中是否有足够透明 padding。
+- 修正动作：优先重新生成带明确 padding 的 asset cell；次选手工扩展透明画布并在 fit 阶段先 trim subject bbox；如果装饰归属不明确，拆成 background + decoration layer。
+- 验证方式：记录 `corner_alpha`、transparent ratio、foreground bbox；`assets_fit_raw` 必须来自 IR bbox，而不是直接拉伸贴边自然图。
+- 来源：`spec_driven_currency_bar_probe` 中，`currency_bar_bg` 已去掉中性背景并可回贴，但左下角 alpha 仍为 255，因为叶片装饰贴到了 cell 边缘。
+
+### KI-20260707-closed-panel-alpha-hole-fill
+
+- 状态：active
+- 触发条件：从浅色中性 backing 的 asset cell 中提取浅色封闭面板、卡片底、牌匾或 parchment 背景。
+- 问题表现：只按背景色差生成 alpha 时，金边/描边被保留，但面板内部因为颜色接近 backing 被误做成半透明或透明，sprite_overview 中能看到棋盘格穿透面板内部。
+- 根因：颜色差分只能识别高对比边缘和纹理，不能理解“封闭边框内部也属于同一 UI 底图”。
+- 预防规则：对封闭 UI 背景类素材，alpha mask 不能只靠色差；应先用高置信边缘/材质得到 subject seed，再从 crop 边界做 background flood fill，并把非边界连通的内部孔洞填为前景。
+- 修正动作：用 hole-fill 后的 mask 重新输出 RGBA，并重新检查四角 alpha、内部不透棋盘格、`sprite_overview.png` 和 focused comparison。
+- 验证方式：面板内部应为不透明材质；四角 alpha 应为 0；`transparent_ratio` 不应来自面板内部大面积漏空。
+- 来源：`spec_driven_panel_split_validation` 中，第一版 `panel_base` 提取把浅色面板内部做成半透明；改用 border flood fill + hole fill 后四角 alpha 为 `[0,0,0,0]` 且内部不再透出棋盘格。

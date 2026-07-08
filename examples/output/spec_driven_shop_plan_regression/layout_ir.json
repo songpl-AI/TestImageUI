@@ -1,0 +1,450 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "spec_driven_shop_bundle_full_effect",
+    "canvas": {
+      "width": 720,
+      "height": 1280
+    },
+    "nodes": [
+      {
+        "id": "background_scene",
+        "type": "Image",
+        "role": "background_scene",
+        "rect": [
+          0,
+          0,
+          720,
+          1280
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/background_scene.png"
+      },
+      {
+        "id": "main_panel_bg",
+        "type": "Panel",
+        "role": "panel_background",
+        "rect": [
+          60,
+          186,
+          600,
+          922
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/main_panel_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "title_board",
+        "type": "Image",
+        "role": "title_board",
+        "rect": [
+          180,
+          109,
+          360,
+          154
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/title_board.png"
+      },
+      {
+        "id": "title_logo",
+        "type": "Image",
+        "role": "fixed_art_text",
+        "rect": [
+          198,
+          147,
+          324,
+          77
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/title_logo.png"
+      },
+      {
+        "id": "currency_bar_bg",
+        "type": "Image",
+        "role": "currency_bar_background",
+        "rect": [
+          446,
+          70,
+          202,
+          70
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/currency_bar_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "coin_icon",
+        "type": "Image",
+        "role": "currency_icon",
+        "rect": [
+          457,
+          78,
+          32,
+          32
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/coin_icon.png"
+      },
+      {
+        "id": "currency_amount_text",
+        "type": "Text",
+        "role": "dynamic_text_currency_amount",
+        "rect": [
+          497,
+          78,
+          108,
+          51
+        ],
+        "anchor": "top_left",
+        "text": "3200"
+      },
+      {
+        "id": "close_button",
+        "type": "Button",
+        "role": "close_button",
+        "rect": [
+          605,
+          166,
+          58,
+          58
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/close_button.png"
+      },
+      {
+        "id": "hot_deal_ribbon_bg",
+        "type": "Image",
+        "role": "subtitle_ribbon_background",
+        "rect": [
+          204,
+          347,
+          312,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/hot_deal_ribbon_bg.png"
+      },
+      {
+        "id": "hot_deal_text",
+        "type": "Text",
+        "role": "dynamic_text_subtitle",
+        "rect": [
+          252,
+          361,
+          216,
+          37
+        ],
+        "anchor": "top_left",
+        "text": "HOT DEAL"
+      },
+      {
+        "id": "product_card_1_bg",
+        "type": "Image",
+        "role": "product_card_background",
+        "rect": [
+          108,
+          444,
+          153,
+          433
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_1_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_1_item_icon",
+        "type": "Image",
+        "role": "reward_item_icon",
+        "rect": [
+          139,
+          505,
+          92,
+          92
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_1_item_icon.png"
+      },
+      {
+        "id": "product_card_1_discount_badge_bg",
+        "type": "Image",
+        "role": "discount_badge_background",
+        "rect": [
+          184,
+          429,
+          73,
+          56
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_1_discount_badge_bg.png"
+      },
+      {
+        "id": "product_card_1_discount_text",
+        "type": "Text",
+        "role": "dynamic_text_discount",
+        "rect": [
+          191,
+          438,
+          58,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "20%"
+      },
+      {
+        "id": "product_card_1_count_text",
+        "type": "Text",
+        "role": "dynamic_text_item_count",
+        "rect": [
+          151,
+          673,
+          67,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "x50"
+      },
+      {
+        "id": "product_card_1_price_tag_bg",
+        "type": "Image",
+        "role": "price_tag_background",
+        "rect": [
+          132,
+          756,
+          104,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_1_price_tag_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_1_price_text",
+        "type": "Text",
+        "role": "dynamic_text_price",
+        "rect": [
+          149,
+          767,
+          70,
+          39
+        ],
+        "anchor": "top_left",
+        "text": "$3"
+      },
+      {
+        "id": "product_card_2_bg",
+        "type": "Image",
+        "role": "product_card_background",
+        "rect": [
+          285,
+          444,
+          153,
+          433
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_2_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_2_item_icon",
+        "type": "Image",
+        "role": "reward_item_icon",
+        "rect": [
+          316,
+          505,
+          92,
+          92
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_2_item_icon.png"
+      },
+      {
+        "id": "product_card_2_discount_badge_bg",
+        "type": "Image",
+        "role": "discount_badge_background",
+        "rect": [
+          361,
+          429,
+          73,
+          56
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_2_discount_badge_bg.png"
+      },
+      {
+        "id": "product_card_2_discount_text",
+        "type": "Text",
+        "role": "dynamic_text_discount",
+        "rect": [
+          368,
+          438,
+          58,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "40%"
+      },
+      {
+        "id": "product_card_2_count_text",
+        "type": "Text",
+        "role": "dynamic_text_item_count",
+        "rect": [
+          328,
+          673,
+          67,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "x3"
+      },
+      {
+        "id": "product_card_2_price_tag_bg",
+        "type": "Image",
+        "role": "price_tag_background",
+        "rect": [
+          309,
+          756,
+          104,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_2_price_tag_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_2_price_text",
+        "type": "Text",
+        "role": "dynamic_text_price",
+        "rect": [
+          326,
+          767,
+          70,
+          39
+        ],
+        "anchor": "top_left",
+        "text": "$6"
+      },
+      {
+        "id": "product_card_3_bg",
+        "type": "Image",
+        "role": "product_card_background",
+        "rect": [
+          462,
+          444,
+          153,
+          433
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_3_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_3_item_icon",
+        "type": "Image",
+        "role": "reward_item_icon",
+        "rect": [
+          493,
+          505,
+          92,
+          92
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_3_item_icon.png"
+      },
+      {
+        "id": "product_card_3_discount_badge_bg",
+        "type": "Image",
+        "role": "discount_badge_background",
+        "rect": [
+          538,
+          429,
+          73,
+          56
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_3_discount_badge_bg.png"
+      },
+      {
+        "id": "product_card_3_discount_text",
+        "type": "Text",
+        "role": "dynamic_text_discount",
+        "rect": [
+          545,
+          438,
+          58,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "60%"
+      },
+      {
+        "id": "product_card_3_count_text",
+        "type": "Text",
+        "role": "dynamic_text_item_count",
+        "rect": [
+          505,
+          673,
+          67,
+          35
+        ],
+        "anchor": "top_left",
+        "text": "x1"
+      },
+      {
+        "id": "product_card_3_price_tag_bg",
+        "type": "Image",
+        "role": "price_tag_background",
+        "rect": [
+          486,
+          756,
+          104,
+          65
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/product_card_3_price_tag_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "product_card_3_price_text",
+        "type": "Text",
+        "role": "dynamic_text_price",
+        "rect": [
+          503,
+          767,
+          70,
+          39
+        ],
+        "anchor": "top_left",
+        "text": "$9"
+      },
+      {
+        "id": "buy_button_bg",
+        "type": "Button",
+        "role": "button_background",
+        "rect": [
+          223,
+          933,
+          274,
+          109
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/buy_button_bg.png",
+        "nine_slice_candidate": true
+      },
+      {
+        "id": "buy_button_text",
+        "type": "Text",
+        "role": "dynamic_text_button_label",
+        "rect": [
+          281,
+          951,
+          158,
+          58
+        ],
+        "anchor": "top_left",
+        "text": "BUY"
+      }
+    ]
+  }
+}

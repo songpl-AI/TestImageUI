@@ -1,0 +1,31 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_price_tag_probe",
+  "assets": [
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "strategy": "source_preserving_asset_cell_extract",
+      "output": "assets_png/price_tag_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "contain",
+        "stretch"
+      ],
+      "recommended_scale_mode": "stretch"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "product_card_1_price_text",
+      "text": "$3",
+      "bbox_relative_to_price_tag": [
+        17,
+        11,
+        70,
+        39
+      ]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import argparse
 import shutil
 from pathlib import Path
 
+from src.spec.layer_contract import export_layer_contract_validation
 from src.spec.planner import export_spec_plan
 
 
@@ -12,11 +13,21 @@ def main() -> int:
     parser.add_argument("--input", type=Path, help="source UI effect image")
     parser.add_argument("--layer-ir", type=Path, help="Layer IR JSON")
     parser.add_argument("--brief", type=Path, help="natural-language generation brief JSON")
+    parser.add_argument("--contract", type=Path, help="spec-driven layer contract JSON")
     parser.add_argument("--output", required=True, type=Path, help="output directory")
     parser.add_argument(
         "--mode",
         default="full",
-        choices=["plan-spec", "validate", "direct", "regenerate", "prepare-regenerate", "rebuild", "full"],
+        choices=[
+            "plan-spec",
+            "validate-contract",
+            "validate",
+            "direct",
+            "regenerate",
+            "prepare-regenerate",
+            "rebuild",
+            "full",
+        ],
         help="pipeline mode",
     )
     args = parser.parse_args()
@@ -45,10 +56,33 @@ def main() -> int:
                 print(f"- {warning}")
         return 0
 
+    if args.mode == "validate-contract":
+        if not args.contract:
+            parser.error("--contract is required when --mode validate-contract")
+        result = export_layer_contract_validation(args.contract, args.output)
+        print(f"Wrote {result.copied_board_path}")
+        print(f"Wrote {result.layer_ir_path}")
+        print(f"Wrote {result.layout_ir_path}")
+        print(f"Wrote {result.sprite_manifest_path}")
+        print(f"Wrote {result.probe_metrics_path}")
+        print(f"Wrote {result.probe_report_path}")
+        print(f"Assets: {result.asset_count}")
+        if result.validation_errors:
+            print("Layer contract IR validation failed:")
+            for error in result.validation_errors:
+                print(f"- {error}")
+            return 1
+        if result.failed_checks:
+            print("Layer contract checks failed:")
+            for check in result.failed_checks:
+                print(f"- {check}")
+            return 1
+        return 0
+
     if not args.input:
-        parser.error("--input is required unless --mode plan-spec")
+        parser.error("--input is required unless --mode plan-spec or --mode validate-contract")
     if not args.layer_ir:
-        parser.error("--layer-ir is required unless --mode plan-spec")
+        parser.error("--layer-ir is required unless --mode plan-spec or --mode validate-contract")
 
     from PIL import Image
 

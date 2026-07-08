@@ -1,0 +1,44 @@
+{
+  "version": "0.1",
+  "screen": {
+    "name": "spec_driven_main_panel_probe",
+    "canvas": {
+      "width": 600,
+      "height": 922
+    },
+    "nodes": [
+      {
+        "id": "main_panel_bg_composite",
+        "type": "Panel",
+        "role": "panel_background_composite",
+        "rect": [
+          0,
+          0,
+          600,
+          922
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/main_panel_bg_composite_stretch.png",
+        "source_asset": "assets_png/main_panel_bg_composite.png",
+        "scale_mode": "stretch",
+        "verdict": "fail_as_clean_panel_base"
+      },
+      {
+        "id": "panel_base_candidate",
+        "type": "Panel",
+        "role": "panel_background_base_candidate",
+        "rect": [
+          0,
+          0,
+          600,
+          922
+        ],
+        "anchor": "top_left",
+        "asset": "assets_fit_raw/panel_base_candidate_stretch.png",
+        "source_asset": "assets_png/panel_base_candidate.png",
+        "scale_mode": "stretch",
+        "verdict": "diagnostic_only"
+      }
+    ]
+  }
+}

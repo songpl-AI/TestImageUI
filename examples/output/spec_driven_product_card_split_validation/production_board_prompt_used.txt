@@ -1,0 +1,34 @@
+Use case: ui-mockup
+Asset type: production board for a game UI split pipeline
+Primary request: Create one wide production board image that tests whether a shop product card can be generated as a full UI module plus reusable parent/child asset sheet from the same layer contract.
+
+Canvas/composition: wide landscape production board, 1536x1024. Left 55% is a complete vertical mobile shop UI full_effect, portrait mobile ratio inside the board. The full UI should include a large featured product card that is easy to inspect. Right 45% is a clean asset_sheet with 6 large isolated cells in a neat 2-column by 3-row grid. Keep all asset cells large, centered, separated by visible whitespace, and easy to audit.
+
+Theme: pastoral spring shop for a casual match-3 mobile game, soft garden mood, fruit, flowers, warm sunlight.
+Style: polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, mint green, cream parchment card surfaces, berry red discount badge, bright fruit reward icon, consistent painterly highlights.
+
+Full UI components on the left: centered rounded cream shop panel with gold trim, title text "SPRING SHOP", red "HOT DEAL" ribbon, one large featured product card showing a wooden basket of red apples, quantity text "x25", red discount badge with text "-30%", gold price tag with text "$1.99", top currency counter, close button, and one green primary buy button with text "BUY". The product card should visibly contain its child layers so the split can be audited.
+
+Layer contract for the featured product card:
+- product_card_base: only the cream rounded product card body with gold trim, inner surface, and subtle corner ornament. It must NOT include reward icon, apples, basket, quantity text, quantity pill, discount badge, price tag, price text, shadows from child layers, or any child elements.
+- reward_icon_basket: only the wooden basket with red apples reward art. No card body, no quantity text, no badge, no price tag.
+- quantity_pill_bg: only the small neutral/gold pill or label backing used behind the quantity value. It must NOT include "x25" or any digits/letters.
+- discount_badge_bg: only the red scalloped discount badge background. It must NOT include "-30%" or any digits/letters.
+- price_tag_bg: only the gold rounded price tag background. It must NOT include "$1.99" or any digits/letters.
+- full_product_card_composite_reference: one small visual reference showing the assembled product card module with base + reward icon + quantity pill + discount badge + price tag, but with no text inside the child backgrounds.
+
+Asset sheet on the right: each cell must contain exactly one layer from the layer contract above, using the same visual variant as the left full UI. The asset_sheet is not a generic style sheet. Each cell is a layer-equivalent asset for the full_effect. Remove child layers, sibling decorations, text, numbers, product icons when they are not the requested cell, neighboring UI, and background. Use a flat light neutral backing behind cells only so shapes can be seen; do not bake that backing into the asset itself.
+
+Asset sheet cell list, in order:
+1. product_card_base only
+2. reward_icon_basket only
+3. quantity_pill_bg only
+4. discount_badge_bg only
+5. price_tag_bg only
+6. full_product_card_composite_reference only
+
+Text nodes in the full UI only: "x25", "-30%", "$1.99", "BUY", "SPRING SHOP", "HOT DEAL". Asset cells must not contain any of those text strings.
+
+Engineering constraints: UI elements must be visually separable for later standalone sprite generation. The `product_card_base` cell must be clean parent base art, with all child layers excluded. Dynamic text belongs only in the full UI mockup and should remain simple and readable. Asset cells must not include dynamic text, numbers, prices, child icons, neighboring UI, or full-effect background.
+
+Avoid: device frame, watermark, brand logos, garbled text, excessive tiny labels, strong perspective, merged UI parts, asset sheet cells that are different variants from the full UI, asset cells that contain title text or child elements, a `product_card_base` cell that includes apples, quantity, discount badge, or price tag.

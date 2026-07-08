@@ -1,0 +1,58 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 274,
+    "height": 109
+  },
+  "source_image": "diagnostics/full_effect_buy_button_scaled_to_bbox.png",
+  "layers": [
+    {
+      "id": "buy_button_bg",
+      "role": "button_background",
+      "bbox": [
+        0,
+        0,
+        274,
+        109
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_fit_raw/buy_button_bg_stretch.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_asset_png": "assets_png/buy_button_bg.png",
+        "scale_mode_candidates": [
+          "contain",
+          "stretch"
+        ],
+        "recommended_scale_mode": "stretch",
+        "source": "production_board asset cell extraction"
+      }
+    },
+    {
+      "id": "buy_button_text",
+      "role": "dynamic_text_button_label",
+      "bbox": [
+        58,
+        18,
+        158,
+        58
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "BUY",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false,
+      "metadata": {
+        "font_hint": {
+          "size": 44,
+          "bold": true,
+          "stroke": true
+        }
+      }
+    }
+  ]
+}

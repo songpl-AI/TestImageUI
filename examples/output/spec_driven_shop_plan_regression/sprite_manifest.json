@@ -1,0 +1,448 @@
+{
+  "version": "0.1",
+  "screen_name": "spec_driven_shop_bundle",
+  "source": "spec_driven_generation",
+  "assets": [
+    {
+      "id": "background_scene",
+      "role": "background_scene",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/background_scene.png",
+      "transparent": false,
+      "forbid_text": true,
+      "scale_mode": "cover",
+      "nine_slice_candidate": false,
+      "prompt_subject": "low contrast spring garden background behind a mobile game shop UI",
+      "layers": [
+        {
+          "layer_id": "background_scene",
+          "bbox": [
+            0,
+            0,
+            720,
+            1280
+          ],
+          "fit_output": "assets_fit_raw/background_scene.png",
+          "z": 0
+        }
+      ],
+      "prompt": "asset_prompts/background_scene.txt"
+    },
+    {
+      "id": "buy_button_bg",
+      "role": "button_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/buy_button_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "prompt_subject": "large green primary buy button background with gold trim, no text",
+      "layers": [
+        {
+          "layer_id": "buy_button_bg",
+          "bbox": [
+            223,
+            933,
+            274,
+            109
+          ],
+          "fit_output": "assets_fit_raw/buy_button_bg.png",
+          "z": 90
+        }
+      ],
+      "prompt": "asset_prompts/buy_button_bg.txt"
+    },
+    {
+      "id": "close_button",
+      "role": "close_button",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/close_button.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "round close button with gold rim and red center, no background",
+      "layers": [
+        {
+          "layer_id": "close_button",
+          "bbox": [
+            605,
+            166,
+            58,
+            58
+          ],
+          "fit_output": "assets_fit_raw/close_button.png",
+          "z": 30
+        }
+      ],
+      "prompt": "asset_prompts/close_button.txt"
+    },
+    {
+      "id": "coin_icon",
+      "role": "currency_icon",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/coin_icon.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "small gold coin icon with clean transparent edge",
+      "layers": [
+        {
+          "layer_id": "coin_icon",
+          "bbox": [
+            457,
+            78,
+            32,
+            32
+          ],
+          "fit_output": "assets_fit_raw/coin_icon.png",
+          "z": 26
+        }
+      ],
+      "prompt": "asset_prompts/coin_icon.txt"
+    },
+    {
+      "id": "currency_bar_bg",
+      "role": "currency_bar_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/currency_bar_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "prompt_subject": "compact capsule currency bar background, no icon, no number",
+      "layers": [
+        {
+          "layer_id": "currency_bar_bg",
+          "bbox": [
+            446,
+            70,
+            202,
+            70
+          ],
+          "fit_output": "assets_fit_raw/currency_bar_bg.png",
+          "z": 25
+        }
+      ],
+      "prompt": "asset_prompts/currency_bar_bg.txt"
+    },
+    {
+      "id": "discount_badge_bg",
+      "role": "discount_badge_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/discount_badge_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch",
+      "nine_slice_candidate": false,
+      "prompt_subject": "small red discount ribbon badge background, no text",
+      "layers": [
+        {
+          "layer_id": "product_card_1_discount_badge_bg",
+          "bbox": [
+            184,
+            429,
+            73,
+            56
+          ],
+          "fit_output": "assets_fit_raw/product_card_1_discount_badge_bg.png",
+          "z": 52
+        },
+        {
+          "layer_id": "product_card_2_discount_badge_bg",
+          "bbox": [
+            361,
+            429,
+            73,
+            56
+          ],
+          "fit_output": "assets_fit_raw/product_card_2_discount_badge_bg.png",
+          "z": 62
+        },
+        {
+          "layer_id": "product_card_3_discount_badge_bg",
+          "bbox": [
+            538,
+            429,
+            73,
+            56
+          ],
+          "fit_output": "assets_fit_raw/product_card_3_discount_badge_bg.png",
+          "z": 72
+        }
+      ],
+      "prompt": "asset_prompts/discount_badge_bg.txt"
+    },
+    {
+      "id": "hot_deal_ribbon_bg",
+      "role": "subtitle_ribbon_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/hot_deal_ribbon_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch",
+      "nine_slice_candidate": false,
+      "prompt_subject": "wide red and gold subtitle ribbon background, no text",
+      "layers": [
+        {
+          "layer_id": "hot_deal_ribbon_bg",
+          "bbox": [
+            204,
+            347,
+            312,
+            65
+          ],
+          "fit_output": "assets_fit_raw/hot_deal_ribbon_bg.png",
+          "z": 35
+        }
+      ],
+      "prompt": "asset_prompts/hot_deal_ribbon_bg.txt"
+    },
+    {
+      "id": "main_panel_bg",
+      "role": "panel_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/main_panel_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "prompt_subject": "large rounded shop panel background with gold trim, no text, no icons",
+      "layers": [
+        {
+          "layer_id": "main_panel_bg",
+          "bbox": [
+            60,
+            186,
+            600,
+            922
+          ],
+          "fit_output": "assets_fit_raw/main_panel_bg.png",
+          "z": 10
+        }
+      ],
+      "prompt": "asset_prompts/main_panel_bg.txt"
+    },
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/price_tag_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "prompt_subject": "small rounded price tag background, no text",
+      "layers": [
+        {
+          "layer_id": "product_card_1_price_tag_bg",
+          "bbox": [
+            132,
+            756,
+            104,
+            65
+          ],
+          "fit_output": "assets_fit_raw/product_card_1_price_tag_bg.png",
+          "z": 55
+        },
+        {
+          "layer_id": "product_card_2_price_tag_bg",
+          "bbox": [
+            309,
+            756,
+            104,
+            65
+          ],
+          "fit_output": "assets_fit_raw/product_card_2_price_tag_bg.png",
+          "z": 65
+        },
+        {
+          "layer_id": "product_card_3_price_tag_bg",
+          "bbox": [
+            486,
+            756,
+            104,
+            65
+          ],
+          "fit_output": "assets_fit_raw/product_card_3_price_tag_bg.png",
+          "z": 75
+        }
+      ],
+      "prompt": "asset_prompts/price_tag_bg.txt"
+    },
+    {
+      "id": "product_card_bg",
+      "role": "product_card_background",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/product_card_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "prompt_subject": "reusable product card background with rounded cream center and green-gold frame, no text, no icon",
+      "layers": [
+        {
+          "layer_id": "product_card_1_bg",
+          "bbox": [
+            108,
+            444,
+            153,
+            433
+          ],
+          "fit_output": "assets_fit_raw/product_card_1_bg.png",
+          "z": 50
+        },
+        {
+          "layer_id": "product_card_2_bg",
+          "bbox": [
+            285,
+            444,
+            153,
+            433
+          ],
+          "fit_output": "assets_fit_raw/product_card_2_bg.png",
+          "z": 60
+        },
+        {
+          "layer_id": "product_card_3_bg",
+          "bbox": [
+            462,
+            444,
+            153,
+            433
+          ],
+          "fit_output": "assets_fit_raw/product_card_3_bg.png",
+          "z": 70
+        }
+      ],
+      "prompt": "asset_prompts/product_card_bg.txt"
+    },
+    {
+      "id": "reward_icon_1",
+      "role": "reward_item_icon",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/reward_icon_1.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "standalone shop reward icon variant 1, matching spring match-3 UI style",
+      "layers": [
+        {
+          "layer_id": "product_card_1_item_icon",
+          "bbox": [
+            139,
+            505,
+            92,
+            92
+          ],
+          "fit_output": "assets_fit_raw/product_card_1_item_icon.png",
+          "z": 51
+        }
+      ],
+      "prompt": "asset_prompts/reward_icon_1.txt"
+    },
+    {
+      "id": "reward_icon_2",
+      "role": "reward_item_icon",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/reward_icon_2.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "standalone shop reward icon variant 2, matching spring match-3 UI style",
+      "layers": [
+        {
+          "layer_id": "product_card_2_item_icon",
+          "bbox": [
+            316,
+            505,
+            92,
+            92
+          ],
+          "fit_output": "assets_fit_raw/product_card_2_item_icon.png",
+          "z": 61
+        }
+      ],
+      "prompt": "asset_prompts/reward_icon_2.txt"
+    },
+    {
+      "id": "reward_icon_3",
+      "role": "reward_item_icon",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/reward_icon_3.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "standalone shop reward icon variant 3, matching spring match-3 UI style",
+      "layers": [
+        {
+          "layer_id": "product_card_3_item_icon",
+          "bbox": [
+            493,
+            505,
+            92,
+            92
+          ],
+          "fit_output": "assets_fit_raw/product_card_3_item_icon.png",
+          "z": 71
+        }
+      ],
+      "prompt": "asset_prompts/reward_icon_3.txt"
+    },
+    {
+      "id": "title_board",
+      "role": "title_board",
+      "strategy": "standalone_sprite",
+      "output": "assets_png/title_board.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "ornate green and gold title plate without text",
+      "layers": [
+        {
+          "layer_id": "title_board",
+          "bbox": [
+            180,
+            109,
+            360,
+            154
+          ],
+          "fit_output": "assets_fit_raw/title_board.png",
+          "z": 20
+        }
+      ],
+      "prompt": "asset_prompts/title_board.txt"
+    },
+    {
+      "id": "title_logo",
+      "role": "fixed_art_text",
+      "strategy": "fixed_art_text",
+      "output": "assets_png/title_logo.png",
+      "transparent": true,
+      "forbid_text": false,
+      "scale_mode": "contain",
+      "nine_slice_candidate": false,
+      "prompt_subject": "fixed art title text \"SPRING SHOP\" in polished game UI lettering",
+      "layers": [
+        {
+          "layer_id": "title_logo",
+          "bbox": [
+            198,
+            147,
+            324,
+            77
+          ],
+          "fit_output": "assets_fit_raw/title_logo.png",
+          "z": 21
+        }
+      ],
+      "prompt": "asset_prompts/title_logo.txt"
+    }
+  ]
+}

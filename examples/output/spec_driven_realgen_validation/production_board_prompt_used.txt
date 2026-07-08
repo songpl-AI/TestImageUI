@@ -1,0 +1,10 @@
+Use case: ui-mockup
+Asset type: production board for a game UI split pipeline
+Primary request: Create one wide production board image that tests whether a full UI mockup and its reusable asset sheet can be generated from the same spec.
+Canvas/composition: wide board. Left 55% is a complete vertical mobile shop UI full_effect, portrait 720x1280 ratio. Right 45% is a clean asset_sheet with 8 large isolated cells in a neat 2-column by 4-row grid. Keep all asset cells large and readable.
+Theme: pastoral spring shop for a casual match-3 mobile game, soft garden mood, leaves, fruit, flowers, warm sunlight.
+Style: polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, mint green, cream, berry red, soft sky blue, consistent painterly highlights.
+Full UI components on the left: centered rounded shop panel, ornate title plate, title text "SPRING SHOP", red "HOT DEAL" ribbon, three product cards, reward icons, red discount badges, price tags, top currency counter, close button, one green primary buy button with text "BUY".
+Asset sheet on the right: each cell contains only the clean base art for the matching full UI element, same visual variant as used on the left, preserving silhouette, material, color, border, corner radius, lighting, and decoration ownership. Include these 8 asset cells: main panel background without children; product card background without icon/text; green buy button background without text; currency bar background without coin/number; red discount badge background without text; price tag background without price; gold coin icon only; close button only.
+Engineering constraints: UI elements must be visually separable for later standalone sprite generation. Asset cells must not include dynamic text, numbers, prices, child icons, neighboring UI, or full-effect background. Dynamic text belongs only in the full UI mockup and should remain simple and readable.
+Avoid: device frame, watermark, brand logos, garbled text, excessive tiny labels, strong perspective, merged UI parts, asset sheet cells that are different variants from the full UI, asset cells that contain text or child elements.

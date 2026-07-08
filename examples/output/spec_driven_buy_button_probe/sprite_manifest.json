@@ -1,0 +1,53 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_buy_button_probe",
+  "assets": [
+    {
+      "id": "buy_button_bg",
+      "role": "button_background",
+      "strategy": "source_preserving_asset_cell_extract",
+      "output": "assets_png/buy_button_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "contain",
+        "stretch"
+      ],
+      "recommended_scale_mode": "stretch",
+      "layers": [
+        {
+          "layer_id": "buy_button_bg_contain",
+          "bbox": [
+            0,
+            0,
+            274,
+            109
+          ],
+          "fit_output": "assets_fit_raw/buy_button_bg_contain.png"
+        },
+        {
+          "layer_id": "buy_button_bg_stretch",
+          "bbox": [
+            0,
+            0,
+            274,
+            109
+          ],
+          "fit_output": "assets_fit_raw/buy_button_bg_stretch.png"
+        }
+      ]
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "buy_button_text",
+      "text": "BUY",
+      "bbox_relative_to_button": [
+        58,
+        18,
+        158,
+        58
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "version": "0.1",
+  "canvas": {
+    "width": 104,
+    "height": 65
+  },
+  "source_image": "diagnostics/full_effect_price_tag_scaled_to_bbox.png",
+  "layers": [
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "bbox": [
+        0,
+        0,
+        104,
+        65
+      ],
+      "asset_strategy": "segmentation_extract",
+      "output": "assets_fit_raw/price_tag_bg_stretch.png",
+      "transparent": true,
+      "remove_text": true,
+      "remove_occluding_children": true,
+      "nine_slice_candidate": true,
+      "metadata": {
+        "source_asset_png": "assets_png/price_tag_bg.png",
+        "scale_mode_candidates": [
+          "contain",
+          "stretch"
+        ],
+        "recommended_scale_mode": "stretch"
+      }
+    },
+    {
+      "id": "product_card_1_price_text",
+      "role": "dynamic_text_price",
+      "bbox": [
+        17,
+        11,
+        70,
+        39
+      ],
+      "asset_strategy": "text_node",
+      "transparent": true,
+      "text": "$3",
+      "remove_text": false,
+      "remove_occluding_children": false,
+      "nine_slice_candidate": false
+    }
+  ]
+}

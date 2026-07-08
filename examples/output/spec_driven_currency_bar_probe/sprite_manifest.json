@@ -1,0 +1,43 @@
+{
+  "version": "0.1",
+  "source": "spec_driven_currency_bar_probe",
+  "assets": [
+    {
+      "id": "currency_bar_bg",
+      "role": "currency_bar_background",
+      "strategy": "source_preserving_asset_cell_extract",
+      "output": "assets_png/currency_bar_bg.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "contain",
+        "stretch"
+      ],
+      "recommended_scale_mode": "stretch"
+    },
+    {
+      "id": "coin_icon",
+      "role": "currency_icon",
+      "strategy": "source_preserving_asset_cell_extract",
+      "output": "assets_png/coin_icon.png",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode_candidates": [
+        "contain"
+      ],
+      "recommended_scale_mode": "contain"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "currency_amount_text",
+      "text": "3200",
+      "bbox_relative_to_bar": [
+        51,
+        8,
+        108,
+        51
+      ]
+    }
+  ]
+}

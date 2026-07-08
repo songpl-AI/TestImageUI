@@ -1,0 +1,254 @@
+{
+  "version": "0.1",
+  "contract_id": "spec_driven_product_card_split_contract",
+  "primary_asset_id": "product_card_base",
+  "board_image": "../output/spec_driven_product_card_split_validation/production_board.png",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "split_x": 738,
+  "diagnostic_crops": [
+    {
+      "id": "full_effect_product_card_crop_source",
+      "label": "full_effect product card crop",
+      "bbox": [205, 322, 340, 523]
+    }
+  ],
+  "asset_cells": [
+    {
+      "id": "product_card_base",
+      "role": "product_card_base_clean_candidate",
+      "bbox": [759, 28, 358, 365],
+      "parent_layer": "featured_product_card",
+      "children_excluded": ["reward_icon_basket", "quantity_text", "discount_badge_bg", "discount_text", "price_tag_bg", "price_text"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true,
+      "notes": "Parent card background must exclude all children."
+    },
+    {
+      "id": "reward_icon_basket",
+      "role": "reward_icon",
+      "bbox": [1133, 28, 371, 365],
+      "parent_layer": "featured_product_card",
+      "children_excluded": ["product_card_base", "quantity_text", "discount_badge_bg", "price_tag_bg"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "quantity_pill_bg",
+      "role": "quantity_pill_background",
+      "bbox": [759, 409, 358, 219],
+      "parent_layer": "featured_product_card",
+      "children_excluded": ["quantity_text"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch",
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "discount_badge_bg",
+      "role": "discount_badge_background",
+      "bbox": [1133, 409, 371, 219],
+      "parent_layer": "featured_product_card",
+      "children_excluded": ["discount_text"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "price_tag_bg",
+      "role": "price_tag_background",
+      "bbox": [759, 644, 358, 340],
+      "parent_layer": "featured_product_card",
+      "children_excluded": ["price_text"],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "full_product_card_composite_reference",
+      "role": "composite_reference_only",
+      "bbox": [1133, 644, 371, 340],
+      "parent_layer": "featured_product_card",
+      "transparent": true,
+      "forbid_text": false,
+      "scale_mode": "reference_only",
+      "notes": "Reference-only assembled empty product card."
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "quantity_text",
+      "role": "dynamic_text_quantity",
+      "text": "x25"
+    },
+    {
+      "id": "discount_text",
+      "role": "dynamic_text_discount",
+      "text": "-30%"
+    },
+    {
+      "id": "price_text",
+      "role": "dynamic_text_price",
+      "text": "$1.99"
+    }
+  ],
+  "validation_checks": [
+    {
+      "id": "product_card_base_has_low_red_child_signal",
+      "asset_id": "product_card_base",
+      "metric": "red_ratio_hsv",
+      "op": "<=",
+      "value": 0.01
+    },
+    {
+      "id": "product_card_base_has_low_green_icon_signal",
+      "asset_id": "product_card_base",
+      "metric": "green_ratio",
+      "op": "<=",
+      "value": 0.01
+    },
+    {
+      "id": "product_card_base_has_low_dark_text_signal",
+      "asset_id": "product_card_base",
+      "metric": "dark_text_like_ratio",
+      "op": "<=",
+      "value": 0.01
+    },
+    {
+      "id": "product_card_base_has_cream_surface_signal",
+      "asset_id": "product_card_base",
+      "metric": "cream_ratio",
+      "op": ">=",
+      "value": 0.25
+    },
+    {
+      "id": "reward_icon_has_red_apple_signal",
+      "asset_id": "reward_icon_basket",
+      "metric": "red_ratio_hsv",
+      "op": ">=",
+      "value": 0.2
+    },
+    {
+      "id": "quantity_pill_bg_has_low_dark_text_signal",
+      "asset_id": "quantity_pill_bg",
+      "metric": "dark_text_like_ratio",
+      "op": "<=",
+      "value": 0.02
+    },
+    {
+      "id": "discount_badge_bg_has_red_material_signal",
+      "asset_id": "discount_badge_bg",
+      "metric": "red_ratio_hsv",
+      "op": ">=",
+      "value": 0.45
+    },
+    {
+      "id": "price_tag_bg_has_gold_material_signal",
+      "asset_id": "price_tag_bg",
+      "metric": "gold_ratio",
+      "op": ">=",
+      "value": 0.35
+    },
+    {
+      "id": "product_card_base_has_clean_corners",
+      "asset_id": "product_card_base",
+      "metric": "corner_alpha_max",
+      "op": "==",
+      "value": 0
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "product_card_base_excludes_reward_icon",
+      "status": "pass",
+      "description": "The product card base cell contains no apples or basket."
+    },
+    {
+      "id": "product_card_base_excludes_quantity_discount_price",
+      "status": "pass",
+      "description": "The product card base cell contains no quantity text, discount badge, or price tag."
+    },
+    {
+      "id": "child_backgrounds_exclude_text",
+      "status": "pass",
+      "description": "Quantity pill, discount badge, and price tag cells are text-free."
+    }
+  ],
+  "rough_reconstruction": {
+    "canvas": [360, 540],
+    "layers": [
+      {
+        "id": "product_card_base_layer",
+        "asset_id": "product_card_base",
+        "rect": [38, 26, 285, 405],
+        "scale_mode": "stretch_for_probe"
+      },
+      {
+        "id": "reward_icon_basket_layer",
+        "asset_id": "reward_icon_basket",
+        "rect": [75, 65, 210, 190],
+        "scale_mode": "contain_for_probe"
+      },
+      {
+        "id": "quantity_pill_bg_layer",
+        "asset_id": "quantity_pill_bg",
+        "rect": [102, 250, 155, 58],
+        "scale_mode": "stretch_for_probe"
+      },
+      {
+        "id": "discount_badge_bg_layer",
+        "asset_id": "discount_badge_bg",
+        "rect": [128, 306, 105, 105],
+        "scale_mode": "contain_for_probe"
+      },
+      {
+        "id": "price_tag_bg_layer",
+        "asset_id": "price_tag_bg",
+        "rect": [72, 400, 215, 72],
+        "scale_mode": "stretch_for_probe"
+      }
+    ],
+    "text_nodes": [
+      {
+        "id": "quantity_text",
+        "text": "x25",
+        "rect": [102, 250, 155, 58],
+        "font_size": 34,
+        "fill": "#4c3518"
+      },
+      {
+        "id": "discount_text",
+        "text": "-30%",
+        "rect": [128, 306, 105, 105],
+        "font_size": 34,
+        "fill": "#ffffff",
+        "stroke_fill": "#8d261d",
+        "stroke_width": 1
+      },
+      {
+        "id": "price_text",
+        "text": "$1.99",
+        "rect": [72, 400, 215, 72],
+        "font_size": 42,
+        "fill": "#5a3a11"
+      }
+    ],
+    "comparison": {
+      "source_crop": {
+        "id": "full_effect_product_card_crop_source",
+        "label": "full_effect product card crop"
+      },
+      "reconstruction_label": "rough split-layer reconstruction",
+      "composite_asset_id": "full_product_card_composite_reference",
+      "composite_label": "generated composite reference"
+    }
+  },
+  "interpretation": "This validates whether the production-board asset sheet respects nested product-card parent/child ownership. It does not prove final engine-ready sprite quality.",
+  "verdict": "product card parent/child split contract: pass when all configured checks pass"
+}

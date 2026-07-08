@@ -1,0 +1,94 @@
+{
+  "target_bbox": [
+    202,
+    70
+  ],
+  "source_cell_size": [
+    267,
+    86
+  ],
+  "coin_source_cell_size": [
+    138,
+    143
+  ],
+  "full_crop_size": [
+    256,
+    72
+  ],
+  "sprite_natural_size": [
+    260,
+    86
+  ],
+  "coin_sprite_natural_size": [
+    131,
+    135
+  ],
+  "foreground_bbox_in_source_cell": [
+    0,
+    0,
+    260,
+    86
+  ],
+  "coin_foreground_bbox_in_source_cell": [
+    0,
+    0,
+    131,
+    135
+  ],
+  "background_estimate_rgb": [
+    222,
+    218,
+    212
+  ],
+  "coin_background_estimate_rgb": [
+    251,
+    248,
+    240
+  ],
+  "coin_bbox_relative_to_bar": [
+    11,
+    8,
+    32,
+    32
+  ],
+  "text_bbox_relative_to_bar": [
+    51,
+    8,
+    108,
+    51
+  ],
+  "text_value_from_spec": "3200",
+  "alpha_validation": {
+    "currency_bar_bg": {
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        255,
+        0
+      ],
+      "transparent_pixels": 1957,
+      "opaque_pixels": 20403,
+      "semi_transparent_pixels": 0,
+      "transparent_ratio": 0.0875
+    },
+    "coin_icon": {
+      "mode": "RGBA",
+      "corner_alpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "transparent_pixels": 3233,
+      "opaque_pixels": 13677,
+      "semi_transparent_pixels": 775,
+      "transparent_ratio": 0.1828
+    }
+  },
+  "mean_abs_delta_vs_full_scaled": {
+    "contain_icon_text": 58.23,
+    "stretch_icon_text": 54.54
+  },
+  "neutral_background_removal": "removed globally neutral light pixels with min>=205 and chroma<=34"
+}

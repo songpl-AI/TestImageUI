@@ -1,0 +1,236 @@
+{
+  "version": "0.1",
+  "contract_id": "spec_driven_panel_split_contract",
+  "primary_asset_id": "panel_base",
+  "board_image": "../output/spec_driven_panel_split_validation/production_board.png",
+  "canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "split_x": 738,
+  "asset_cells": [
+    {
+      "id": "panel_base",
+      "role": "panel_base_clean_candidate",
+      "bbox": [
+        759,
+        28,
+        358,
+        365
+      ],
+      "parent_layer": "main_panel",
+      "children_excluded": [
+        "panel_top_title_plate",
+        "panel_corner_flowers",
+        "panel_bottom_leaves",
+        "title_text",
+        "cards",
+        "buttons"
+      ],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "nine_slice",
+      "nine_slice_candidate": true
+    },
+    {
+      "id": "panel_top_title_plate",
+      "role": "panel_top_title_plate",
+      "bbox": [
+        1133,
+        28,
+        371,
+        365
+      ],
+      "parent_layer": "main_panel",
+      "children_excluded": [
+        "title_text"
+      ],
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "panel_corner_flowers",
+      "role": "panel_corner_flowers",
+      "bbox": [
+        759,
+        409,
+        358,
+        219
+      ],
+      "parent_layer": "main_panel",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "panel_bottom_leaves",
+      "role": "panel_bottom_leaves",
+      "bbox": [
+        1133,
+        409,
+        371,
+        219
+      ],
+      "parent_layer": "main_panel",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "contain"
+    },
+    {
+      "id": "panel_inner_texture",
+      "role": "panel_inner_texture_tile",
+      "bbox": [
+        759,
+        644,
+        358,
+        340
+      ],
+      "parent_layer": "main_panel",
+      "transparent": true,
+      "forbid_text": true,
+      "scale_mode": "stretch"
+    },
+    {
+      "id": "full_panel_composite_reference",
+      "role": "composite_reference_only",
+      "bbox": [
+        1133,
+        644,
+        371,
+        340
+      ],
+      "parent_layer": "main_panel",
+      "transparent": true,
+      "forbid_text": false,
+      "scale_mode": "reference_only"
+    }
+  ],
+  "text_nodes": [
+    {
+      "id": "title_text",
+      "role": "dynamic_text_title",
+      "text": "SPRING SHOP"
+    }
+  ],
+  "validation_checks": [
+    {
+      "id": "panel_base_has_low_green_decor_signal",
+      "asset_id": "panel_base",
+      "metric": "green_ratio",
+      "op": "<=",
+      "value": 0.02
+    },
+    {
+      "id": "panel_base_has_low_red_ribbon_signal",
+      "asset_id": "panel_base",
+      "metric": "red_ratio_hsv",
+      "op": "<=",
+      "value": 0.01
+    },
+    {
+      "id": "panel_base_has_gold_border_signal",
+      "asset_id": "panel_base",
+      "metric": "gold_ratio",
+      "op": ">=",
+      "value": 0.08
+    },
+    {
+      "id": "title_plate_has_green_material_signal",
+      "asset_id": "panel_top_title_plate",
+      "metric": "green_ratio",
+      "op": ">=",
+      "value": 0.35
+    },
+    {
+      "id": "bottom_leaves_cell_has_green_signal",
+      "asset_id": "panel_bottom_leaves",
+      "metric": "green_ratio",
+      "op": ">=",
+      "value": 0.45
+    },
+    {
+      "id": "panel_base_has_clean_corners",
+      "asset_id": "panel_base",
+      "metric": "corner_alpha_max",
+      "op": "==",
+      "value": 0
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "panel_base_excludes_title_plate",
+      "status": "pass",
+      "description": "The panel base cell contains no green title plate."
+    },
+    {
+      "id": "panel_base_excludes_flowers_and_leaves",
+      "status": "pass",
+      "description": "The panel base cell contains no flower or leaf decorations."
+    },
+    {
+      "id": "separate_decoration_cells_present",
+      "status": "pass",
+      "description": "Flower and leaf decorations are present as separate cells."
+    }
+  ],
+  "rough_reconstruction": {
+    "canvas": [
+      420,
+      520
+    ],
+    "layers": [
+      {
+        "id": "panel_base_layer",
+        "asset_id": "panel_base",
+        "rect": [
+          40,
+          115,
+          340,
+          355
+        ],
+        "scale_mode": "stretch_for_probe"
+      },
+      {
+        "id": "panel_top_title_plate_layer",
+        "asset_id": "panel_top_title_plate",
+        "rect": [
+          55,
+          45,
+          310,
+          95
+        ],
+        "scale_mode": "stretch_for_probe"
+      },
+      {
+        "id": "panel_corner_flowers_layer",
+        "asset_id": "panel_corner_flowers",
+        "rect": [
+          60,
+          40,
+          300,
+          92
+        ],
+        "scale_mode": "contain_for_probe"
+      },
+      {
+        "id": "panel_bottom_leaves_layer",
+        "asset_id": "panel_bottom_leaves",
+        "rect": [
+          42,
+          365,
+          340,
+          120
+        ],
+        "scale_mode": "contain_for_probe"
+      }
+    ],
+    "comparison": {
+      "reconstruction_label": "rough split-layer assembly",
+      "composite_asset_id": "full_panel_composite_reference",
+      "composite_label": "generated composite reference"
+    }
+  },
+  "interpretation": "This validates whether explicit decoration ownership can prevent the main panel base from baking in title plate and floral layers.",
+  "verdict": "panel split contract: pass when all configured checks pass"
+}

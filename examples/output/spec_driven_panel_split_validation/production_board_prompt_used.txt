@@ -1,0 +1,32 @@
+Use case: ui-mockup
+Asset type: production board for a game UI split pipeline
+Primary request: Create one wide production board image that tests whether a full UI mockup and its reusable asset sheet can be generated from the same layer contract.
+
+Canvas/composition: wide landscape production board, 1536x1024. Left 55% is a complete vertical mobile shop UI full_effect, portrait mobile ratio inside the board. Right 45% is a clean asset_sheet with 6 large isolated cells in a neat 2-column by 3-row grid. Keep all asset cells large, centered, separated by visible whitespace, and easy to audit.
+
+Theme: pastoral spring shop for a casual match-3 mobile game, soft garden mood, fruit, flowers, warm sunlight.
+Style: polished 2D game UI, rounded forms, clean readable silhouettes, soft bevels, warm gold trim, mint green, cream parchment panel, berry red ribbon, consistent painterly highlights.
+
+Full UI components on the left: centered rounded cream shop panel with gold trim, separate green top title plate, title text "SPRING SHOP", red "HOT DEAL" ribbon, three product cards, reward icons, red discount badges, price tags, top currency counter, close button, one green primary buy button with text "BUY".
+
+Layer contract for the full UI main panel:
+- panel_base: only the large cream rounded panel body with gold trim and subtle parchment texture. It must NOT include top title plate, flowers, leaves, ribbon, cards, buttons, icons, text, or any child elements.
+- panel_top_title_plate: only the separate green-and-gold title plaque shape behind the title. It must NOT include the words "SPRING SHOP".
+- panel_corner_flowers: only the white/yellow flower clusters that sit near the panel corners. No panel body, no title plate, no text.
+- panel_bottom_leaves: only the green leaf clusters and small floral decorations at the lower corners. No panel body, no title plate, no text.
+- panel_inner_texture: only a small seamless cream parchment material sample or tile matching the inside of panel_base. No border, no decorations, no text.
+- full_panel_composite_reference: one small visual reference showing the assembled empty panel with base + title plate + decorations, no cards, no buttons, no text.
+
+Asset sheet on the right: each cell must contain exactly one layer from the layer contract above, using the same visual variant as the left full UI. The asset_sheet is not a generic style sheet. Each cell is a layer-equivalent asset for the full_effect. Remove child layers, sibling decorations, text, numbers, product icons, cards, buttons, and background. Use a flat light neutral backing behind cells only so shapes can be seen; do not bake that backing into the asset itself.
+
+Asset sheet cell list, in order:
+1. panel_base only
+2. panel_top_title_plate only
+3. panel_corner_flowers only
+4. panel_bottom_leaves only
+5. panel_inner_texture only
+6. full_panel_composite_reference only
+
+Engineering constraints: UI elements must be visually separable for later standalone sprite generation. The `panel_base` cell must be clean base art, with sibling layers excluded. Dynamic text belongs only in the full UI mockup and should remain simple and readable. Asset cells must not include dynamic text, numbers, prices, child icons, neighboring UI, or full-effect background.
+
+Avoid: device frame, watermark, brand logos, garbled text, excessive tiny labels, strong perspective, merged UI parts, asset sheet cells that are different variants from the full UI, asset cells that contain title text or child elements, a `panel_base` cell that includes flowers, leaves, or top title plaque.
