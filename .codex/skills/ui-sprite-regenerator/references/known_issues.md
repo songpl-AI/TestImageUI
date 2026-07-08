@@ -258,6 +258,39 @@
 - 验证方式：记录 `corner_alpha`、transparent ratio、foreground bbox；`assets_fit_raw` 必须来自 IR bbox，而不是直接拉伸贴边自然图。
 - 来源：`spec_driven_currency_bar_probe` 中，`currency_bar_bg` 已去掉中性背景并可回贴，但左下角 alpha 仍为 255，因为叶片装饰贴到了 cell 边缘。
 
+### KI-20260708-fixed-asset-sheet-bbox-drift
+
+- 状态：active
+- 触发条件：复用上一张 production board 的固定 asset cell bbox 去验证新生成的 production board / asset sheet。
+- 问题表现：目标 asset 主体本身可能干净，但 crop 左侧或边缘带入 full effect 背景、cell 分隔线、花草装饰或中性 backing 残片，导致 red/green child signal、dark text signal 或 corner alpha 检查失败。
+- 根因：图像模型会保持大致 2x3 asset sheet 结构，但每次生成的 split line、cell 起点、cell padding 和 gutter 都会漂移；固定像素 bbox 不能跨 run 复用。
+- 预防规则：跨 run 稳定性测试必须先区分“生成层级失败”和“固定 bbox/grid 漂移”。正式验证前应自动检测 asset sheet 网格/单元内部安全框，或在 contract 中记录可检测的 grid/inset 规则，而不是直接复用旧图坐标。
+- 修正动作：新增 grid/cell auto-detect 预处理，输出 detected bbox overlay；用 detected bbox 重新跑相同图，再比较合同指标。如果 detected bbox 后仍失败，才归因于 layer ownership 或 prompt contract。
+- 验证方式：查看 `sprite_overview.png` 和 `focused_split_comparison.png`，目标 sprite 四周不应出现竖向背景残片；`corner_alpha` 应为 0，且失败指标不能由 cell 边缘残片贡献。
+- 来源：`spec_driven_product_card_stability` 3-run 验证中，三张图的 6-cell sheet 结构和 asset 文本约束基本成立，但左列固定 bbox 都捕获了不同程度的竖向背景/分隔残片，导致 0/3 合同全通过。
+
+### KI-20260708-asset-sheet-index-label-artifacts
+
+- 状态：active
+- 触发条件：AI 生成的 asset sheet / production board 在 cell 左上角添加数字编号、圆点标签或索引标记。
+- 问题表现：auto-detect 可以去掉部分边缘残片，但小型编号标记可能作为高置信前景组件被保留，进入 `assets_png`；现有颜色类 contract checks 可能仍然通过，形成假阳性。
+- 根因：编号标记与真实装饰一样是前景色差组件，且不一定贴住 cell 边缘；单纯 foreground-safe bbox 无法理解它是 annotation，不是 sprite 内容。
+- 预防规则：验证 production board 时必须把 visible cell labels / index markers / captions 作为污染物检查；不能只依赖 green/red/gold/corner alpha 指标。prompt 也要禁止可见 cell 编号。
+- 修正动作：在报告中人工标记为 `asset_sheet_label_artifact`；后续可新增 top-left label artifact detector，或要求重新生成无编号 asset sheet。
+- 验证方式：检查 `sprite_overview.png` 和 `focused_split_comparison.png`；任何资产 PNG 中出现数字圆点、cell label 或 caption 都应判为失败，即使 contract color checks 通过。
+- 来源：`spec_driven_panel_split_stability` run_03 中，`panel_corner_flowers`、`panel_bottom_leaves`、`panel_inner_texture`、`full_panel_composite_reference` 的 auto-detected sprites 仍带有绿色编号圆点。
+
+### KI-20260708-low-contrast-texture-cell-bbox
+
+- 状态：active
+- 触发条件：production board 的 asset sheet 包含浅色 texture tile、parchment sample、paper sample 或其它低对比材质块。
+- 问题表现：原始 asset sheet cell 肉眼干净，但固定 bbox 或 foreground-safe bbox 会把左侧背景/植物/分隔线/neutral backing 一起纳入 `asset_cells` 与 `assets_png`，尤其是 `panel_inner_texture` 这类浅色 tile。
+- 根因：foreground-safe bbox 依赖与边界背景的色差；当 texture tile、cell backing 和浅色背景接近时，检测会把整个粗 bbox 当作前景，无法自动排除左侧 strip。
+- 预防规则：低对比 texture cell 不应只依赖 foreground-safe bbox；优先使用 `asset_sheet_detection.mode: "grid_cell_foreground_safe_bbox"`，先按 asset sheet 行/列聚合检测 grid/cell 边缘污染，再在收缩后的 search bbox 内做 foreground-safe bbox。只有板级规律不足时，才使用 asset-specific bbox hint / inset / expected cell inner rect 作为兜底。
+- 修正动作：给 contract 增加 `panel_inner_texture` 类检查，例如 `green_ratio <= 0.02` 和 `corner_alpha_max == 0`；对跨 run 验证使用 `grid_cell_foreground_safe_bbox`，保留 `bbox_detection_hint: "trim_saturated_left_edge_then_foreground"` 作为单 cell 回退路径。
+- 验证方式：`asset_sheet_detection.json` 应记录 grid trim 与 detected bbox；`focused_split_comparison.png` 中 texture PNG 只应包含 parchment/cream tile，不应带绿色竖条；`probe_metrics.json` 中 texture 的 `green_ratio` 和 `corner_alpha_max` 应通过。
+- 来源：`spec_driven_panel_split_no_label_stability` run_01 和 run_03 中，strict no-label prompt 没有生成编号，但旧粗 bbox 加 foreground-safe bbox 仍把左侧植物/背景 strip 裁进 `panel_inner_texture`；改用 `grid_cell_foreground_safe_bbox` 后 strict/no-label auto validation 达到 3/3。
+
 ### KI-20260707-closed-panel-alpha-hole-fill
 
 - 状态：active

@@ -2,7 +2,7 @@
   "version": "0.1",
   "contract_id": "spec_driven_panel_split_contract",
   "primary_asset_id": "panel_base",
-  "board_image": "../output/spec_driven_panel_split_validation/production_board.png",
+  "board_image": "production_board.png",
   "canvas": {
     "width": 1536,
     "height": 1024
@@ -12,9 +12,21 @@
     {
       "id": "panel_base",
       "role": "panel_base_clean_candidate",
-      "bbox": [759, 28, 358, 365],
+      "bbox": [
+        759,
+        28,
+        358,
+        365
+      ],
       "parent_layer": "main_panel",
-      "children_excluded": ["panel_top_title_plate", "panel_corner_flowers", "panel_bottom_leaves", "title_text", "cards", "buttons"],
+      "children_excluded": [
+        "panel_top_title_plate",
+        "panel_corner_flowers",
+        "panel_bottom_leaves",
+        "title_text",
+        "cards",
+        "buttons"
+      ],
       "transparent": true,
       "forbid_text": true,
       "scale_mode": "nine_slice",
@@ -23,9 +35,16 @@
     {
       "id": "panel_top_title_plate",
       "role": "panel_top_title_plate",
-      "bbox": [1133, 28, 371, 365],
+      "bbox": [
+        1133,
+        28,
+        371,
+        365
+      ],
       "parent_layer": "main_panel",
-      "children_excluded": ["title_text"],
+      "children_excluded": [
+        "title_text"
+      ],
       "transparent": true,
       "forbid_text": true,
       "scale_mode": "contain"
@@ -33,7 +52,12 @@
     {
       "id": "panel_corner_flowers",
       "role": "panel_corner_flowers",
-      "bbox": [759, 409, 358, 219],
+      "bbox": [
+        759,
+        409,
+        358,
+        219
+      ],
       "parent_layer": "main_panel",
       "transparent": true,
       "forbid_text": true,
@@ -42,7 +66,12 @@
     {
       "id": "panel_bottom_leaves",
       "role": "panel_bottom_leaves",
-      "bbox": [1133, 409, 371, 219],
+      "bbox": [
+        1133,
+        409,
+        371,
+        219
+      ],
       "parent_layer": "main_panel",
       "transparent": true,
       "forbid_text": true,
@@ -51,7 +80,12 @@
     {
       "id": "panel_inner_texture",
       "role": "panel_inner_texture_tile",
-      "bbox": [759, 644, 358, 340],
+      "bbox": [
+        759,
+        644,
+        358,
+        340
+      ],
       "parent_layer": "main_panel",
       "transparent": true,
       "forbid_text": true,
@@ -60,7 +94,12 @@
     {
       "id": "full_panel_composite_reference",
       "role": "composite_reference_only",
-      "bbox": [1133, 644, 371, 340],
+      "bbox": [
+        1133,
+        644,
+        371,
+        340
+      ],
       "parent_layer": "main_panel",
       "transparent": true,
       "forbid_text": false,
@@ -111,6 +150,13 @@
       "value": 0.45
     },
     {
+      "id": "panel_base_has_clean_corners",
+      "asset_id": "panel_base",
+      "metric": "corner_alpha_max",
+      "op": "==",
+      "value": 0
+    },
+    {
       "id": "inner_texture_has_low_green_decor_signal",
       "asset_id": "panel_inner_texture",
       "metric": "green_ratio",
@@ -120,13 +166,6 @@
     {
       "id": "inner_texture_has_clean_corners",
       "asset_id": "panel_inner_texture",
-      "metric": "corner_alpha_max",
-      "op": "==",
-      "value": 0
-    },
-    {
-      "id": "panel_base_has_clean_corners",
-      "asset_id": "panel_base",
       "metric": "corner_alpha_max",
       "op": "==",
       "value": 0
@@ -192,30 +231,53 @@
     }
   ],
   "rough_reconstruction": {
-    "canvas": [420, 520],
+    "canvas": [
+      420,
+      520
+    ],
     "layers": [
       {
         "id": "panel_base_layer",
         "asset_id": "panel_base",
-        "rect": [40, 115, 340, 355],
+        "rect": [
+          40,
+          115,
+          340,
+          355
+        ],
         "scale_mode": "stretch_for_probe"
       },
       {
         "id": "panel_top_title_plate_layer",
         "asset_id": "panel_top_title_plate",
-        "rect": [55, 45, 310, 95],
+        "rect": [
+          55,
+          45,
+          310,
+          95
+        ],
         "scale_mode": "stretch_for_probe"
       },
       {
         "id": "panel_corner_flowers_layer",
         "asset_id": "panel_corner_flowers",
-        "rect": [60, 40, 300, 92],
+        "rect": [
+          60,
+          40,
+          300,
+          92
+        ],
         "scale_mode": "contain_for_probe"
       },
       {
         "id": "panel_bottom_leaves_layer",
         "asset_id": "panel_bottom_leaves",
-        "rect": [42, 365, 340, 120],
+        "rect": [
+          42,
+          365,
+          340,
+          120
+        ],
         "scale_mode": "contain_for_probe"
       }
     ],

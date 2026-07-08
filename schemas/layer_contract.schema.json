@@ -39,6 +39,9 @@
       "type": "integer",
       "minimum": 1
     },
+    "asset_sheet_detection": {
+      "$ref": "#/$defs/asset_sheet_detection"
+    },
     "diagnostic_crops": {
       "type": "array",
       "items": {
@@ -154,8 +157,55 @@
         "nine_slice_candidate": {
           "type": "boolean"
         },
+        "bbox_detection_hint": {
+          "type": "string",
+          "enum": ["trim_saturated_left_edge_then_foreground"]
+        },
         "notes": {
           "type": "string"
+        }
+      }
+    },
+    "asset_sheet_detection": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "mode": {
+          "type": "string",
+          "enum": ["foreground_safe_bbox", "grid_cell_foreground_safe_bbox"]
+        },
+        "padding": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "threshold": {
+          "type": "number",
+          "minimum": 0
+        },
+        "min_component_area": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "drop_border_artifacts": {
+          "type": "boolean"
+        },
+        "border_artifact_width_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "border_artifact_height_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "border_artifact_area_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
         }
       }
     },
@@ -198,7 +248,10 @@
             "gold_ratio",
             "cream_ratio",
             "transparent_ratio",
-            "corner_alpha_max"
+            "corner_alpha_max",
+            "label_artifact_score",
+            "label_artifact_ratio",
+            "label_artifact_candidate_count"
           ]
         },
         "op": {

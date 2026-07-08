@@ -198,8 +198,10 @@ python3 -m src.main \
 
 - `board_image`：production board 路径。
 - `asset_cells`：每个 asset sheet cell 的 `id`、`role`、`bbox`、`children_excluded`、`forbid_text`、`scale_mode`。
+- `asset_sheet_detection`：可选，用粗 bbox 生成验证用的有效 bbox。`mode: "foreground_safe_bbox"` 会在每个粗 bbox 内自动寻找主体安全框，过滤贴边竖条、分隔线或背景残片；`mode: "grid_cell_foreground_safe_bbox"` 会先按 asset sheet 的行/列聚合检测饱和边缘 strip，得到每个 cell 的搜索框，再在搜索框内做 foreground-safe bbox，适合低对比 texture cell 的跨 run 漂移验证。
+- `bbox_detection_hint`：可选的单个 `asset_cells[*]` 兜底提示；当前支持 `trim_saturated_left_edge_then_foreground`。优先使用 `grid_cell_foreground_safe_bbox` 做板级规则，只有个别 cell 无法从 grid/cell 规律恢复时再使用 hint。
 - `text_nodes`：动态文字，例如价格、数量、折扣，不生成 PNG。
-- `validation_checks`：机器检查项，例如 `red_ratio_hsv <= 0.01`、`corner_alpha_max == 0`。
+- `validation_checks`：机器检查项，例如 `red_ratio_hsv <= 0.01`、`corner_alpha_max == 0`、`label_artifact_score == 0`。
 - `manual_checks`：人工已确认的视觉归属检查。
 - `rough_reconstruction`：可选，用候选素材和 Text Node 组装一个粗重建。
 
@@ -209,9 +211,18 @@ python3 -m src.main \
 - `assets_png/`：从 cell 提取的透明候选 sprite。
 - `assets_fit_raw/`：粗重建使用的 layout instance。
 - `bbox_overlay.png`、`sprite_overview.png`、`focused_split_comparison.png`。
+- 启用 `asset_sheet_detection` 时，额外输出 `layer_contract_input.json`、`asset_sheet_detection.json`、`bbox_detection_overlay.png`。
 - `sprite_manifest.json`、`layer_ir.json`、`layout_ir.json`、`probe_metrics.json`、`probe_report.md`。
 
 这个模式验证的是 **layer ownership contract 和证据链路**，不是最终生产资产质量。通过后仍需要进一步确认精确 bbox、九宫格参数、字体/描边参数、软边 alpha，以及是否要改用 per-asset 透明生成或人工修图。
+
+`label_artifact_score` 是一个针对 production board asset sheet 的启发式污染检查：如果透明候选 PNG 左上角出现小型高饱和圆形/徽章状前景组件，通常代表模型把 cell 编号、索引标记或设计稿注释画进了素材。它不能替代 OCR 或人工审图，但可以把 `asset_sheet_index_label_artifacts` 这类已知失败从“漏检”变成合同失败。
+
+当前有一个 strict/no-label panel split 回归测试，使用 `tests/fixtures/panel_split_no_label/` 下的最小 fixture，用于防止 `grid_cell_foreground_safe_bbox` 退化回 asset-specific hint 或固定 bbox 漂移：
+
+```bash
+python3 -m unittest tests.test_panel_split_grid_detection_regression
+```
 
 ## Codex Skills
 

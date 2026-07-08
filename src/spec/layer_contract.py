@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import json
 import math
 import operator
@@ -32,31 +33,40 @@ class LayerContractResult:
 
 
 def export_layer_contract_validation(contract_path: Path, output_dir: Path) -> LayerContractResult:
-    contract = _load_json(contract_path)
+    input_contract = _load_json(contract_path)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     contract_base = contract_path.parent
-    board_path = _resolve_path(str(contract.get("board_image", "")), contract_base)
+    board_path = _resolve_path(str(input_contract.get("board_image", "")), contract_base)
     if not board_path.exists():
         raise FileNotFoundError(f"board_image does not exist: {board_path}")
 
     board = Image.open(board_path).convert("RGB")
     board_size = board.size
-    expected_canvas = contract.get("canvas") or {}
+    expected_canvas = input_contract.get("canvas") or {}
     if expected_canvas:
         expected_size = (int(expected_canvas["width"]), int(expected_canvas["height"]))
         if expected_size != board_size:
             raise ValueError(f"contract canvas {expected_size} does not match board image {board_size}")
 
+    contract, detection_report = _apply_asset_sheet_detection(board, input_contract)
+
     copied_board_path = output_dir / "production_board.png"
     shutil.copy2(board_path, copied_board_path)
     _write_json(output_dir / "layer_contract.json", contract)
+    if detection_report.get("enabled"):
+        _write_json(output_dir / "layer_contract_input.json", input_contract)
+        _write_json(output_dir / "asset_sheet_detection.json", detection_report)
 
     _ensure_dirs(output_dir)
     _export_regions(board, contract, output_dir)
     _export_bbox_overlay(board, contract, output_dir)
+    if detection_report.get("enabled"):
+        _export_detection_overlay(board, input_contract, contract, detection_report, output_dir)
 
     assets, metrics = _extract_assets(board, contract, output_dir)
+    if detection_report.get("enabled"):
+        metrics["asset_sheet_detection"] = detection_report
     check_results, failed_checks = _evaluate_checks(contract, metrics)
     metrics["contract_checks"] = check_results
     probe_metrics_path = output_dir / "probe_metrics.json"
@@ -202,11 +212,621 @@ def _export_bbox_overlay(board: Image.Image, contract: dict[str, Any], output_di
     overlay.save(output_dir / "bbox_overlay.png")
 
 
+def _export_detection_overlay(
+    board: Image.Image,
+    input_contract: dict[str, Any],
+    detected_contract: dict[str, Any],
+    detection_report: dict[str, Any],
+    output_dir: Path,
+) -> None:
+    small_font, _font, title_font = _fonts()
+    overlay = board.copy()
+    draw = ImageDraw.Draw(overlay)
+    input_cells = {str(cell["id"]): cell for cell in _asset_cells(input_contract)}
+    detected_cells = {str(cell["id"]): cell for cell in _asset_cells(detected_contract)}
+
+    draw.text(
+        (14, 16),
+        f"asset sheet detection: {detection_report.get('mode', 'unknown')}",
+        fill="white",
+        font=title_font,
+        stroke_width=4,
+        stroke_fill="#222",
+    )
+
+    for index, (asset_id, detected_cell) in enumerate(detected_cells.items(), start=1):
+        input_cell = input_cells.get(asset_id)
+        if input_cell:
+            x, y, width, height = _bbox(input_cell["bbox"])
+            draw.rectangle((x, y, x + width, y + height), outline="#ff3b30", width=2)
+        x, y, width, height = _bbox(detected_cell["bbox"])
+        draw.rectangle((x, y, x + width, y + height), outline="#34c759", width=4)
+        label = f"{index}. {asset_id}"
+        text_box = draw.textbbox((0, 0), label, font=small_font)
+        draw.rectangle((x, max(0, y - 24), x + text_box[2] + 10, y), fill="#34c759")
+        draw.text((x + 5, max(0, y - 22)), label, fill="white", font=small_font)
+
+    draw.rectangle((14, board.height - 48, 34, board.height - 28), outline="#ff3b30", width=3)
+    draw.text((42, board.height - 49), "input bbox", fill="white", font=small_font, stroke_width=3, stroke_fill="#222")
+    draw.rectangle((150, board.height - 48, 170, board.height - 28), outline="#34c759", width=3)
+    draw.text((178, board.height - 49), "detected bbox", fill="white", font=small_font, stroke_width=3, stroke_fill="#222")
+    overlay.save(output_dir / "bbox_detection_overlay.png")
+
+
 def _asset_cells(contract: dict[str, Any]) -> list[dict[str, Any]]:
     cells = contract.get("asset_cells")
     if not isinstance(cells, list) or not cells:
         raise ValueError("contract must contain a non-empty asset_cells list")
     return [dict(item) for item in cells]
+
+
+def _apply_asset_sheet_detection(board: Image.Image, contract: dict[str, Any]) -> tuple[dict[str, Any], dict[str, Any]]:
+    config = contract.get("asset_sheet_detection")
+    if not isinstance(config, dict) or not bool(config.get("enabled", False)):
+        return copy.deepcopy(contract), {"enabled": False}
+
+    mode = str(config.get("mode") or "foreground_safe_bbox")
+    supported_modes = {"foreground_safe_bbox", "grid_cell_foreground_safe_bbox"}
+    if mode not in supported_modes:
+        raise ValueError(f"unsupported asset_sheet_detection mode: {mode}")
+
+    detected_contract = copy.deepcopy(contract)
+    padding = int(config.get("padding", 22))
+    threshold = float(config.get("threshold", 55))
+    min_area = int(config.get("min_component_area", 120))
+    drop_border_artifacts = bool(config.get("drop_border_artifacts", True))
+    border_width_ratio = float(config.get("border_artifact_width_ratio", 0.18))
+    border_height_ratio = float(config.get("border_artifact_height_ratio", 0.18))
+    border_area_ratio = float(config.get("border_artifact_area_ratio", 0.18))
+
+    report: dict[str, Any] = {
+        "enabled": True,
+        "mode": mode,
+        "parameters": {
+            "padding": padding,
+            "threshold": threshold,
+            "min_component_area": min_area,
+            "drop_border_artifacts": drop_border_artifacts,
+            "border_artifact_width_ratio": border_width_ratio,
+            "border_artifact_height_ratio": border_height_ratio,
+            "border_artifact_area_ratio": border_area_ratio,
+        },
+        "cells": {},
+    }
+
+    cells = detected_contract.get("asset_cells")
+    if not isinstance(cells, list):
+        raise ValueError("contract must contain asset_cells before asset sheet detection")
+
+    grid_cells: dict[str, dict[str, Any]] = {}
+    if mode == "grid_cell_foreground_safe_bbox":
+        grid_cells, grid_report = _detect_grid_cell_search_bboxes(board, cells, board.size)
+        report["grid_cell_detection"] = grid_report
+
+    for cell in cells:
+        asset_id = str(cell["id"])
+        original_bbox = list(_bbox(cell["bbox"]))
+        grid_cell_report = grid_cells.get(asset_id)
+        search_bbox = _clamp_bbox(
+            list(grid_cell_report["search_bbox"]) if grid_cell_report else original_bbox,
+            board.size,
+        )
+        crop = board.crop(_crop_box(search_bbox))
+        hint = str(cell.get("bbox_detection_hint") or "")
+        local_bbox, cell_report = _detect_cell_bbox(
+            crop,
+            hint=hint,
+            padding=padding,
+            threshold=threshold,
+            min_area=min_area,
+            drop_border_artifacts=drop_border_artifacts,
+            border_width_ratio=border_width_ratio,
+            border_height_ratio=border_height_ratio,
+            border_area_ratio=border_area_ratio,
+        )
+        cell_report["original_bbox"] = original_bbox
+        cell_report["search_bbox"] = search_bbox
+        if grid_cell_report:
+            cell_report["grid_cell_search"] = grid_cell_report
+
+        if local_bbox is None:
+            detected_bbox = search_bbox
+            cell_report["status"] = "fallback_original_bbox"
+        else:
+            detected_bbox = _local_to_global_bbox(local_bbox, search_bbox)
+            cell_report["status"] = "detected"
+
+        cell["bbox"] = detected_bbox
+        cell["bbox_detection"] = {
+            "mode": mode,
+            "hint": hint or None,
+            "original_bbox": original_bbox,
+            "search_bbox": search_bbox,
+            "detected_bbox": detected_bbox,
+            "status": cell_report["status"],
+        }
+        report["cells"][asset_id] = cell_report | {"detected_bbox": detected_bbox}
+
+    return detected_contract, report
+
+
+def _clamp_bbox(bbox: list[int], image_size: tuple[int, int]) -> list[int]:
+    x, y, width, height = _bbox(bbox)
+    image_width, image_height = image_size
+    x0 = max(0, min(image_width - 1, x))
+    y0 = max(0, min(image_height - 1, y))
+    x1 = max(x0 + 1, min(image_width, x + width))
+    y1 = max(y0 + 1, min(image_height, y + height))
+    return [x0, y0, x1 - x0, y1 - y0]
+
+
+def _local_to_global_bbox(local_bbox: list[int], search_bbox: list[int]) -> list[int]:
+    local_x, local_y, width, height = _bbox(local_bbox)
+    search_x, search_y, _search_width, _search_height = _bbox(search_bbox)
+    return [search_x + local_x, search_y + local_y, width, height]
+
+
+def _detect_grid_cell_search_bboxes(
+    board: Image.Image,
+    cells: list[dict[str, Any]],
+    image_size: tuple[int, int],
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    cell_reports: dict[str, dict[str, Any]] = {}
+    column_keys = _axis_groups([_bbox(cell["bbox"])[0] for cell in cells])
+    row_keys = _axis_groups([_bbox(cell["bbox"])[1] for cell in cells])
+    columns: dict[int, list[int]] = {index: [] for index in range(len(column_keys))}
+    rows: dict[int, list[int]] = {index: [] for index in range(len(row_keys))}
+
+    for cell_index, cell in enumerate(cells):
+        asset_id = str(cell["id"])
+        original_bbox = _clamp_bbox(list(_bbox(cell["bbox"])), image_size)
+        crop = board.crop(_crop_box(original_bbox))
+        edge_strips = _detect_saturated_edge_strips(crop)
+        column_index = _nearest_axis_group(original_bbox[0], column_keys)
+        row_index = _nearest_axis_group(original_bbox[1], row_keys)
+        columns[column_index].append(cell_index)
+        rows[row_index].append(cell_index)
+        cell_reports[asset_id] = {
+            "asset_id": asset_id,
+            "original_bbox": original_bbox,
+            "column_index": column_index,
+            "row_index": row_index,
+            "edge_strips": edge_strips,
+        }
+
+    column_trims: dict[int, dict[str, int]] = {}
+    for column_index, indexes in columns.items():
+        left_values = [int(cell_reports[str(cells[index]["id"])]["edge_strips"]["left"]["strip_width"]) for index in indexes]
+        right_values = [int(cell_reports[str(cells[index]["id"])]["edge_strips"]["right"]["strip_width"]) for index in indexes]
+        column_trims[column_index] = {
+            "left": _aggregate_grid_trim(left_values, len(indexes)),
+            "right": _aggregate_grid_trim(right_values, len(indexes)),
+        }
+
+    row_trims: dict[int, dict[str, int]] = {}
+    for row_index, indexes in rows.items():
+        top_values = [int(cell_reports[str(cells[index]["id"])]["edge_strips"]["top"]["strip_width"]) for index in indexes]
+        bottom_values = [int(cell_reports[str(cells[index]["id"])]["edge_strips"]["bottom"]["strip_width"]) for index in indexes]
+        row_trims[row_index] = {
+            "top": _aggregate_grid_trim(top_values, len(indexes)),
+            "bottom": _aggregate_grid_trim(bottom_values, len(indexes)),
+        }
+
+    for report in cell_reports.values():
+        x, y, width, height = _bbox(report["original_bbox"])
+        column_trim = column_trims[int(report["column_index"])]
+        row_trim = row_trims[int(report["row_index"])]
+        left = min(width - 1, int(column_trim["left"]))
+        right = min(width - left - 1, int(column_trim["right"]))
+        top = min(height - 1, int(row_trim["top"]))
+        bottom = min(height - top - 1, int(row_trim["bottom"]))
+        search_bbox = [x + left, y + top, width - left - right, height - top - bottom]
+        report["grid_trim"] = {
+            "left": left,
+            "right": right,
+            "top": top,
+            "bottom": bottom,
+        }
+        report["search_bbox"] = search_bbox
+
+    grid_report = {
+        "mode": "grid_cell_foreground_safe_bbox",
+        "column_keys": column_keys,
+        "row_keys": row_keys,
+        "column_trims": column_trims,
+        "row_trims": row_trims,
+        "cells": cell_reports,
+    }
+    return cell_reports, grid_report
+
+
+def _axis_groups(values: list[int], *, tolerance: int = 12) -> list[int]:
+    groups: list[list[int]] = []
+    for value in sorted(int(item) for item in values):
+        if not groups or abs(value - round(sum(groups[-1]) / len(groups[-1]))) > tolerance:
+            groups.append([value])
+        else:
+            groups[-1].append(value)
+    return [int(round(sum(group) / len(group))) for group in groups]
+
+
+def _nearest_axis_group(value: int, groups: list[int]) -> int:
+    if not groups:
+        return 0
+    return min(range(len(groups)), key=lambda index: abs(int(value) - int(groups[index])))
+
+
+def _aggregate_grid_trim(values: list[int], group_size: int) -> int:
+    positive = [int(value) for value in values if int(value) > 0]
+    min_count = max(2, math.ceil(group_size * 0.67))
+    if len(positive) < min_count:
+        return 0
+    return int(round(float(np.median(np.asarray(positive)))))
+
+
+def _detect_cell_bbox(
+    crop: Image.Image,
+    *,
+    hint: str,
+    padding: int,
+    threshold: float,
+    min_area: int,
+    drop_border_artifacts: bool,
+    border_width_ratio: float,
+    border_height_ratio: float,
+    border_area_ratio: float,
+) -> tuple[list[int] | None, dict[str, Any]]:
+    if hint == "trim_saturated_left_edge_then_foreground":
+        return _detect_saturated_left_edge_then_foreground_safe_bbox(
+            crop,
+            padding=padding,
+            threshold=threshold,
+            min_area=min_area,
+            drop_border_artifacts=drop_border_artifacts,
+            border_width_ratio=border_width_ratio,
+            border_height_ratio=border_height_ratio,
+            border_area_ratio=border_area_ratio,
+        )
+    if hint:
+        raise ValueError(f"unsupported bbox_detection_hint: {hint}")
+    return _detect_foreground_safe_bbox(
+        crop,
+        padding=padding,
+        threshold=threshold,
+        min_area=min_area,
+        drop_border_artifacts=drop_border_artifacts,
+        border_width_ratio=border_width_ratio,
+        border_height_ratio=border_height_ratio,
+        border_area_ratio=border_area_ratio,
+    )
+
+
+def _detect_saturated_left_edge_then_foreground_safe_bbox(
+    crop: Image.Image,
+    *,
+    padding: int,
+    threshold: float,
+    min_area: int,
+    drop_border_artifacts: bool,
+    border_width_ratio: float,
+    border_height_ratio: float,
+    border_area_ratio: float,
+) -> tuple[list[int] | None, dict[str, Any]]:
+    left_strip_width, strip_report = _detect_saturated_left_edge_strip(crop)
+    if left_strip_width <= 0:
+        local_bbox, report = _detect_foreground_safe_bbox(
+            crop,
+            padding=padding,
+            threshold=threshold,
+            min_area=min_area,
+            drop_border_artifacts=drop_border_artifacts,
+            border_width_ratio=border_width_ratio,
+            border_height_ratio=border_height_ratio,
+            border_area_ratio=border_area_ratio,
+        )
+        report["hint"] = "trim_saturated_left_edge_then_foreground"
+        report["hint_status"] = "no_left_strip_detected"
+        report["left_edge_strip"] = strip_report
+        return local_bbox, report
+
+    subcrop = crop.crop((left_strip_width, 0, crop.width, crop.height))
+    sub_bbox, sub_report = _detect_foreground_safe_bbox(
+        subcrop,
+        padding=padding,
+        threshold=threshold,
+        min_area=min_area,
+        drop_border_artifacts=drop_border_artifacts,
+        border_width_ratio=border_width_ratio,
+        border_height_ratio=border_height_ratio,
+        border_area_ratio=border_area_ratio,
+    )
+    report = {
+        "source_cell_size": [crop.width, crop.height],
+        "hint": "trim_saturated_left_edge_then_foreground",
+        "hint_status": "left_strip_trimmed",
+        "left_edge_strip": strip_report,
+        "foreground_subcrop_report": sub_report,
+    }
+    if sub_bbox is None:
+        fallback_bbox = [left_strip_width, 0, crop.width - left_strip_width, crop.height]
+        report["detected_local_bbox"] = fallback_bbox
+        report["status_note"] = "foreground fallback after left-strip trim"
+        return fallback_bbox, report
+
+    detected_local_bbox = [
+        left_strip_width + int(sub_bbox[0]),
+        int(sub_bbox[1]),
+        int(sub_bbox[2]),
+        int(sub_bbox[3]),
+    ]
+    report["detected_local_bbox"] = detected_local_bbox
+    return detected_local_bbox, report
+
+
+def _detect_saturated_left_edge_strip(crop: Image.Image) -> tuple[int, dict[str, Any]]:
+    report = _detect_saturated_edge_strips(crop)["left"]
+    return int(report["strip_width"]), report
+
+
+def _detect_saturated_edge_strips(crop: Image.Image) -> dict[str, dict[str, Any]]:
+    arr = np.asarray(crop.convert("RGB"))
+    _hue, saturation, value = _rgb_to_hsv(arr)
+    saturated = (saturation > 0.22) & (value > 0.25)
+    backing = (saturation < 0.28) & (value > 0.62)
+    return {
+        "left": _detect_saturated_edge_strip_from_projection(
+            saturated.mean(axis=0),
+            backing.mean(axis=0),
+            edge="left",
+        ),
+        "right": _detect_saturated_edge_strip_from_projection(
+            saturated.mean(axis=0)[::-1],
+            backing.mean(axis=0)[::-1],
+            edge="right",
+        ),
+        "top": _detect_saturated_edge_strip_from_projection(
+            saturated.mean(axis=1),
+            backing.mean(axis=1),
+            edge="top",
+        ),
+        "bottom": _detect_saturated_edge_strip_from_projection(
+            saturated.mean(axis=1)[::-1],
+            backing.mean(axis=1)[::-1],
+            edge="bottom",
+        ),
+    }
+
+
+def _detect_saturated_edge_strip_from_projection(
+    saturated_projection: np.ndarray,
+    backing_projection: np.ndarray,
+    *,
+    edge: str,
+) -> dict[str, Any]:
+    length = int(saturated_projection.shape[0])
+    search_limit = max(1, min(length, int(length * 0.45)))
+    edge_end = 0
+    while edge_end < search_limit and float(saturated_projection[edge_end]) > 0.12:
+        edge_end += 1
+
+    min_edge_width = max(8, int(length * 0.025))
+    min_backing_width = max(8, int(length * 0.05))
+    backing_end = edge_end
+    while backing_end < search_limit and float(backing_projection[backing_end]) > 0.60:
+        backing_end += 1
+
+    accepted = edge_end >= min_edge_width and (backing_end - edge_end) >= min_backing_width
+    return {
+        "edge": edge,
+        "detected": accepted,
+        "strip_width": int(edge_end if accepted else 0),
+        "candidate_edge_width": int(edge_end),
+        "candidate_backing_width": int(backing_end - edge_end),
+        "search_limit": int(search_limit),
+        "thresholds": {
+            "saturation_min": 0.22,
+            "value_min": 0.25,
+            "saturated_column_ratio_min": 0.12,
+            "backing_saturation_max": 0.28,
+            "backing_value_min": 0.62,
+            "backing_column_ratio_min": 0.60,
+        },
+    }
+
+
+def _detect_foreground_safe_bbox(
+    crop: Image.Image,
+    *,
+    padding: int,
+    threshold: float,
+    min_area: int,
+    drop_border_artifacts: bool,
+    border_width_ratio: float,
+    border_height_ratio: float,
+    border_area_ratio: float,
+) -> tuple[list[int] | None, dict[str, Any]]:
+    rgb = crop.convert("RGB")
+    arr = np.asarray(rgb).astype(np.float32)
+    height, width = arr.shape[:2]
+    background = _estimate_bg(arr)
+    dist = np.linalg.norm(arr - background.reshape(1, 1, 3), axis=2)
+    seed = dist > threshold
+
+    components = [
+        component
+        for component in _connected_components(seed)
+        if int(component["area"]) >= min_area
+    ]
+    kept: list[dict[str, Any]] = []
+    dropped: list[dict[str, Any]] = []
+    total_area = width * height
+
+    for component in components:
+        x0, y0, x1, y1 = component["bbox"]
+        component_width = x1 - x0
+        component_height = y1 - y0
+        touches_edge = x0 <= 1 or y0 <= 1 or x1 >= width - 1 or y1 >= height - 1
+        thin_edge_artifact = touches_edge and (
+            (component_width <= max(10, int(width * border_width_ratio)) and component_height >= height * 0.35)
+            or (component_height <= max(10, int(height * border_height_ratio)) and component_width >= width * 0.35)
+        )
+        edge_band_artifact = touches_edge and (
+            x1 < width * 0.28
+            or x0 > width * 0.72
+            or y1 < height * 0.18
+            or y0 > height * 0.82
+        )
+        small_edge_artifact = int(component["area"]) < total_area * border_area_ratio
+        if drop_border_artifacts and (thin_edge_artifact or (edge_band_artifact and small_edge_artifact)):
+            dropped.append(component)
+        else:
+            kept.append(component)
+
+    if not kept and components:
+        kept = [max(components, key=lambda item: int(item["area"]))]
+
+    report = {
+        "source_cell_size": [width, height],
+        "background_estimate_rgb": [round(float(value), 2) for value in background],
+        "component_count": len(components),
+        "kept_component_count": len(kept),
+        "dropped_component_count": len(dropped),
+        "kept_components": [_component_report(component) for component in kept],
+        "dropped_components": [_component_report(component) for component in dropped],
+    }
+
+    if not kept:
+        report["detected_local_bbox"] = None
+        return None, report
+
+    x0 = min(int(component["bbox"][0]) for component in kept)
+    y0 = min(int(component["bbox"][1]) for component in kept)
+    x1 = max(int(component["bbox"][2]) for component in kept)
+    y1 = max(int(component["bbox"][3]) for component in kept)
+    left_guard, top_guard, right_guard, bottom_guard = _edge_padding_guards(
+        dropped,
+        width=width,
+        height=height,
+        border_width_ratio=border_width_ratio,
+        border_height_ratio=border_height_ratio,
+    )
+    padded_x0 = max(0, x0 - padding, left_guard)
+    padded_y0 = max(0, y0 - padding, top_guard)
+    padded_x1 = min(width, x1 + padding, right_guard)
+    padded_y1 = min(height, y1 + padding, bottom_guard)
+    vertical_strip_dropped = _has_dropped_vertical_edge_strip(
+        dropped,
+        width=width,
+        height=height,
+        border_width_ratio=border_width_ratio,
+    )
+    horizontal_strip_dropped = _has_dropped_horizontal_edge_strip(
+        dropped,
+        width=width,
+        height=height,
+        border_height_ratio=border_height_ratio,
+    )
+    if vertical_strip_dropped and not horizontal_strip_dropped:
+        padded_y0 = 0
+        padded_y1 = height
+    if horizontal_strip_dropped and not vertical_strip_dropped:
+        padded_x0 = 0
+        padded_x1 = width
+    if padded_x1 <= padded_x0 or padded_y1 <= padded_y0:
+        padded_x0 = max(0, x0 - padding)
+        padded_y0 = max(0, y0 - padding)
+        padded_x1 = min(width, x1 + padding)
+        padded_y1 = min(height, y1 + padding)
+    local_bbox = [
+        padded_x0,
+        padded_y0,
+        padded_x1 - padded_x0,
+        padded_y1 - padded_y0,
+    ]
+    report["edge_padding_guards"] = {
+        "left": left_guard,
+        "top": top_guard,
+        "right": right_guard if right_guard != width else None,
+        "bottom": bottom_guard if bottom_guard != height else None,
+        "vertical_strip_dropped": vertical_strip_dropped,
+        "horizontal_strip_dropped": horizontal_strip_dropped,
+    }
+    report["detected_local_bbox"] = local_bbox
+    return local_bbox, report
+
+
+def _edge_padding_guards(
+    dropped: list[dict[str, Any]],
+    *,
+    width: int,
+    height: int,
+    border_width_ratio: float,
+    border_height_ratio: float,
+) -> tuple[int, int, int, int]:
+    left_guard = 0
+    top_guard = 0
+    right_guard = width
+    bottom_guard = height
+    vertical_width = max(10, int(width * border_width_ratio))
+    horizontal_height = max(10, int(height * border_height_ratio))
+
+    for component in dropped:
+        x0, y0, x1, y1 = (int(value) for value in component["bbox"])
+        component_width = x1 - x0
+        component_height = y1 - y0
+        if x0 <= 1 and component_width <= vertical_width:
+            left_guard = max(left_guard, x1)
+        if x1 >= width - 1 and component_width <= vertical_width:
+            right_guard = min(right_guard, x0)
+        if y0 <= 1 and component_height <= horizontal_height:
+            top_guard = max(top_guard, y1)
+        if y1 >= height - 1 and component_height <= horizontal_height:
+            bottom_guard = min(bottom_guard, y0)
+
+    return left_guard, top_guard, right_guard, bottom_guard
+
+
+def _has_dropped_vertical_edge_strip(
+    dropped: list[dict[str, Any]],
+    *,
+    width: int,
+    height: int,
+    border_width_ratio: float,
+) -> bool:
+    vertical_width = max(10, int(width * border_width_ratio))
+    for component in dropped:
+        x0, y0, x1, y1 = (int(value) for value in component["bbox"])
+        component_width = x1 - x0
+        component_height = y1 - y0
+        touches_vertical_edge = x0 <= 1 or x1 >= width - 1
+        if touches_vertical_edge and component_width <= vertical_width and component_height >= height * 0.75:
+            return True
+    return False
+
+
+def _has_dropped_horizontal_edge_strip(
+    dropped: list[dict[str, Any]],
+    *,
+    width: int,
+    height: int,
+    border_height_ratio: float,
+) -> bool:
+    horizontal_height = max(10, int(height * border_height_ratio))
+    for component in dropped:
+        x0, y0, x1, y1 = (int(value) for value in component["bbox"])
+        component_width = x1 - x0
+        component_height = y1 - y0
+        touches_horizontal_edge = y0 <= 1 or y1 >= height - 1
+        if touches_horizontal_edge and component_height <= horizontal_height and component_width >= width * 0.75:
+            return True
+    return False
+
+
+def _component_report(component: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "area": int(component["area"]),
+        "bbox": [int(value) for value in component["bbox"]],
+    }
 
 
 def _extract_assets(
@@ -232,6 +852,7 @@ def _extract_assets(
         rgba.save(asset_path)
         alpha_metrics = _alpha_metrics(rgba)
         color_metrics = _color_audit(rgba)
+        artifact_metrics = _artifact_audit(rgba)
 
         cell_metrics = {
             "role": str(cell.get("role") or asset_id),
@@ -242,6 +863,7 @@ def _extract_assets(
             "trim_bbox_in_source_cell": trim,
             "alpha_validation": alpha_metrics,
             "color_audit_on_opaque_pixels": color_metrics,
+            "artifact_audit": artifact_metrics,
         }
         metrics["asset_cells"][asset_id] = cell_metrics
         assets.append(
@@ -259,6 +881,7 @@ def _extract_assets(
                     "parent_layer": cell.get("parent_layer"),
                     "children_excluded": list(cell.get("children_excluded") or []),
                     "notes": cell.get("notes"),
+                    "bbox_detection": cell.get("bbox_detection"),
                 },
             }
         )
@@ -305,6 +928,40 @@ def _extract_rgba(cell: Image.Image) -> tuple[Image.Image, np.ndarray, list[int]
     x1 = min(rgba.width, bbox[2] + pad)
     y1 = min(rgba.height, bbox[3] + pad)
     return rgba.crop((x0, y0, x1, y1)), background, [x0, y0, x1, y1]
+
+
+def _connected_components(mask: np.ndarray) -> list[dict[str, Any]]:
+    height, width = mask.shape
+    seen = np.zeros_like(mask, dtype=bool)
+    components: list[dict[str, Any]] = []
+    directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+    for yy in range(height):
+        for xx in range(width):
+            if not mask[yy, xx] or seen[yy, xx]:
+                continue
+            queue: deque[tuple[int, int]] = deque([(xx, yy)])
+            seen[yy, xx] = True
+            points: list[tuple[int, int]] = []
+            while queue:
+                x, y = queue.popleft()
+                points.append((x, y))
+                for dx, dy in directions:
+                    nx = x + dx
+                    ny = y + dy
+                    if 0 <= nx < width and 0 <= ny < height and mask[ny, nx] and not seen[ny, nx]:
+                        seen[ny, nx] = True
+                        queue.append((nx, ny))
+            xs = [point[0] for point in points]
+            ys = [point[1] for point in points]
+            components.append(
+                {
+                    "area": len(points),
+                    "bbox": (min(xs), min(ys), max(xs) + 1, max(ys) + 1),
+                }
+            )
+
+    return components
 
 
 def _remove_small_components(mask: np.ndarray, *, min_area: int) -> np.ndarray:
@@ -410,6 +1067,87 @@ def _color_audit(rgba: Image.Image) -> dict[str, float]:
     }
 
 
+def _artifact_audit(rgba: Image.Image) -> dict[str, Any]:
+    arr = np.asarray(rgba)
+    alpha = arr[..., 3] > 96
+    if not alpha.any():
+        return {
+            "label_artifact_score": 0.0,
+            "label_artifact_ratio": 0.0,
+            "label_artifact_candidate_count": 0,
+            "label_artifact_candidates": [],
+        }
+
+    hue, saturation, value = _rgb_to_hsv(arr[..., :3])
+    marker_mask = (
+        alpha
+        & (saturation > 0.38)
+        & (value > 0.12)
+        & (value < 0.82)
+    )
+    height, width = alpha.shape
+    candidates: list[dict[str, Any]] = []
+    for component in _connected_components(marker_mask):
+        candidate = _label_artifact_candidate(component, width, height, alpha, saturation, value)
+        if candidate is not None:
+            candidates.append(candidate)
+
+    candidate_area = sum(int(candidate["area"]) for candidate in candidates)
+    opaque_pixels = max(1, int(alpha.sum()))
+    return {
+        "label_artifact_score": 1.0 if candidates else 0.0,
+        "label_artifact_ratio": round(float(candidate_area / opaque_pixels), 4),
+        "label_artifact_candidate_count": len(candidates),
+        "label_artifact_candidates": candidates,
+    }
+
+
+def _label_artifact_candidate(
+    component: dict[str, Any],
+    image_width: int,
+    image_height: int,
+    alpha: np.ndarray,
+    saturation: np.ndarray,
+    value: np.ndarray,
+) -> dict[str, Any] | None:
+    area = int(component["area"])
+    x0, y0, x1, y1 = (int(value) for value in component["bbox"])
+    component_width = x1 - x0
+    component_height = y1 - y0
+    image_area = image_width * image_height
+
+    if area < 120 or area > max(2800, int(image_area * 0.045)):
+        return None
+    if x0 > max(28, int(image_width * 0.10)) or y0 > max(28, int(image_height * 0.12)):
+        return None
+    if component_width < 8 or component_height < 8:
+        return None
+    max_label_dimension = 58
+    if component_width > max_label_dimension:
+        return None
+    if component_height > max_label_dimension:
+        return None
+
+    aspect_ratio = max(component_width / component_height, component_height / component_width)
+    fill_ratio = area / (component_width * component_height)
+    if aspect_ratio > 1.85 or fill_ratio < 0.34:
+        return None
+
+    bright_region = (
+        alpha[y0:y1, x0:x1]
+        & (value[y0:y1, x0:x1] > 0.78)
+        & (saturation[y0:y1, x0:x1] < 0.45)
+    )
+    bright_inside_ratio = float(bright_region.sum() / max(1, component_width * component_height))
+    return {
+        "area": area,
+        "bbox": [x0, y0, component_width, component_height],
+        "fill_ratio": round(float(fill_ratio), 4),
+        "aspect_ratio": round(float(aspect_ratio), 4),
+        "bright_inside_ratio": round(bright_inside_ratio, 4),
+    }
+
+
 def _rgb_to_hsv(rgb: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     arr = rgb.astype(np.float32) / 255.0
     r, g, b = arr[..., 0], arr[..., 1], arr[..., 2]
@@ -485,6 +1223,8 @@ def _metric_value(metrics: dict[str, Any], asset_id: str, metric_name: str) -> f
         return float(asset_metrics["color_audit_on_opaque_pixels"][metric_name])
     if metric_name in asset_metrics["alpha_validation"]:
         return float(asset_metrics["alpha_validation"][metric_name])
+    if metric_name in asset_metrics["artifact_audit"]:
+        return float(asset_metrics["artifact_audit"][metric_name])
     raise KeyError(f"unknown metric for {asset_id}: {metric_name}")
 
 
@@ -512,6 +1252,9 @@ def _build_sprite_manifest(contract: dict[str, Any], assets: list[dict[str, Any]
         "known_issues": [
             "production-board-layer-ownership-drift",
             "asset-cell-tight-padding",
+            "fixed-asset-sheet-bbox-drift",
+            "asset-sheet-index-label-artifacts",
+            "low-contrast-texture-cell-bbox",
             "closed-panel-alpha-hole-fill",
         ],
     }
@@ -805,6 +1548,7 @@ def _build_report(
     primary = asset_cells[primary_asset_id]
     checks = metrics.get("contract_checks", {})
     verdict = "pass" if not validation_errors and not failed_checks else "fail"
+    detection = metrics.get("asset_sheet_detection")
 
     lines = [
         f"# {contract_id} Contract Validation",
@@ -823,36 +1567,59 @@ def _build_report(
         f"- Primary corner alpha: `{primary['alpha_validation']['corner_alpha']}`.",
         f"- Validation errors: `{len(validation_errors)}`.",
         f"- Failed checks: `{len(failed_checks)}`.",
-        "",
-        "## Contract Checks",
-        "",
-        "```json",
-        json.dumps(checks, indent=2, ensure_ascii=False),
-        "```",
-        "",
-        "## Interpretation",
-        "",
-        str(contract.get("interpretation") or "This validates layer ownership and artifact generation from a production board contract. It does not prove final production readiness."),
-        "",
-        "## Files",
-        "",
-        "- `layer_contract.json`: copied input contract.",
-        "- `production_board.png`: copied source board.",
-        "- `bbox_overlay.png`: board with asset-cell boxes.",
-        "- `asset_cells/*.png`: source cell crops for audit.",
-        "- `assets_png/*.png`: transparent candidates extracted from source cells.",
-        "- `assets_fit_raw/*.png`: rough layout instances when rough reconstruction is configured.",
-        "- `sprite_overview.png`: transparent candidate overview.",
-        "- `focused_split_comparison.png`: cell-to-transparent-candidate comparison.",
-        "- `rough_reconstruction.png`: rough reconstruction when configured.",
-        "- `rough_reconstruction_comparison.png`: source / reconstruction / reference comparison when configured.",
-        "- `probe_metrics.json`: machine-readable metrics.",
-        "- `sprite_manifest.json`, `layer_ir.json`, `layout_ir.json`: validation metadata.",
-        "",
-        "## Verdict",
-        "",
-        "```text",
-        str(contract.get("verdict") or f"{contract_id}: {verdict} for configured contract checks"),
-        "```",
     ]
+    if isinstance(detection, dict) and detection.get("enabled"):
+        lines.extend(
+            [
+                f"- Asset-sheet bbox detection: `{detection.get('mode')}`.",
+                f"- Detection cells: `{len(detection.get('cells') or {})}`.",
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "## Contract Checks",
+            "",
+            "```json",
+            json.dumps(checks, indent=2, ensure_ascii=False),
+            "```",
+            "",
+            "## Interpretation",
+            "",
+            str(contract.get("interpretation") or "This validates layer ownership and artifact generation from a production board contract. It does not prove final production readiness."),
+            "",
+            "## Files",
+            "",
+            "- `layer_contract.json`: effective contract used for validation.",
+        ]
+    )
+    if isinstance(detection, dict) and detection.get("enabled"):
+        lines.extend(
+            [
+                "- `layer_contract_input.json`: original input contract before bbox detection.",
+                "- `asset_sheet_detection.json`: detected bbox report.",
+                "- `bbox_detection_overlay.png`: input bbox vs detected bbox overlay.",
+            ]
+        )
+    lines.extend(
+        [
+            "- `production_board.png`: copied source board.",
+            "- `bbox_overlay.png`: board with asset-cell boxes.",
+            "- `asset_cells/*.png`: source cell crops for audit.",
+            "- `assets_png/*.png`: transparent candidates extracted from source cells.",
+            "- `assets_fit_raw/*.png`: rough layout instances when rough reconstruction is configured.",
+            "- `sprite_overview.png`: transparent candidate overview.",
+            "- `focused_split_comparison.png`: cell-to-transparent-candidate comparison.",
+            "- `rough_reconstruction.png`: rough reconstruction when configured.",
+            "- `rough_reconstruction_comparison.png`: source / reconstruction / reference comparison when configured.",
+            "- `probe_metrics.json`: machine-readable metrics.",
+            "- `sprite_manifest.json`, `layer_ir.json`, `layout_ir.json`: validation metadata.",
+            "",
+            "## Verdict",
+            "",
+            "```text",
+            str(contract.get("verdict") or f"{contract_id}: {verdict} for configured contract checks"),
+            "```",
+        ]
+    )
     return "\n".join(lines) + "\n"
