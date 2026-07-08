@@ -99,6 +99,8 @@ class SpecPlannerPanelSplitTest(unittest.TestCase):
 
             self.assertIn("1536x1024", prompt)
             self.assertIn("2-column by 3-row grid", prompt)
+            self.assertIn("fit fully inside its own cell with a clear neutral margin", prompt)
+            self.assertIn("panel_base cell especially needs empty neutral padding", prompt)
             self.assertIn("no visible cell labels, no numbers, no index markers", prompt)
             self.assertIn("Cell order is implicit by grid position only", prompt)
             self.assertIn("panel_base: only the large cream rounded panel body", prompt)
@@ -132,7 +134,7 @@ class SpecPlannerPanelSplitTest(unittest.TestCase):
 
             panel_base = cells["panel_base"]
             self.assertEqual(panel_base["role"], "panel_base_clean_candidate")
-            self.assertEqual(panel_base["bbox"], [759, 28, 358, 365])
+            self.assertEqual(panel_base["bbox"], [759, 28, 405, 365])
             self.assertEqual(panel_base["scale_mode"], "nine_slice")
             self.assertTrue(panel_base["nine_slice_candidate"])
             self.assertEqual(

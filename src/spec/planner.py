@@ -29,11 +29,11 @@ PANEL_FOCUS_ASSET_IDS = [
 ]
 
 PANEL_FOCUS_CELL_BBOXES = {
-    "panel_base": [759, 28, 358, 365],
+    "panel_base": [759, 28, 405, 365],
     "panel_top_title_plate": [1133, 28, 371, 365],
-    "panel_corner_flowers": [759, 409, 358, 219],
+    "panel_corner_flowers": [759, 409, 405, 219],
     "panel_bottom_leaves": [1133, 409, 371, 219],
-    "panel_inner_texture": [759, 644, 358, 340],
+    "panel_inner_texture": [759, 644, 405, 340],
     "full_panel_composite_reference": [1133, 644, 371, 340],
 }
 
@@ -695,6 +695,7 @@ def _build_panel_focus_production_board_prompt(plan: dict[str, Any], sprite_mani
             ),
             "",
             "Canvas/composition: wide landscape production board, 1536x1024. Left 55% is a complete vertical mobile shop UI full_effect, portrait mobile ratio inside the board. Right 45% is a clean asset_sheet with 6 large isolated cells in a neat 2-column by 3-row grid. Keep all asset cells large, centered, separated by visible whitespace, and easy to audit.",
+            "Asset sheet geometry: every asset must fit fully inside its own cell with a clear neutral margin on all four sides. No asset may touch or cross a cell edge, gutter, or neighboring cell. The panel_base cell especially needs empty neutral padding around the full rounded panel silhouette, including all four transparent-looking corners.",
             "",
             f"Theme: {style['theme']} for a {style['game_genre']}.",
             f"Style: {style['visual_style']}; material: {style['material']}.",

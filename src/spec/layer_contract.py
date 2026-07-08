@@ -962,6 +962,10 @@ def _extract_rgba(cell: Image.Image) -> tuple[Image.Image, np.ndarray, list[int]
     outside = _border_connected_background(seed)
     filled = ~outside
     mask = filled | (dist > 42)
+    # Hole-fill recovers closed panels, but any background-like pixels still
+    # connected to the crop border must stay transparent.
+    border_background = _border_connected_background(dist > 42)
+    mask[border_background] = False
     mask = _remove_small_components(mask, min_area=120)
 
     alpha = np.where(mask, 255, 0).astype(np.uint8)
@@ -1181,6 +1185,17 @@ def _label_artifact_candidate(
     fill_ratio = area / (component_width * component_height)
     if aspect_ratio > 1.85 or fill_ratio < 0.34:
         return None
+    alpha_parent = _alpha_parent_component(alpha, x0, y0, x1, y1)
+    if alpha_parent is not None:
+        parent_x0, parent_y0, parent_x1, parent_y1 = alpha_parent["bbox"]
+        parent_width = parent_x1 - parent_x0
+        parent_height = parent_y1 - parent_y0
+        if (
+            int(alpha_parent["area"]) >= area * 4
+            and parent_width >= component_width * 2
+            and parent_height >= component_height * 2
+        ):
+            return None
 
     bright_region = (
         alpha[y0:y1, x0:x1]
@@ -1194,6 +1209,44 @@ def _label_artifact_candidate(
         "fill_ratio": round(float(fill_ratio), 4),
         "aspect_ratio": round(float(aspect_ratio), 4),
         "bright_inside_ratio": round(bright_inside_ratio, 4),
+    }
+
+
+def _alpha_parent_component(
+    alpha: np.ndarray,
+    x0: int,
+    y0: int,
+    x1: int,
+    y1: int,
+) -> dict[str, Any] | None:
+    seed_points = np.argwhere(alpha[y0:y1, x0:x1])
+    if seed_points.size == 0:
+        return None
+
+    seed_y = int(seed_points[0][0]) + y0
+    seed_x = int(seed_points[0][1]) + x0
+    height, width = alpha.shape
+    seen = np.zeros_like(alpha, dtype=bool)
+    queue: deque[tuple[int, int]] = deque([(seed_x, seed_y)])
+    seen[seed_y, seed_x] = True
+    xs: list[int] = []
+    ys: list[int] = []
+    directions = ((1, 0), (-1, 0), (0, 1), (0, -1))
+
+    while queue:
+        x, y = queue.popleft()
+        xs.append(x)
+        ys.append(y)
+        for dx, dy in directions:
+            nx = x + dx
+            ny = y + dy
+            if 0 <= nx < width and 0 <= ny < height and alpha[ny, nx] and not seen[ny, nx]:
+                seen[ny, nx] = True
+                queue.append((nx, ny))
+
+    return {
+        "area": len(xs),
+        "bbox": [min(xs), min(ys), max(xs) + 1, max(ys) + 1],
     }
 
 

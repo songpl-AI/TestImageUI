@@ -15,4 +15,5 @@ env/
 examples/output/spec_driven_panel_split_auto_detect_validation/
 examples/output/spec_driven_panel_split_no_label_stability/
 examples/output/spec_driven_panel_split_stability/
+examples/output/spec_driven_panel_focus_realgen_validation/
 examples/output/spec_driven_product_card_stability/
